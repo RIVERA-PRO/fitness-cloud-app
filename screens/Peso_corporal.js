@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ImageBackground, ScrollView, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { ejerciciosData } from '../components/Data';
-
+import Header from '../components/Header';
+import pesoCorporalImg from '../assets/pesocorporal.jpg'
 export default function PesoCorporal({ navigation }) {
     const [searchText, setSearchText] = useState('');
     const pesoCorporalExercises = ejerciciosData.filter(exercise => exercise.categoria === 'Peso_corporal' && exercise.title.toLowerCase().includes(searchText.toLowerCase()));
@@ -9,52 +10,82 @@ export default function PesoCorporal({ navigation }) {
     const goToDetail = (exerciseId) => {
         navigation.navigate('Detail', { exerciseId });
     };
-
     return (
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <View style={styles.seccion}>
-                <Text style={styles.texto}>Peso Corporal</Text>
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Buscar ejercicio"
-                    value={searchText}
-                    onChangeText={text => setSearchText(text)}
-                />
-            </View>
-            <View style={styles.seccion2}>
-                {pesoCorporalExercises.map(exercise => (
-                    <TouchableOpacity key={exercise.id} style={styles.exerciseItem} onPress={() => goToDetail(exercise.id)}>
-                        <View style={styles.exerciseContent}>
-                            <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
-                            </ImageBackground>
-                            <Text style={styles.exerciseName}>{exercise.title}</Text>
-                        </View>
-                    </TouchableOpacity>
-                ))}
-            </View>
-        </ScrollView>
+        <ImageBackground source={pesoCorporalImg} resizeMode="cover">
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <Header />
+
+
+
+                <View style={styles.seccion}>
+                    <View style={styles.titleCantidad}>
+                        <Text style={styles.textoTitle}>Ejercicios de Peso corporal</Text>
+                        <Text style={styles.textoCantidad}>{pesoCorporalExercises.length}</Text>
+                    </View>
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Buscar ejercicio"
+                        value={searchText}
+                        onChangeText={text => setSearchText(text)}
+                    />
+                </View>
+                <ScrollView style={styles.seccion2}>
+                    {pesoCorporalExercises.map(exercise => (
+                        <TouchableOpacity key={exercise.id} style={styles.exerciseItem} onPress={() => goToDetail(exercise.id)}>
+                            <View style={styles.exerciseContent}>
+                                <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
+                                </ImageBackground>
+                                <Text style={styles.exerciseName}>{exercise.title}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+
+            </ScrollView>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
-        height: "200%",
-        padding: 10,
+        height: "220%",
         width: '100%',
+        marginTop: 300,
+        backgroundColor: '#f5f5f5',
+        borderRadius: 30
     },
     seccion: {
-        height: "20%",
+
         padding: 20,
         justifyContent: 'center',
     },
     seccion2: {
-        height: "100%",
+
+        padding: 20,
+        height: "50%",
     },
-    texto: {
+    textoTitle: {
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 35,
+        fontSize: 19,
+        fontWeight: 'bold',
+
+    },
+    textoCantidad: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: '#fff',
+        backgroundColor: 'rgba(215, 25, 0, 0.8)',
+        padding: 6,
+        borderRadius: 100,
+        width: 50,
+        height: 30,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     searchInput: {
         backgroundColor: '#fff',
@@ -63,10 +94,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     exerciseItem: {
-        margin: 10,
-        backgroundColor: '#000',
-        borderRadius: 8,
-        padding: 10
+        marginTop: 15,
+        backgroundColor: 'rgba(215, 25, 0, 0.8)',
+        borderRadius: 10,
+        borderWidth: 0.3,
+        borderColor: 'rgba(215, 25, 0, 0.8)',
     },
     exerciseContent: {
         flexDirection: 'row',
@@ -75,7 +107,8 @@ const styles = StyleSheet.create({
     exerciseImage: {
         width: 70,
         height: 70,
-        borderRadius: 100,
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10,
         marginRight: 10,
         justifyContent: 'flex-end',
         overflow: 'hidden',
@@ -90,4 +123,10 @@ const styles = StyleSheet.create({
         padding: 10,
         width: '80%',
     },
+    titleCantidad: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        marginBottom: 10
+    }
 });

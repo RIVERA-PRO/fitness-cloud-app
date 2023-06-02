@@ -17,9 +17,11 @@ import Peso_corporal from '../screens/Peso_corporal'
 import Yoga from '../screens/Yoga'
 import Cardio from '../screens/Cardio'
 import Categorias from '../screens/Categorias'
+import Time from '../screens/Time'
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 
 function BottomTabsNavigation() {
@@ -46,7 +48,7 @@ function BottomTabsNavigation() {
                     fontSize: 11,
                     marginBottom: 3,
                 },
-                activeTintColor: '#fff',
+                activeTintColor: '#D71920',
                 inactiveTintColor: '#000',
 
 
@@ -56,13 +58,13 @@ function BottomTabsNavigation() {
                 component={Home}
                 options={{
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#ffff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Home',
@@ -71,6 +73,23 @@ function BottomTabsNavigation() {
                     ),
                 }}
             />
+
+            < Tab.Screen name="Categorias" component={Categorias}
+                options={{
+                    tabBarStyle: {
+                        backgroundColor: '#ffff',
+                        height: 53,
+                        elevation: 0,
+                        position: 'absolute',
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Categorias',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="fitness-center" size={25} color={color} />
+                    ),
+                }} />
 
             <Tab.Screen
                 name="Ejercicios"
@@ -85,62 +104,66 @@ function BottomTabsNavigation() {
                                 borderRadius: Platform.OS === "ios" ? 25 : 30,
                                 position: 'absolute',
                                 bottom: 10,
-                                backgroundColor: '#d71b7b',
+                                backgroundColor: '#D71920',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                shadowColor: '#fff',
-                                shadowOffset: { width: 0, height: 2 },
-                                shadowOpacity: 0.25,
-                                shadowRadius: 3,
-                                elevation: 5,
+                                shadowColor: '#D71920',
+                                shadowOffset: { width: 10, height: 20 },
+                                shadowOpacity: 10.25,
+                                shadowRadius: 300,
+                                elevation: 6,
                             }}
                         >
                             <FontAwesome name="plus" size={size} color="#fff" />
                         </View>
                     ),
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
                     },
-                    activeTintColor: '#000',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                 }}
             />
 
-
-            < Tab.Screen name="Categorias" component={Categorias}
+            <Tab.Screen
+                name="Time"
+                component={Time}
                 options={{
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
+
                     },
                     activeTintColor: '#fff',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
-                    tabBarLabel: 'Categorias',
+                    tabBarLabel: 'Time',
                     tabBarIcon: ({ color }) => (
-                        <MaterialIcons name="fitness-center" size={28} color={color} />
+                        <MaterialCommunityIcons name="timer" size={24} color={color} />
                     ),
-                }} />
+                }}
+            />
+
             < Tab.Screen name="Perfil" component={Perfil}
                 options={{
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Profile',
                     tabBarIcon: ({ color }) => (
-                        <FontAwesome5 name="user-alt" size={24} color={color} />
+                        <FontAwesome5 name="user-alt" size={23} color={color} />
                     ),
                 }} />
 
@@ -148,12 +171,12 @@ function BottomTabsNavigation() {
                 options={{
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Details',
@@ -168,13 +191,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Gluteos',
@@ -190,13 +213,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#ffff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Abdominales',
@@ -212,13 +235,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Pecho',
@@ -234,13 +257,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Biceps',
@@ -256,13 +279,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Triceps',
@@ -278,13 +301,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Espalda',
@@ -300,12 +323,12 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Cuadriceps',
@@ -322,13 +345,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Hombros',
@@ -344,13 +367,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Peso_corporal',
@@ -366,13 +389,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Yoga',
@@ -389,13 +412,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#d71b7b',
-                        height: 56,
+                        backgroundColor: '#fff',
+                        height: 53,
                         elevation: 0,
                         position: 'absolute',
 
                     },
-                    activeTintColor: '#fff',
+                    activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Cardio',

@@ -1,35 +1,67 @@
-import React from 'react';
-import { View, StyleSheet, ImageBackground, ScrollView, Text } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, StyleSheet, ImageBackground, ScrollView, Text, TouchableOpacity, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 import bg from '../assets/home.png';
 import HomeTitle from '../components/HomeTitle';
 import AllsCategory from '../components/AllsCategory';
 import AllEjercicios from '../components/AllEjercicios';
 import MoreEjercice from '../components/MoreEjercice';
+import Empieza from '../components/Empieza';
+import Header from '../components/Header';
 export default function Home() {
     const navigation = useNavigation();
+    const animation = useRef(new Animated.Value(0)).current;
+
+    const navigateToCategories = () => {
+        navigation.navigate('Categorias'); // Reemplaza 'Categorias' con la ruta correcta a tu página de categorías
+    };
+
+    const navigateToEjercicios = () => {
+        navigation.navigate('Ejercicios'); // Reemplaza 'Categorias' con la ruta correcta a tu página de categorías
+    };
+
+    useEffect(() => {
+        animateHome();
+    }, []);
+
+    const animateHome = () => {
+        Animated.timing(animation, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const homeStyle = {
+        opacity: animation,
+    };
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            {/* <ImageBackground source={bg} style={styles.backgroundImage}>
-          <View style={styles.seccion}>
-              <HomeTitle />
-          </View>
-      </ImageBackground> */}
-
-
-
-            <ScrollView style={styles.scrollViewHome}>
-                <AllEjercicios navigation={navigation} />
-
-                <Text style={styles.textMore}>Caegorias</Text>
-                <AllsCategory navigation={navigation} />
-
-            </ScrollView>
-            <ScrollView style={styles.scrollViewHome}>
-                <MoreEjercice navigation={navigation} />
-            </ScrollView>
+            <LinearGradient colors={['#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff']} style={styles.container}>
+                <Animated.ScrollView style={[styles.scrollViewHome, homeStyle]}>
+                    <Header />
+                    <View style={styles.seccionMas}>
+                        <Text style={styles.categoriasText}>Ejercicios</Text>
+                        <TouchableOpacity onPress={navigateToEjercicios}>
+                            <Text style={styles.verMasText}>Ver más</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <AllEjercicios navigation={navigation} />
+                    <View style={styles.seccionMas}>
+                        <Text style={styles.categoriasText}>Categorias</Text>
+                        <TouchableOpacity onPress={navigateToCategories}>
+                            <Text style={styles.verMasText}>Ver más</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <AllsCategory navigation={navigation} />
+                </Animated.ScrollView>
+                <Empieza />
+                <ScrollView style={styles.scrollViewHome}>
+                    <MoreEjercice navigation={navigation} />
+                </ScrollView>
+            </LinearGradient>
         </ScrollView>
     );
 }
@@ -37,26 +69,41 @@ export default function Home() {
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
-        height: "200%",
     },
     scrollViewHome: {
-        height: "100%",
+        height: '100%',
         flex: 1,
-        gap: 30
+        gap: 30,
+        paddingTop: 50,
     },
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover',
-        height: "100%"
+        height: '100%',
     },
-    seccion: {
-        height: "100%",
-        padding: 20,
-        justifyContent: 'space-around',
+    seccionMas: {
+        flex: 1,
+        flexGrow: 1,
+        height: '100%',
+        justifyContent: 'space-between',
         alignContent: 'center',
-        marginTop: 100
+        flexDirection: 'row',
+        width: '100%',
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 10,
+
     },
-    seccion2: {
-        height: "100%",
+
+    verMasText: {
+        color: '#D71920',
+        fontSize: 15,
+        color: '#000',
+        marginRight: 10,
+    },
+    categoriasText: {
+        color: '#000',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });

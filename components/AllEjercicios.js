@@ -50,10 +50,9 @@ export default function AllEjercicios({ navigation }) {
 const styles = StyleSheet.create({
     scrollView: {
         padding: 20,
-        height: '200%',
-        marginTop: 100,
-        backgroundColor: '#234234',
+        height: '300%',
 
+        alignContent: 'center',
     },
     exerciseItem: {
         marginRight: 10,
@@ -79,6 +78,15 @@ const styles = StyleSheet.create({
         height: 70,
         borderRadius: 100,
         overflow: 'hidden',
-        marginLeft: 10,
+        borderColor: '#000',
+        borderWidth: 0.1,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 3,
     },
 });

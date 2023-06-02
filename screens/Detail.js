@@ -3,7 +3,7 @@ import { View, StyleSheet, ImageBackground, ScrollView, Text, Image, TouchableOp
 import { ejerciciosData } from '../components/Data';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Timer from '../components/Timer';
-
+import { LinearGradient } from 'expo-linear-gradient';
 export default function Detail({ route }) {
     const { exerciseId } = route.params;
     const exercise = ejerciciosData.find((exercise) => exercise.id === exerciseId);
@@ -34,29 +34,35 @@ export default function Detail({ route }) {
     };
 
     return (
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <ImageBackground source={{ uri: exercise.fondo }} style={styles.backgroundImage}>
+        <ScrollView contentContainerStyle={styles.scrollContainer} >
+            <Image source={{ uri: exercise.img }} style={styles.exerciseImage}>
+
+            </Image>
+            <LinearGradient colors={['#fff', '#AC1929']} style={styles.container}>
                 <View style={styles.seccion}>
                     <Text style={styles.title}>{exercise.title}</Text>
                     <Text style={styles.category}>{exercise.categoria}</Text>
-                    <Image source={{ uri: exercise.img }} style={styles.exerciseImage} />
-                    {exercise.paso1 !== '' && <Text style={styles.pasos}>1- {exercise.paso1}</Text>}
-                    {exercise.paso2 !== '' && <Text style={styles.pasos}>2- {exercise.paso2}</Text>}
-                    {exercise.paso3 !== '' && <Text style={styles.pasos}>3- {exercise.paso3}</Text>}
-                    {exercise.paso4 !== '' && <Text style={styles.pasos}>4- {exercise.paso4}</Text>}
-                    {exercise.paso5 !== '' && <Text style={styles.pasos}>5- {exercise.paso5}</Text>}
-                    {exercise.paso6 !== '' && <Text style={styles.pasos}>6- {exercise.paso6}</Text>}
-                    {exercise.paso7 !== '' && <Text style={styles.pasos}>7- {exercise.paso7}</Text>}
-                    {exercise.paso8 !== '' && <Text style={styles.pasos}>8- {exercise.paso8}</Text>}
-                    {exercise.paso9 !== '' && <Text style={styles.pasos}>9- {exercise.paso9}</Text>}
-                    {exercise.paso10 !== '' && <Text style={styles.pasos}>10- {exercise.paso10}</Text>}
+
+
+                    <ScrollView>
+                        {exercise.paso1 !== '' && <Text style={styles.pasos}>1- {exercise.paso1}</Text>}
+                        {exercise.paso2 !== '' && <Text style={styles.pasos}>2- {exercise.paso2}</Text>}
+                        {exercise.paso3 !== '' && <Text style={styles.pasos}>3- {exercise.paso3}</Text>}
+                        {exercise.paso4 !== '' && <Text style={styles.pasos}>4- {exercise.paso4}</Text>}
+                        {exercise.paso5 !== '' && <Text style={styles.pasos}>5- {exercise.paso5}</Text>}
+                        {exercise.paso6 !== '' && <Text style={styles.pasos}>6- {exercise.paso6}</Text>}
+                        {exercise.paso7 !== '' && <Text style={styles.pasos}>7- {exercise.paso7}</Text>}
+                        {exercise.paso8 !== '' && <Text style={styles.pasos}>8- {exercise.paso8}</Text>}
+                        {exercise.paso9 !== '' && <Text style={styles.pasos}>9- {exercise.paso9}</Text>}
+                        {exercise.paso10 !== '' && <Text style={styles.pasos}>10- {exercise.paso10}</Text>}
+                    </ScrollView>
                     <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
                         <Text style={styles.favoriteButtonText}>{isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}</Text>
                     </TouchableOpacity>
                     <Timer />
                     <Text style={styles.description}>{exercise.description}</Text>
                 </View>
-            </ImageBackground>
+            </LinearGradient>
         </ScrollView>
     );
 }
@@ -65,37 +71,61 @@ const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
         height: '300%',
+        backgroundColor: '#fff',
     },
-    backgroundImage: {
-        flex: 1,
-        resizeMode: 'cover',
-        paddingTop: 100,
-    },
+
     seccion: {
         padding: 20,
         justifyContent: 'center',
+        borderRadius: 30,
+        paddingTop: 50,
+        backgroundColor: '#000',
     },
     title: {
         color: '#fff',
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+
     },
+
     description: {
         color: '#fff',
         fontSize: 16,
         marginBottom: 10,
     },
     category: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 13,
+        fontWeight: 'bold',
         color: '#fff',
-        fontSize: 16,
+        backgroundColor: 'rgba(215, 25, 0, 0.8)',
+        padding: 6,
+        borderRadius: 100,
+        width: 100,
+        height: 30,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+
     },
     exerciseImage: {
-        width: 200,
-        height: 200,
-        borderRadius: 100,
+        width: '100%',
+        height: 300,
         alignSelf: 'center',
-        marginTop: 20,
+        marginTop: 100,
+
+        overflow: 'hidden',
+        borderWidth: 2,
+        borderColor: '#fff',
+        objectFit: 'contain'
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
     },
     favoriteButton: {
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -109,10 +139,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     pasos: {
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
         borderRadius: 8,
         padding: 10,
         marginTop: 10,
+        color: '#fff',
     },
     seriesContainer: {
         alignItems: 'center',

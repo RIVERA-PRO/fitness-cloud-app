@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, TextInput, ScrollView } from 'react-native';
 import { ejerciciosData } from './Data';
 import { useNavigation } from '@react-navigation/native';
 
@@ -63,6 +63,10 @@ export default function CategoriasY({ navigation }) {
 
     return (
         <View style={styles.container}>
+            <View style={styles.titleCantidad}>
+                <Text style={styles.textoTitle}>Categorias </Text>
+                <Text style={styles.textoCantidad}>{categories.length}</Text>
+            </View>
             <TextInput
                 style={styles.input}
                 placeholder="Filtrar categorías"
@@ -76,6 +80,7 @@ export default function CategoriasY({ navigation }) {
                 numColumns={2}
                 contentContainerStyle={styles.scrollView}
             />
+
         </View>
     );
 }
@@ -83,13 +88,13 @@ export default function CategoriasY({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 100,
+
         gap: 10,
-        padding: 10,
+        padding: 20,
     },
     scrollView: {
 
-        paddingTop: 50,
+        marginTop: 20,
         alignItems: 'center',
         gap: 10
     },
@@ -119,12 +124,37 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginHorizontal: 10,
-        marginBottom: 10,
-        paddingHorizontal: 10,
         borderRadius: 10,
-        gap: 10
+        backgroundColor: '#fff',
+        paddingHorizontal: 10,
+        marginBottom: 10,
     },
+    textoTitle: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 22,
+        fontWeight: 'bold',
+
+    },
+    textoCantidad: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: '#fff',
+        backgroundColor: 'rgba(215, 25, 0, 0.8)',
+        padding: 6,
+        borderRadius: 100,
+        width: 50,
+        height: 30,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    titleCantidad: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+    }
 });

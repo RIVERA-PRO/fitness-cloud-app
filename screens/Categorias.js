@@ -2,12 +2,13 @@ import React from 'react'
 import { View, StyleSheet, ImageBackground, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CategoriasY from '../components/CategoriasY';
+import Header from '../components/Header';
 export default function Categorias() {
     const navigation = useNavigation();
     return (
 
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-
+            <Header />
             <CategoriasY navigation={navigation} />
         </ScrollView>
 
@@ -17,14 +18,14 @@ export default function Categorias() {
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
-        height: "200%"
+        paddingTop: 50
     },
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover',
     },
     seccion: {
-        height: "50%",
+
         padding: 20,
         justifyContent: 'center',
     },

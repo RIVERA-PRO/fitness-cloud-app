@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, ImageBackground, TextInput, ScrollView } from 'react-native';
 import { ejerciciosData } from '../components/Data';
-
+import Header from '../components/Header';
 export default function Ejercicios({ navigation }) {
     const [exercises, setExercises] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -76,28 +76,35 @@ export default function Ejercicios({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <TextInput
-                style={styles.searchInput}
-                placeholder="Buscar ejercicio"
-                value={searchText}
-                onChangeText={setSearchText}
-            />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <View style={styles.categoryFilter}>
-                    {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal'].map((category) => (
-                        <TouchableOpacity
-                            key={category}
-                            style={[
-                                styles.filterItem,
-                                selectedCategory === category && styles.filterItemSelected,
-                            ]}
-                            onPress={() => handleCategoryFilter(category)}
-                        >
-                            <Text style={styles.filterItemLabel}>{category}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            </ScrollView>
+            <Header />
+            <View style={styles.titleCantidad}>
+                <Text style={styles.textoTitle}>Ejercicios </Text>
+                <Text style={styles.textoCantidad}>{exercises.length}</Text>
+            </View>
+            <View style={styles.filtros}>
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder="Buscar ejercicio"
+                    value={searchText}
+                    onChangeText={setSearchText}
+                />
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <View style={styles.categoryFilter}>
+                        {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal'].map((category) => (
+                            <TouchableOpacity
+                                key={category}
+                                style={[
+                                    styles.filterItem,
+                                    selectedCategory === category && styles.filterItemSelected,
+                                ]}
+                                onPress={() => handleCategoryFilter(category)}
+                            >
+                                <Text style={styles.filterItemLabel}>{category}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </ScrollView>
+            </View>
             <FlatList
                 data={filteredExercises}
                 renderItem={renderExerciseItem}
@@ -112,28 +119,28 @@ export default function Ejercicios({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#234234',
-        paddingTop: 100,
-        paddingHorizontal: 20,
+        paddingTop: 50,
 
     },
     scrollView: {
         flexGrow: 1,
         marginTop: 20,
         alignItems: 'center',
+
     },
     exerciseItem: {
-        flex: 2,
-        marginRight: 10,
+        flex: 1,
+        marginRight: 25,
         marginBottom: 10,
         height: 200,
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
         borderRadius: 10,
+
     },
     exerciseImage: {
-        width: 140,
+        width: 155,
         height: 150,
         borderRadius: 8,
         overflow: 'hidden', // Añade esta línea
@@ -152,6 +159,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         marginBottom: 10,
+
     },
     categoryFilter: {
         flexDirection: 'row',
@@ -164,9 +172,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginRight: 10,
-        backgroundColor: '#677',
+        backgroundColor: 'rgba(215, 25, 32, 0.9)',
         padding: 7,
         borderRadius: 8
+
     },
     filterTitle: {
         marginRight: 10,
@@ -178,10 +187,42 @@ const styles = StyleSheet.create({
     },
     filterItemSelected: {
         borderBottomWidth: 2,
-        borderBottomColor: '#fff',
+        borderBottomColor: '#000',
     },
     tileEjercice: {
-        color: '#fff',
+        color: '#000',
         paddingTop: 10
+    },
+    filtros: {
+        paddingHorizontal: 20,
+    },
+    textoTitle: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 22,
+        fontWeight: 'bold',
+
+    },
+    textoCantidad: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: '#fff',
+        backgroundColor: 'rgba(215, 25, 0, 0.8)',
+        padding: 6,
+        borderRadius: 100,
+        width: 50,
+        height: 30,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    titleCantidad: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+        padding: 20
     }
 });

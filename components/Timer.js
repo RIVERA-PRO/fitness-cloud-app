@@ -196,6 +196,7 @@ const Timer = () => {
         overflow: 'hidden',
     },
 
+
     timer: {
         fontSize: 24,
         fontWeight: 'bold',

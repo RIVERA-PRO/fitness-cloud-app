@@ -61,6 +61,7 @@ export default function AllsCategory({ navigation }) {
         };
     };
 
+
     return (
         <ScrollView horizontal={true} style={styles.scrollView}>
 

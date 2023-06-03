@@ -48,7 +48,7 @@ export default function CategoriasY({ navigation }) {
 
     const renderCategoryItem = ({ item }) => {
         if (filter && !item.categoria.toLowerCase().includes(filter.toLowerCase())) {
-            return null; // No renderizar si el filtro no coincide
+            return null;
         }
 
         return (

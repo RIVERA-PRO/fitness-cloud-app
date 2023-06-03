@@ -6,10 +6,15 @@ export default function Header() {
     return (
         <View style={styles.container}>
             <View style={styles.logoContainer}>
-                <Image source={logo} style={styles.logo} />
-                <Text style={styles.logoText}>Fitness Cloud</Text>
+                <View style={styles.logoContainer} >
+                    <Image source={logo} style={styles.logo} />
+                    <Text style={styles.logoText}>Fitness Cloud</Text>
+                </View>
+
+
+                <Text style={styles.dateText}>{getCurrentDate()}</Text>
             </View>
-            <Text style={styles.dateText}>{getCurrentDate()}</Text>
+
         </View>
     );
 }
@@ -30,6 +35,7 @@ const styles = StyleSheet.create({
     logoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         gap: 5
     },
     logo: {
@@ -45,5 +51,6 @@ const styles = StyleSheet.create({
     dateText: {
         color: '#000',
         fontSize: 13,
+        marginLeft: 30
     },
 });

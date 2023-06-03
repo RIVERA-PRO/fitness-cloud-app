@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+
     exerciseImage: {
         width: 70,
         height: 70,

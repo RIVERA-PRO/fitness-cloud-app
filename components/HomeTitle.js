@@ -19,6 +19,7 @@ export default function HomeTitle(props) {
 }
 
 
+
 const styles = StyleSheet.create({
 
 

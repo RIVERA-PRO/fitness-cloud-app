@@ -42,7 +42,7 @@ export default function AllsCategory({ navigation }) {
     };
 
     const orderCategories = (array) => {
-        const order = ['Cardio', 'Biceps', 'Cuadriceps', 'Espalda', 'Gluteos', 'Abdominales', 'Triceps', 'Yoga', 'Peso_corporal', 'Hombro', 'Pecho',];
+        const order = ['Cardio', 'Biceps', 'Cuadriceps', 'Espalda', 'Gluteos', 'Abdominales', 'Triceps', 'Yoga', 'Peso_corporal', 'Hombros', 'Pecho',];
         const orderedArray = order.map((categoria) => array.find((item) => item.categoria === categoria));
         return orderedArray.filter(Boolean);
     };
@@ -83,8 +83,9 @@ export default function AllsCategory({ navigation }) {
 
 const styles = StyleSheet.create({
     scrollView: {
-        padding: 10,
-        height: '600%',
+        paddingLeft: 10,
+        paddingTop: 10,
+        height: '500%',
 
     },
     categoryBackgroundImage: {
@@ -95,10 +96,10 @@ const styles = StyleSheet.create({
     },
     categoryName: {
         position: 'absolute',
-        top: 160,
+        top: 170,
         left: 20,
         color: '#fff',
-        fontSize: 19,
+        fontSize: 17,
         fontWeight: 'bold',
         textShadowColor: 'rgba(0, 0, 0, 0.5)',
         textShadowOffset: { width: 1, height: 1 },
@@ -106,5 +107,10 @@ const styles = StyleSheet.create({
     },
     carouselItem: {
         marginRight: 10,
+        shadowColor: '#D71920',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 50,
     },
 });

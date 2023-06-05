@@ -3,6 +3,7 @@ import { View, StyleSheet, ImageBackground, ScrollView, Text, Image, TouchableOp
 import { ejerciciosData } from '../components/Data';
 import Header from '../components/Header';
 import pechoImg from '../assets/pecho.jpg'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function Pecho({ navigation }) {
     const [searchText, setSearchText] = useState('');
     const pechoExercises = ejerciciosData.filter(exercise => exercise.categoria === 'Pecho' && exercise.title.toLowerCase().includes(searchText.toLowerCase()));
@@ -22,12 +23,15 @@ export default function Pecho({ navigation }) {
                         <Text style={styles.textoTitle}>Ejercicios de Pecho</Text>
                         <Text style={styles.textoCantidad}>{pechoExercises.length}</Text>
                     </View>
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder="Buscar ejercicio"
-                        value={searchText}
-                        onChangeText={text => setSearchText(text)}
-                    />
+                    <View style={styles.searchInputContainer}>
+                        <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
+                        <TextInput
+                            style={styles.searchInput}
+                            placeholder="Buscar ejercicio"
+                            value={searchText}
+                            onChangeText={text => setSearchText(text)}
+                        />
+                    </View>
                 </View>
                 <ScrollView style={styles.seccion2}>
                     {pechoExercises.map(exercise => (
@@ -45,7 +49,6 @@ export default function Pecho({ navigation }) {
         </ImageBackground>
     );
 }
-
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
@@ -56,7 +59,6 @@ const styles = StyleSheet.create({
         borderRadius: 30
     },
     seccion: {
-
         padding: 20,
         justifyContent: 'center',
     },
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: 'bold',
         color: '#fff',
-        backgroundColor: 'rgba(215, 25, 0, 0.8)',
+        backgroundColor: '#D71920',
         padding: 6,
         borderRadius: 100,
         width: 50,
@@ -87,22 +89,39 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    searchInput: {
+
+    searchInputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 10,
         backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 8,
+        paddingHorizontal: 10,
         marginBottom: 10,
+    },
+    searchIcon: {
+        marginRight: 10,
+    },
+    searchInput: {
+        flex: 1,
+        height: 40,
     },
     exerciseItem: {
         marginTop: 15,
-        backgroundColor: 'rgba(215, 25, 0, 0.8)',
+
         borderRadius: 10,
-        borderWidth: 0.3,
-        borderColor: 'rgba(215, 25, 0, 0.8)',
+
+
     },
     exerciseContent: {
         flexDirection: 'row',
         alignItems: 'center',
+        shadowColor: 'rgba(0, 0, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 10.25,
+        shadowRadius: 30,
+        elevation: 2,
+        backgroundColor: '#D71920',
+        borderRadius: 10,
     },
     exerciseImage: {
         width: 70,
@@ -115,13 +134,13 @@ const styles = StyleSheet.create({
     },
     exerciseName: {
         color: '#fff',
-        fontSize: 17,
+        fontSize: 15,
         fontWeight: 'bold',
         textShadowColor: 'rgba(0, 0, 0, 0.5)',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 2,
         padding: 10,
-        width: '80%',
+        width: '75%',
     },
     titleCantidad: {
         flexDirection: 'row',

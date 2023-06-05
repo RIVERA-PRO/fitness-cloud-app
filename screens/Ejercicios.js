@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, ImageBackground, TextInput, ScrollView } from 'react-native';
 import { ejerciciosData } from '../components/Data';
 import Header from '../components/Header';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function Ejercicios({ navigation }) {
     const [exercises, setExercises] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -76,18 +77,21 @@ export default function Ejercicios({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Header />
+            {/* <Header /> */}
             <View style={styles.titleCantidad}>
                 <Text style={styles.textoTitle}>Ejercicios </Text>
                 <Text style={styles.textoCantidad}>{exercises.length}</Text>
             </View>
             <View style={styles.filtros}>
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Buscar ejercicio"
-                    value={searchText}
-                    onChangeText={setSearchText}
-                />
+                <View style={styles.searchInputContainer}>
+                    <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Buscar ejercicio"
+                        value={searchText}
+                        onChangeText={setSearchText}
+                    />
+                </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <View style={styles.categoryFilter}>
                         {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal'].map((category) => (
@@ -119,14 +123,16 @@ export default function Ejercicios({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 50,
-
+        paddingTop: 70,
+        backgroundColor: '#D71920',
     },
     scrollView: {
         flexGrow: 1,
         marginTop: 20,
         alignItems: 'center',
-
+        backgroundColor: '#fff',
+        paddingTop: 50,
+        borderRadius: 30
     },
     exerciseItem: {
         flex: 1,
@@ -138,12 +144,14 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 10,
 
+
+
     },
     exerciseImage: {
         width: 155,
         height: 150,
         borderRadius: 8,
-        overflow: 'hidden', // Añade esta línea
+        overflow: 'hidden',
     },
     imageContainer: {
         flex: 1,
@@ -151,15 +159,28 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
+        backgroundColor: '#fff',
+        shadowColor: 'rgba(0, 0, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 5,
     },
 
-    searchInput: {
-        height: 40,
+    searchInputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         borderRadius: 10,
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         marginBottom: 10,
-
+    },
+    searchIcon: {
+        marginRight: 10,
+    },
+    searchInput: {
+        flex: 1,
+        height: 40,
     },
     categoryFilter: {
         flexDirection: 'row',
@@ -172,18 +193,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginRight: 10,
-        backgroundColor: 'rgba(215, 25, 32, 0.9)',
+        backgroundColor: '#fff',
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 20,
         padding: 7,
-        borderRadius: 8
-
+        color: '#000',
     },
+
     filterTitle: {
         marginRight: 10,
         fontSize: 16,
         color: '#fff',
     },
     filterItemLabel: {
-        color: '#fff',
+        color: '#000',
     },
     filterItemSelected: {
         borderBottomWidth: 2,
@@ -191,7 +215,9 @@ const styles = StyleSheet.create({
     },
     tileEjercice: {
         color: '#000',
-        paddingTop: 10
+        paddingTop: 10,
+
+
     },
     filtros: {
         paddingHorizontal: 20,
@@ -201,15 +227,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         fontSize: 22,
         fontWeight: 'bold',
-
+        color: '#fff',
     },
     textoCantidad: {
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: 13,
         fontWeight: 'bold',
-        color: '#fff',
-        backgroundColor: 'rgba(215, 25, 0, 0.8)',
+        color: '#000',
+        backgroundColor: '#fff',
         padding: 6,
         borderRadius: 100,
         width: 50,

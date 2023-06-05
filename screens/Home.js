@@ -9,6 +9,7 @@ import AllEjercicios from '../components/AllEjercicios';
 import MoreEjercice from '../components/MoreEjercice';
 import Empieza from '../components/Empieza';
 import Header from '../components/Header';
+import { AntDesign } from '@expo/vector-icons';
 export default function Home() {
     const navigation = useNavigation();
     const animation = useRef(new Animated.Value(0)).current;
@@ -39,28 +40,29 @@ export default function Home() {
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <LinearGradient colors={['#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff']} style={styles.container}>
+            <LinearGradient colors={['#D71920', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff']} style={styles.container}>
                 <Animated.ScrollView style={[styles.scrollViewHome, homeStyle]}>
                     <Header />
                     <View style={styles.seccionMas}>
                         <Text style={styles.categoriasText}>Ejercicios</Text>
-                        <TouchableOpacity onPress={navigateToEjercicios}>
-                            <Text style={styles.verMasText}>Ver más</Text>
+                        <TouchableOpacity onPress={navigateToEjercicios} style={styles.verMasbtn}>
+                            <Text style={styles.verMasText}>Ver más </Text>
+                            <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
                         </TouchableOpacity>
                     </View>
                     <AllEjercicios navigation={navigation} />
                     <View style={styles.seccionMas}>
                         <Text style={styles.categoriasText}>Categorias</Text>
-                        <TouchableOpacity onPress={navigateToCategories}>
-                            <Text style={styles.verMasText}>Ver más</Text>
+                        <TouchableOpacity onPress={navigateToCategories} style={styles.verMasbtn}>
+                            <Text style={styles.verMasText}>Ver más </Text>
+
+                            <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
                         </TouchableOpacity>
                     </View>
                     <AllsCategory navigation={navigation} />
                 </Animated.ScrollView>
                 <Empieza />
-                <ScrollView style={styles.scrollViewHome}>
-                    <MoreEjercice navigation={navigation} />
-                </ScrollView>
+
             </LinearGradient>
         </ScrollView>
     );
@@ -69,6 +71,7 @@ export default function Home() {
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
+
     },
     scrollViewHome: {
         height: '100%',
@@ -91,19 +94,24 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingLeft: 20,
         paddingRight: 20,
-        paddingTop: 10,
+        paddingTop: 20,
 
     },
 
     verMasText: {
         color: '#D71920',
-        fontSize: 15,
-        color: '#000',
-        marginRight: 10,
+        fontSize: 14,
+
+
+    },
+    verMasbtn: {
+        flexDirection: 'row',
+        alignContent: 'center',
     },
     categoriasText: {
-        color: '#000',
+        color: 'rgba(0, 0, 0, 0.9)',
         fontSize: 16,
         fontWeight: 'bold',
     },
+
 });

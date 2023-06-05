@@ -1721,7 +1721,7 @@ export let ejerciciosData = [
         title: "Peso muerto rumano con pesas rusas",
         categoria: "Cuadriceps",
         img: "https://i.postimg.cc/zX10MJSy/souleve-de-terre-roumain-kettlebell.gif",
-        description: "l peso muerto rumano con pesas rusas es una variación del peso muerto rumano . Este es un ejercicio que ayuda a desarrollar los músculos isquiotibiales .  Este ejercicio debe hacerse lentamente, centrándose en sentir la tensión en los isquiotibiales y los glúteos .  El peso muerto rumano con pesas rusas es un gran ejercicio que trabaja en el movimiento de flexión de la cadera antes de pasar a ejercicios más pesados ​​y avanzados .",
+        description: "El peso muerto rumano con pesas rusas es una variación del peso muerto rumano . Este es un ejercicio que ayuda a desarrollar los músculos isquiotibiales .  Este ejercicio debe hacerse lentamente, centrándose en sentir la tensión en los isquiotibiales y los glúteos .  El peso muerto rumano con pesas rusas es un gran ejercicio que trabaja en el movimiento de flexión de la cadera antes de pasar a ejercicios más pesados ​​y avanzados .",
         consejo1: "El peso muerto rumano con pesas rusas es una excelente manera de enfatizar la parte excéntrica del ejercicio, cuando los isquiotibiales se alargan. Por eso es fundamental hacer este ejercicio lentamente para maximizar la tensión en la parte posterior de las piernas.",
         consejo2: "Debe sentir un estiramiento profundo de los isquiotibiales a medida que sus caderas se mueven hacia atrás.",
         consejo3: "Todo movimiento debe provenir de las caderas. Mantenga la espalda recta (evite encorvar la espalda) y evite doblar excesivamente las rodillas durante todo el ejercicio.",

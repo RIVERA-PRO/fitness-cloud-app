@@ -4,13 +4,13 @@ import { ejerciciosData } from '../components/Data';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Timer from '../components/Timer';
 import Header from '../components/Header';
-import { LinearGradient } from 'expo-linear-gradient';
-import { FontAwesome } from '@expo/vector-icons';
+import { Dialog } from "react-native-popup-dialog";
 import { MaterialIcons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 export default function Detail({ route }) {
+    const [showAlert, setShowAlert] = useState(false);
+
     const { exerciseId } = route.params;
     const exercise = ejerciciosData.find((exercise) => exercise.id === exerciseId);
     const [isFavorite, setIsFavorite] = useState(false);
@@ -21,24 +21,25 @@ export default function Detail({ route }) {
             const favorites = await AsyncStorage.getItem('favorites');
             let favoritesArray = favorites ? JSON.parse(favorites) : [];
 
-            if (isFavorite) {
-                // Remove exercise from favorites
-                const exerciseIndex = favoritesArray.findIndex((fav) => fav.id === exercise.id);
-                if (exerciseIndex !== -1) {
-                    favoritesArray.splice(exerciseIndex, 1);
-                    await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
-                }
-            } else {
+            // Check if exercise is already in favorites
+            const exerciseIndex = favoritesArray.findIndex((fav) => fav.id === exercise.id);
+            if (exerciseIndex === -1) {
                 // Add exercise to favorites
                 favoritesArray.push(exercise);
                 await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
-            }
+                setIsFavorite(true);
+                setShowAlert(true);
 
-            setIsFavorite(!isFavorite);
+            } else {
+                // Exercise already exists in favorites, do nothing
+                setIsFavorite(false);
+            }
         } catch (error) {
             console.log('Error toggling favorite:', error);
         }
     };
+
+
     useEffect(() => {
         const randomCalories = Math.floor(Math.random() * 70 + 20); // Genera un número entre 100 y 600
         setCalories(randomCalories);
@@ -50,26 +51,32 @@ export default function Detail({ route }) {
         <ScrollView contentContainerStyle={styles.scrollContainer} >
             <Header />
             <Image source={{ uri: exercise.img }} style={styles.exerciseImage}>
+
             </Image>
             <View style={styles.seccion}>
                 <View style={styles.timeCaloriCard}>
                     <View style={styles.timeCalori}>
-                        <Ionicons name="fitness" size={24} color='#D71920' style={styles.icon} />
+                        <MaterialCommunityIcons name="timer" size={24} color='#D71920' style={styles.icon} />
                         <View>
                             <Text style={styles.timeCaloriText2}>Tiempo </Text>
                             <Text style={styles.timeCaloriText}>{minutes} min </Text>
                         </View>
                     </View>
                     <View style={styles.timeCalori}>
-                        <MaterialCommunityIcons name="timer" size={24} color='#D71920' style={styles.icon} />
+                        <Ionicons name="fitness" size={24} color='#D71920' style={styles.icon} />
                         <View>
                             <Text style={styles.timeCaloriText2}>Calorias </Text>
                             <Text style={styles.timeCaloriText}>{calories} cal</Text>
                         </View>
                     </View>
                 </View>
-                <Text style={styles.title}>   {exercise.title}</Text>
-                <Text style={styles.category}>{exercise.categoria}</Text>
+                <View style={styles.iconTexto2}>
+                    <Ionicons name="checkmark-circle" size={23} color='#D71920' />
+                    <Text style={styles.title}> {exercise.title}</Text>
+                </View>
+                <View style={styles.iconTexto2}>
+                </View>
+
                 <ScrollView>
                     {exercise.paso1 !== '' && <Text style={styles.pasos}>1- {exercise.paso1}</Text>}
                     {exercise.paso2 !== '' && <Text style={styles.pasos}>2- {exercise.paso2}</Text>}
@@ -83,11 +90,18 @@ export default function Detail({ route }) {
                     {exercise.paso10 !== '' && <Text style={styles.pasos}>10- {exercise.paso10}</Text>}
                 </ScrollView>
                 <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
-                    <Text style={styles.favoriteButtonText}>{isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}</Text>
+                    <Text style={styles.favoriteButtonText}>Añadir aFavoritos  </Text>
+                    <MaterialIcons name="favorite" size={24} color='#ffff' />
                 </TouchableOpacity>
+
                 <Text style={styles.description}>{exercise.description}</Text>
                 <View>
-                    <Text style={styles.iconTexto}>    <Ionicons name="checkmark-circle" size={24} color="black" />Consejo de entrenamiento:</Text>
+
+                    {exercise.consejo1 !== '' && <View style={styles.iconTexto}>
+                        <Ionicons name="checkmark-circle" size={20} color='#D71920' />
+                        <Text style={styles.TextIcon}>  Consejo de entrenamiento:</Text>
+                    </View>}
+
                     {exercise.consejo1 !== '' && <Text style={styles.pasos}>1- {exercise.consejo1}</Text>}
                     {exercise.consejo2 !== '' && <Text style={styles.pasos}>2- {exercise.consejo2}</Text>}
                     {exercise.consejo3 !== '' && <Text style={styles.pasos}>3- {exercise.consejo3}</Text>}
@@ -96,6 +110,15 @@ export default function Detail({ route }) {
 
                 </View>
             </View>
+            <Dialog
+                visible={showAlert}
+                onTouchOutside={() => setShowAlert(false)}
+            >
+                <View style={styles.agregado}>
+                    <Text>¡Agregado a favoritos!</Text>
+                </View>
+            </Dialog>
+
         </ScrollView>
     );
 }
@@ -111,18 +134,17 @@ const styles = StyleSheet.create({
     seccion: {
         padding: 20,
         justifyContent: 'center',
-
+        backgroundColor: '#F0F0F0',
         marginTop: 70,
+        borderRadius: 30
     },
     title: {
         color: '#000',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
-
         justifyContent: 'center',
         alignItems: 'center',
-        textAlign: 'center'
-
+        textAlign: 'center',
     },
     timeCaloriCard: {
         backgroundColor: '#D71920',
@@ -151,6 +173,7 @@ const styles = StyleSheet.create({
     timeCaloriText2: {
         color: '#fff',
         fontSize: 13,
+
     },
     icon: {
         backgroundColor: '#fff',
@@ -159,9 +182,10 @@ const styles = StyleSheet.create({
     },
     description: {
         color: '#000',
-        fontSize: 16,
+        fontSize: 15,
         marginBottom: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingTop: 30
     },
     category: {
         alignItems: 'center',
@@ -192,10 +216,24 @@ const styles = StyleSheet.create({
     },
     iconTexto: {
         color: '#000',
-        fontSize: 16,
         marginBottom: 10,
         alignItems: 'center',
+        flexDirection: 'row',
+        marginTop: 30,
+    },
+    iconTexto2: {
+        color: '#000',
+        marginBottom: 10,
+        alignItems: 'center',
+        flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        marginTop: 20,
+    },
+
+    TextIcon: {
+        fontSize: 15,
     },
     image: {
         width: '100%',
@@ -203,10 +241,13 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     favoriteButton: {
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        backgroundColor: '#D71920',
         borderRadius: 8,
         padding: 10,
-        marginTop: 10,
+        marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     favoriteButtonText: {
         color: '#fff',
@@ -214,19 +255,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     pasos: {
-        backgroundColor: '#D71920',
+        backgroundColor: '#fff',
         borderRadius: 8,
         marginTop: 10,
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-around',
+        color: '#000',
+        padding: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3,
-        elevation: 5,
-        color: '#fff',
-        padding: 10
+        elevation: 2,
+        fontSize: 13
     },
     seriesContainer: {
         alignItems: 'center',
@@ -283,6 +325,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         fontSize: 16,
         textAlign: 'center',
+    },
+
+    agregado: {
+
+        padding: 20,
+
+
+
+
     },
 });
 

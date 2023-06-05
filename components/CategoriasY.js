@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, TextInput, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, TextInput } from 'react-native';
 import { ejerciciosData } from './Data';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function CategoriasY({ navigation }) {
     const [categories, setCategories] = useState([]);
@@ -67,12 +68,16 @@ export default function CategoriasY({ navigation }) {
                 <Text style={styles.textoTitle}>Categorias </Text>
                 <Text style={styles.textoCantidad}>{categories.length}</Text>
             </View>
-            <TextInput
-                style={styles.input}
-                placeholder="Filtrar categorías"
-                value={filter}
-                onChangeText={setFilter}
-            />
+
+            <View style={styles.searchInputContainer}>
+                <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Filtrar categorías"
+                    value={filter}
+                    onChangeText={setFilter}
+                />
+            </View>
             <FlatList
                 data={categories}
                 renderItem={renderCategoryItem}
@@ -80,7 +85,6 @@ export default function CategoriasY({ navigation }) {
                 numColumns={2}
                 contentContainerStyle={styles.scrollView}
             />
-
         </View>
     );
 }
@@ -88,7 +92,6 @@ export default function CategoriasY({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
         gap: 10,
         padding: 20,
     },
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
 
         marginTop: 20,
         alignItems: 'center',
-        gap: 10
+
     },
     categoryBackgroundImage: {
         width: 150,
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
         top: 160,
         left: 20,
         color: '#fff',
-        fontSize: 19,
+        fontSize: 16,
         fontWeight: 'bold',
         textShadowColor: 'rgba(0, 0, 0, 0.5)',
         textShadowOffset: { width: 1, height: 1 },
@@ -122,17 +125,25 @@ const styles = StyleSheet.create({
         gap: 10,
         marginHorizontal: 10, // Agregar esta línea
     },
-    input: {
-        height: 40,
+    searchInputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         borderRadius: 10,
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         marginBottom: 10,
     },
+    searchIcon: {
+        marginRight: 10,
+    },
+    input: {
+        flex: 1,
+        height: 40,
+    },
     textoTitle: {
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: 'bold',
 
     },
@@ -142,7 +153,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: 'bold',
         color: '#fff',
-        backgroundColor: 'rgba(215, 25, 0, 0.8)',
+        backgroundColor: '#D71920',
         padding: 6,
         borderRadius: 100,
         width: 50,

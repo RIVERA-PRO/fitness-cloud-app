@@ -22,6 +22,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 const Tab = createBottomTabNavigator();
 
 function BottomTabsNavigation() {
@@ -163,7 +164,7 @@ function BottomTabsNavigation() {
                     headerShown: false,
                     tabBarLabel: 'Profile',
                     tabBarIcon: ({ color }) => (
-                        <FontAwesome5 name="user-alt" size={23} color={color} />
+                        <MaterialIcons name="favorite" size={24} color={color} />
                     ),
                 }} />
 

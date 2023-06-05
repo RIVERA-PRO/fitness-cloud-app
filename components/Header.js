@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     dateText: {
-        color: '#000',
+        color: 'rgba(0, 0, 0, 0.7)',
         fontSize: 13,
         marginLeft: 30
     },

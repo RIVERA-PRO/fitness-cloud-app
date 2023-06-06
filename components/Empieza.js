@@ -9,24 +9,19 @@ export default function Empieza() {
     const navigation = useNavigation();
 
     useEffect(() => {
-        // Generar un número aleatorio entre 0 y 1
         const randomNum = Math.random();
-        // Asignar la imagen según el número aleatorio
         const image = randomNum < 0.5 ? imagen : imagen2;
         setSelectedImage(image);
     }, []);
 
     const handleImagePress = () => {
-        // Navegar a la página de Ejercicios
         navigation.navigate('Ejercicios');
     };
 
     return (
         <TouchableOpacity style={styles.container} onPress={handleImagePress}>
             {selectedImage && (
-
                 <Image source={selectedImage} style={styles.image} />
-
             )}
         </TouchableOpacity>
     );

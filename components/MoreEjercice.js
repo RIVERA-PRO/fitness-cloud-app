@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import { ejerciciosData } from './Data';
-
-
+import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 export default function MoreEjercice({ navigation }) {
     const [exercises, setExercises] = useState([]);
 
     useEffect(() => {
         const shuffledExercises = shuffle(ejerciciosData);
-        const slicedExercises = shuffledExercises.slice(0, 6);
+        const slicedExercises = shuffledExercises.slice(0, 3);
         setExercises(slicedExercises);
     }, []);
 
@@ -32,38 +32,38 @@ export default function MoreEjercice({ navigation }) {
         navigation.navigate('Detail', { exerciseId });
     };
     return (
-        <View style={styles.scrollView}>
+        <ScrollView style={styles.scrollView}>
             {exercises.map((exercise) => (
                 <TouchableOpacity key={exercise.id} onPress={() => goToDetail(exercise.id)}>
                     <View style={styles.exerciseItem}>
 
-                        <View style={styles.exerciseContent}>
+
+                        <LinearGradient colors={['#D71920', '#AC1929',]} style={styles.exerciseContent}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}>
                             <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
                             </ImageBackground>
-                            <Text style={styles.exerciseName}>{exercise.title.slice(0, 20)}</Text>
-                        </View>
+                            <Text style={styles.exerciseName}>{exercise.title.slice(0, 50)}</Text>
+                        </LinearGradient>
+
 
                     </View>
                 </TouchableOpacity>
             ))}
-        </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
 
     scrollView: {
-        padding: 20,
-        height: '100%',
-        marginTop: 100,
-        backgroundColor: '#234234',
+        height: 400,
+        padding: 10,
 
     },
 
 
     exerciseItem: {
-        margin: 10,
-        backgroundColor: '#000',
         borderRadius: 8,
         padding: 10,
 
@@ -71,23 +71,31 @@ const styles = StyleSheet.create({
     exerciseContent: {
         flexDirection: 'row',
         alignItems: 'center',
+        shadowColor: 'rgba(0, 0, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 10.25,
+        shadowRadius: 30,
+        elevation: 2,
+        backgroundColor: '#D71920',
+        borderRadius: 10,
     },
     exerciseImage: {
         width: 70,
         height: 70,
-        borderRadius: 100,
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10,
         marginRight: 10,
         justifyContent: 'flex-end',
         overflow: 'hidden',
     },
     exerciseName: {
         color: '#fff',
-        fontSize: 17,
+        fontSize: 15,
         fontWeight: 'bold',
         textShadowColor: 'rgba(0, 0, 0, 0.5)',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 2,
         padding: 10,
-        width: '80%',
+        width: '75%',
     },
 });

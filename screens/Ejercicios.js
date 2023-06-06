@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, ImageBackground, TextInput, ScrollView } from 'react-native';
 import { ejerciciosData } from '../components/Data';
-import Header from '../components/Header';
+import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function Ejercicios({ navigation }) {
     const [exercises, setExercises] = useState([]);
@@ -76,7 +76,7 @@ export default function Ejercicios({ navigation }) {
     };
 
     return (
-        <View style={styles.container}>
+        <LinearGradient colors={['#AC1929', '#D71929', '#D71929', '#D71929', '#D71929', '#D71929', '#D71929',]} style={styles.container}>
             {/* <Header /> */}
             <View style={styles.titleCantidad}>
                 <Text style={styles.textoTitle}>Ejercicios </Text>
@@ -116,7 +116,7 @@ export default function Ejercicios({ navigation }) {
                 numColumns={2}
                 contentContainerStyle={styles.scrollView}
             />
-        </View>
+        </LinearGradient>
     );
 }
 
@@ -132,7 +132,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         paddingTop: 50,
-        borderRadius: 30
+        borderRadius: 30,
+
     },
     exerciseItem: {
         flex: 1,
@@ -143,9 +144,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         borderRadius: 10,
-
-
-
     },
     exerciseImage: {
         width: 155,

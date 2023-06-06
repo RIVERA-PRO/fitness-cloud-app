@@ -94,12 +94,11 @@ const styles = StyleSheet.create({
         flex: 1,
         gap: 10,
         padding: 20,
+
     },
     scrollView: {
-
-        marginTop: 20,
         alignItems: 'center',
-
+        padding: 20,
     },
     categoryBackgroundImage: {
         width: 150,

@@ -4,6 +4,7 @@ import { ejerciciosData } from '../components/Data';
 import Header from '../components/Header';
 import gluteosImg from '../assets/gluteos.jpg'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { LinearGradient } from 'expo-linear-gradient';
 export default function Gluteos({ navigation }) {
     const [searchText, setSearchText] = useState('');
     const gluteosExercises = ejerciciosData.filter(exercise => exercise.categoria === 'Gluteos' && exercise.title.toLowerCase().includes(searchText.toLowerCase()));
@@ -37,11 +38,13 @@ export default function Gluteos({ navigation }) {
                 <ScrollView style={styles.seccion2}>
                     {gluteosExercises.map(exercise => (
                         <TouchableOpacity key={exercise.id} style={styles.exerciseItem} onPress={() => goToDetail(exercise.id)}>
-                            <View style={styles.exerciseContent}>
+                            <LinearGradient colors={['#D71920', '#AC1929',]} style={styles.exerciseContent}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 0 }}>
                                 <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
                                 </ImageBackground>
                                 <Text style={styles.exerciseName}>{exercise.title}</Text>
-                            </View>
+                            </LinearGradient>
                         </TouchableOpacity>
                     ))}
                 </ScrollView>
@@ -54,7 +57,7 @@ export default function Gluteos({ navigation }) {
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
-        height: "220%",
+        height: "250%",
         width: '100%',
         marginTop: 300,
         backgroundColor: '#f5f5f5',

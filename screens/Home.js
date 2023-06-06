@@ -40,7 +40,7 @@ export default function Home() {
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <LinearGradient colors={['#D71920', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff']} style={styles.container}>
+            <LinearGradient colors={['#AC1929', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff']} style={styles.container}>
                 <Animated.ScrollView style={[styles.scrollViewHome, homeStyle]}>
                     <Header />
                     <View style={styles.seccionMas}>
@@ -60,10 +60,22 @@ export default function Home() {
                         </TouchableOpacity>
                     </View>
                     <AllsCategory navigation={navigation} />
-                </Animated.ScrollView>
-                <Empieza />
+                    <Empieza />
 
-            </LinearGradient>
+                </Animated.ScrollView>
+                <View style={styles.seccionMas}>
+                    <Text style={styles.categoriasText}>Destacados</Text>
+                    <TouchableOpacity onPress={navigateToEjercicios} style={styles.verMasbtn}>
+                        <Text style={styles.verMasText}>Ver más </Text>
+                        <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
+                    </TouchableOpacity>
+                </View>
+                <ScrollView>
+
+                    <MoreEjercice navigation={navigation} />
+                </ScrollView>
+
+            </LinearGradient >
         </ScrollView>
     );
 }
@@ -94,7 +106,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingLeft: 20,
         paddingRight: 20,
-        paddingTop: 20,
+        paddingTop: 30,
 
     },
 

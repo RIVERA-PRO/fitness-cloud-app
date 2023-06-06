@@ -5,6 +5,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 export default function Perfil() {
     const navigation = useNavigation();
     const isFocused = useIsFocused();
@@ -56,11 +57,11 @@ export default function Perfil() {
     };
 
     return (
-        <LinearGradient colors={['#D71920', '#D71920']} style={styles.container}>
+        <LinearGradient colors={['#AC1929',]} style={styles.container}>
 
 
             {favorites.length > 0 ? (
-                <LinearGradient colors={['#D71920', '#D71920']} style={styles.container}>
+                <LinearGradient colors={['#AC1929', '#D71929', '#D71929', '#D71929', '#D71929', '#D71929', '#D71929',]} style={styles.container}>
                     <View style={styles.containerInput}>
                         <View style={styles.titleCantidad}>
                             <Text style={styles.textoTitle}>Tus ejercicios favoritos:  </Text>
@@ -80,11 +81,13 @@ export default function Perfil() {
                         {favorites.filter(filterExercises).map((exercise) => (
                             <View key={exercise.id} style={styles.exerciseItem}>
                                 <TouchableOpacity onPress={() => goToDetail(exercise.id)} >
-                                    <View style={styles.exerciseContent}>
+                                    <LinearGradient colors={['#D71920', '#D71920',]} style={styles.exerciseContent}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 1, y: 0 }}>
                                         <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
                                         </ImageBackground>
-                                        <Text style={styles.exerciseName}>{exercise.title.slice(0, 60)}</Text>
-                                    </View>
+                                        <Text style={styles.exerciseName}>{exercise.title.slice(0, 55)}</Text>
+                                    </LinearGradient>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => removeExercise(exercise.id)}>
                                     <Text><MaterialIcons name="delete" size={24} color="#D71920" /></Text>
@@ -221,7 +224,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 10,
-        borderRadius: 20
+        borderRadius: 8,
+        marginTop: 20
     },
     RemoverText: {
         fontWeight: 'bold',

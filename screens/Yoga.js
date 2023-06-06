@@ -4,6 +4,7 @@ import { ejerciciosData } from '../components/Data';
 import Header from '../components/Header';
 import yogaImg from '../assets/yoga.jpg'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { LinearGradient } from 'expo-linear-gradient';
 export default function Yoga({ navigation }) {
     const [searchText, setSearchText] = useState('');
     const yogaExercises = ejerciciosData.filter(exercise => exercise.categoria === 'Yoga' && exercise.title.toLowerCase().includes(searchText.toLowerCase()));
@@ -39,11 +40,13 @@ export default function Yoga({ navigation }) {
                 <ScrollView style={styles.seccion2}>
                     {yogaExercises.map(exercise => (
                         <TouchableOpacity key={exercise.id} style={styles.exerciseItem} onPress={() => goToDetail(exercise.id)}>
-                            <View style={styles.exerciseContent}>
+                            <LinearGradient colors={['#D71920', '#AC1929',]} style={styles.exerciseContent}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 0 }}>
                                 <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
                                 </ImageBackground>
-                                <Text style={styles.exerciseName}>{exercise.title.slice(0, 60)}</Text>
-                            </View>
+                                <Text style={styles.exerciseName}>{exercise.title.slice(0, 55)}</Text>
+                            </LinearGradient>
                         </TouchableOpacity>
                     ))}
                 </ScrollView>

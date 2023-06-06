@@ -18,13 +18,20 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.fitnesscloud.app",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/Cloud.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fb0d941d-8550-4b2e-be10-6451555a8569"
+      }
     }
   }
 }

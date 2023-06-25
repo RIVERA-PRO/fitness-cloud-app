@@ -8,7 +8,7 @@ import AllsCategory from '../components/AllsCategory';
 import AllEjercicios from '../components/AllEjercicios';
 import MoreEjercice from '../components/MoreEjercice';
 import Empieza from '../components/Empieza';
-import Header from '../components/Header';
+import Header from '../components/HeaderBlanco';
 import { AntDesign } from '@expo/vector-icons';
 export default function Home() {
     const navigation = useNavigation();
@@ -40,17 +40,15 @@ export default function Home() {
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <LinearGradient colors={['#AC1929', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff']} style={styles.container}>
+            <LinearGradient colors={['#AC1929', '#D71920', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9',]} style={styles.container}>
                 <Animated.ScrollView style={[styles.scrollViewHome, homeStyle]}>
                     <Header />
-                    <View style={styles.seccionMas}>
-                        <Text style={styles.categoriasText}>Ejercicios</Text>
-                        <TouchableOpacity onPress={navigateToEjercicios} style={styles.verMasbtn}>
-                            <Text style={styles.verMasText}>Ver más </Text>
-                            <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
-                        </TouchableOpacity>
-                    </View>
+
+
+
                     <AllEjercicios navigation={navigation} />
+
+
                     <View style={styles.seccionMas}>
                         <Text style={styles.categoriasText}>Categorias</Text>
                         <TouchableOpacity onPress={navigateToCategories} style={styles.verMasbtn}>
@@ -60,7 +58,10 @@ export default function Home() {
                         </TouchableOpacity>
                     </View>
                     <AllsCategory navigation={navigation} />
+
                     <Empieza />
+
+
 
                 </Animated.ScrollView>
                 <View style={styles.seccionMas}>
@@ -104,9 +105,10 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         flexDirection: 'row',
         width: '100%',
-        paddingLeft: 20,
+        paddingLeft: 5,
         paddingRight: 20,
-        paddingTop: 30,
+        paddingTop: 15,
+        margin: 10,
 
     },
 
@@ -125,5 +127,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
+
 
 });

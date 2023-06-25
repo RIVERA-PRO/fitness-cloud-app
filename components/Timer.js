@@ -127,8 +127,8 @@ const Timer = () => {
 }; const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        marginTop: 20,
         gap: 30,
+
     },
     rowContain: {
         flexDirection: 'row',

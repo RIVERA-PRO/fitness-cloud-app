@@ -5,21 +5,26 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-export default function Perfil() {
+import Timer from '../components/Timer';
+export default function Rutina3() {
     const navigation = useNavigation();
     const isFocused = useIsFocused();
     const [favorites, setFavorites] = useState([]);
     const [filterText, setFilterText] = useState('');
 
+    const navigateEjercicios = () => {
+        navigation.navigate('Ejercicios'); // Reemplaza 'Categorias' con la ruta correcta a tu página de categorías
+    };
+
     useEffect(() => {
         const getFavorites = async () => {
             try {
-                const favoritesData = await AsyncStorage.getItem('favorites');
+                const favoritesData = await AsyncStorage.getItem('Dia3');
                 if (favoritesData) {
                     setFavorites(JSON.parse(favoritesData));
                 }
             } catch (error) {
-                console.log('Error getting favorites:', error);
+                console.log('Error getting Dia3:', error);
             }
         };
 
@@ -31,19 +36,19 @@ export default function Perfil() {
     const removeExercise = async (exerciseId) => {
         try {
             const updatedFavorites = favorites.filter((exercise) => exercise.id !== exerciseId);
-            await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            await AsyncStorage.setItem('Dia3', JSON.stringify(updatedFavorites));
             setFavorites(updatedFavorites);
         } catch (error) {
-            console.log('Error removing exercise:', error);
+            console.log('Error removing Dia3:', error);
         }
     };
 
     const removeAllExercises = async () => {
         try {
-            await AsyncStorage.removeItem('favorites');
+            await AsyncStorage.removeItem('Dia3');
             setFavorites([]);
         } catch (error) {
-            console.log('Error removing all exercises:', error);
+            console.log('Error removing all Dia3:', error);
         }
     };
 
@@ -55,6 +60,7 @@ export default function Perfil() {
         return exercise.title.toLowerCase().includes(filterText.toLowerCase());
     };
 
+
     return (
         <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.container}>
 
@@ -63,32 +69,54 @@ export default function Perfil() {
                 <LinearGradient colors={['#AC1929', '#D71920', '#D71920', '#D71920']} style={styles.container}>
                     <View style={styles.containerInput}>
                         <View style={styles.titleCantidad}>
-                            <Text style={styles.textoTitle}>Tus ejercicios favoritos:  </Text>
+                            <Text style={styles.textoTitle}> Ejercicios del Dia 3</Text>
                             <Text style={styles.textoCantidad}>{favorites.length}</Text>
                         </View>
-                        <View style={styles.searchInputContainer}>
-                            <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
-                            <TextInput
-                                style={styles.searchInput}
-                                placeholder="Filtrar ejercicios"
-                                value={filterText}
-                                onChangeText={(text) => setFilterText(text)}
-                            />
-                        </View>
+
                     </View>
                     <ScrollView contentContainerStyle={styles.scrollContainer}>
+                        <Timer />
                         {favorites.filter(filterExercises).map((exercise) => (
                             <View key={exercise.id} style={styles.exerciseItem}>
-                                <TouchableOpacity onPress={() => goToDetail(exercise.id)} >
-                                    <View style={styles.exerciseContent}>
-                                        <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
-                                        </ImageBackground>
-                                        <Text style={styles.exerciseName}>{exercise.title.slice(0, 60)}</Text>
+                                <View style={styles.ejerciceDelet}>
+                                    <TouchableOpacity onPress={() => goToDetail(exercise.id)} >
+                                        <View style={styles.exerciseContent}>
+                                            <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
+                                            </ImageBackground>
+                                            <Text style={styles.exerciseName}>{exercise.title.slice(0, 60)}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+
+                                </View>
+
+
+
+                                <View style={styles.rowContain}>
+                                    <View style={styles.row}>
+                                        <Text style={styles.labelText}>Series</Text>
+                                        <View style={styles.counterContainer}>
+                                            <TextInput
+                                                placeholder="1"
+                                                keyboardType="numeric"
+                                                style={styles.input}
+                                            />
+                                        </View>
                                     </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => removeExercise(exercise.id)}>
-                                    <Text><MaterialIcons name="delete" size={24} color="#D71920" /></Text>
-                                </TouchableOpacity>
+                                    <View style={styles.row}>
+                                        <Text style={styles.labelText}>Repet</Text>
+                                        <View style={styles.counterContainer}>
+                                            <TextInput
+                                                placeholder="1"
+                                                keyboardType="numeric"
+                                                style={styles.input}
+                                            />
+
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity onPress={() => removeExercise(exercise.id)}>
+                                        <Text><MaterialIcons name="delete" size={24} color="#fff" /></Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         ))}
                         {favorites.length > 0 && (
@@ -97,14 +125,22 @@ export default function Perfil() {
                                 <MaterialIcons name="delete" size={20} color="#fff" />
                             </TouchableOpacity>
                         )}
+
+
                     </ScrollView>
+
+
                 </LinearGradient>
             ) : (
                 <LinearGradient colors={['#fff', '#fff']} style={styles.container}>
 
                     <View style={styles.noHayFavoritos}>
-                        <Text style={styles.noHayFavoritos}>No hay favoritos</Text>
+                        <Text style={styles.noHayFavoritos}>No hay Rutinas del Día 3</Text>
                     </View>
+                    <TouchableOpacity onPress={navigateEjercicios} style={styles.agregar}>
+                        <Text style={styles.agregarText}>Agregar</Text>
+
+                    </TouchableOpacity>
                 </LinearGradient>
 
             )}
@@ -120,12 +156,12 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flexGrow: 1,
-        paddingTop: 100,
+        paddingTop: 24,
         backgroundColor: '#F9F9F9',
         padding: 20,
-        marginTop: 70,
+        marginTop: 50,
         borderRadius: 30,
-        height: '300%'
+        height: '350%'
     },
     containerInput: {
         padding: 20,
@@ -150,28 +186,33 @@ const styles = StyleSheet.create({
 
     },
     exerciseItem: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 10,
-        width: '100%'
-    },
-    exerciseContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        marginBottom: 20,
+        width: '100%',
+        borderColor: '#000',
+        borderRadius: 10,
+        backgroundColor: '#D71920',
         shadowColor: 'rgba(0, 0, 0, 0.8)',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 10.25,
         shadowRadius: 30,
-        elevation: 4,
-        borderRadius: 10,
-        backgroundColor: '#D71920'
+        elevation: 10,
+    },
+    exerciseContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+
+        borderRadius: 1,
+        borderWidth: 0.1,  // Agrega esta línea para el borde
+        borderColor: '#fff'  // Puedes cambiar el color del borde aquí
     },
     exerciseImage: {
         width: 70,
         height: 70,
         borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10,
+
         marginRight: 10,
         justifyContent: 'flex-end',
         overflow: 'hidden',
@@ -212,7 +253,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         marginBottom: 10,
-        padding: 20
+        padding: 10
     },
     Remover: {
         backgroundColor: '#D71920',
@@ -223,6 +264,23 @@ const styles = StyleSheet.create({
         gap: 10,
         borderRadius: 8,
         marginTop: 20
+    },
+    agregar: {
+        backgroundColor: '#D71920',
+        padding: 13,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+        marginTop: 20,
+        marginLeft: 96,
+        marginRight: 96,
+        textAlign: 'center'
+    },
+    agregarText: {
+        fontWeight: 'bold',
+        color: '#fff',
+        fontSize: 15
     },
     RemoverText: {
         fontWeight: 'bold',
@@ -235,5 +293,40 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 100,
         color: '#000',
+        fontSize: 16
+    },
+
+
+
+    rowContain: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+        gap: 30,
+        paddingTop: 10
+    },
+    row: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+
+    labelText: {
+        alignItems: 'center',
+        marginBottom: 6,
+        color: '#fff'
+    },
+
+
+    ejerciceDelet: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    input: {
+        backgroundColor: '#fff',
+        width: 50,
+        borderRadius: 7,
+        alignItems: 'center',
+        textAlign: 'center'
     }
 });

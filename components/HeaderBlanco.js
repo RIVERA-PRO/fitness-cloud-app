@@ -8,8 +8,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { Linking } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-export default function Header() {
 
+
+export default function Header() {
     const [isModalVisible, setModalVisible] = useState(false);
 
     const toggleModal = () => {
@@ -58,13 +59,13 @@ export default function Header() {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={toggleModal}>
-                <View style={styles.logoContainer} >
-                    <View style={styles.logoContainer} >
+                <View style={styles.logoContainer}>
+                    <View style={styles.logoContainer}>
                         <Image source={logo} style={styles.logo} />
                         <Text style={styles.logoText}>Fitness Cloud</Text>
                     </View>
-
-                    <EvilIcons name="navicon" size={24} color="black" />
+                    <Text style={styles.dateText}>{getCurrentDate()}</Text>
+                    <EvilIcons name="navicon" size={24} color="#fff" />
                 </View>
             </TouchableOpacity>
             <Modal
@@ -80,6 +81,7 @@ export default function Header() {
                     <View style={styles.modalContent} >
 
                         <Image source={image} style={styles.img} />
+                        <Text style={styles.dateText}>{getCurrentDate()}</Text>
                         <View style={styles.navBtns}>
                             <TouchableOpacity onPress={goToHome} style={styles.btnNav}>
                                 <FontAwesome name="home" size={20} color='#000' />
@@ -134,7 +136,7 @@ export default function Header() {
 
 const getCurrentDate = () => {
     const date = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { weekday: 'long', month: 'long', day: 'numeric' };
     return date.toLocaleDateString(undefined, options);
 };
 
@@ -163,10 +165,16 @@ const styles = StyleSheet.create({
 
     },
     logoText: {
-        color: '#000',
+        color: '#fff',
         fontSize: 17,
         fontWeight: 'bold',
     },
+    dateText: {
+        color: 'rgba(255, 255, 255, 0.8)',
+        fontSize: 13,
+        marginLeft: 30
+    },
+
     button: {
         position: 'absolute',
         bottom: 20,
@@ -231,4 +239,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 100
     }
+
 });

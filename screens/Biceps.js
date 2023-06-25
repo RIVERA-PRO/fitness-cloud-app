@@ -53,14 +53,13 @@ export default function Biceps({ navigation }) {
         </ImageBackground>
     );
 }
-
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
-        height: "220%",
+        height: "210%",
         width: '100%',
         marginTop: 300,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#F9F9F9',
         borderRadius: 30
     },
     seccion: {
@@ -102,6 +101,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         marginBottom: 10,
+        shadowColor: 'rgba(0, 0, 0, 0.5)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 70,
     },
     searchIcon: {
         marginRight: 10,

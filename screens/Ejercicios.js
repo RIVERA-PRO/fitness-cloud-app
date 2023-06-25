@@ -3,11 +3,13 @@ import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, ImageBackgro
 import { ejerciciosData } from '../components/Data';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { color } from '@rneui/themed/dist/config';
 export default function Ejercicios({ navigation }) {
     const [exercises, setExercises] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [filteredExercises, setFilteredExercises] = useState([]);
+    const [showNoResults, setShowNoResults] = useState(false);
 
     useEffect(() => {
         const shuffledExercises = shuffle(ejerciciosData);
@@ -46,8 +48,11 @@ export default function Ejercicios({ navigation }) {
                 <View style={styles.imageContainer}>
                     <ImageBackground source={{ uri: item.img }} style={styles.exerciseImage} />
                     <Text style={styles.tileEjercice}> {item.title.slice(0, 17)}..</Text>
+
                 </View>
+
             </View>
+
         </TouchableOpacity>
     );
 
@@ -65,6 +70,7 @@ export default function Ejercicios({ navigation }) {
         }
 
         setFilteredExercises(filteredData);
+        setShowNoResults(filteredData.length === 0); // Mostrar mensaje "No hay resultados" si no se encontraron ejercicios
     };
 
     const handleCategoryFilter = (category) => {
@@ -108,7 +114,13 @@ export default function Ejercicios({ navigation }) {
                         ))}
                     </View>
                 </ScrollView>
+
             </View>
+            {showNoResults && (
+                <View style={styles.noResultsContainer}>
+                    <Text style={styles.noResultsText}>No hay resultados</Text>
+                </View>
+            )}
             <FlatList
                 data={filteredExercises}
                 renderItem={renderExerciseItem}
@@ -116,21 +128,32 @@ export default function Ejercicios({ navigation }) {
                 numColumns={2}
                 contentContainerStyle={styles.scrollView}
             />
+
         </LinearGradient>
     );
 }
 
 const styles = StyleSheet.create({
+    noResultsContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noResultsText: {
+        fontSize: 16,
+
+        color: '#fff',
+    },
     container: {
         flex: 1,
-        paddingTop: 70,
+        paddingTop: 50,
         backgroundColor: '#D71920',
     },
     scrollView: {
         flexGrow: 1,
         marginTop: 20,
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#F9F9F9',
         paddingTop: 50,
         borderRadius: 30,
 
@@ -138,12 +161,13 @@ const styles = StyleSheet.create({
     exerciseItem: {
         flex: 1,
         marginRight: 25,
-        marginBottom: 10,
+        marginBottom: 20,
         height: 200,
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
         borderRadius: 10,
+
     },
     exerciseImage: {
         width: 155,
@@ -210,12 +234,18 @@ const styles = StyleSheet.create({
     filterItemSelected: {
         borderBottomWidth: 2,
         borderBottomColor: '#000',
+        height: 36,
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        color: '#fff',
+        shadowColor: 'rgba(0, 0, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 5,
     },
     tileEjercice: {
         color: '#000',
         paddingTop: 10,
-
-
     },
     filtros: {
         paddingHorizontal: 20,
@@ -247,6 +277,6 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         marginBottom: 10,
-        padding: 20
+        padding: 20,
     }
 });

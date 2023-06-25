@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ImageBackground, ScrollView, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Button, ScrollView, Text, Image, TouchableOpacity, Modal } from 'react-native';
 import { ejerciciosData } from '../components/Data';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Timer from '../components/Timer';
@@ -8,14 +8,33 @@ import { Dialog } from "react-native-popup-dialog";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import tilde from '../assets/tilde.png'
+import { color } from '@rneui/themed/dist/config';
 export default function Detail({ route }) {
     const [showAlert, setShowAlert] = useState(false);
-
+    const [showAlertError, setShowAlertError] = useState(false);
+    const [showAlertRutina, setShowAlertRutina] = useState(false);
     const { exerciseId } = route.params;
     const exercise = ejerciciosData.find((exercise) => exercise.id === exerciseId);
     const [isFavorite, setIsFavorite] = useState(false);
     const [calories, setCalories] = useState(0);
     const [minutes, setMinutes] = useState(0);
+    const [isRutine, setIsRutine] = useState(false);
+    const [isRutineDia2, setIsRutineDia2] = useState(false);
+    const [isRutineDia3, setIsRutineDia3] = useState(false);
+    const [isRutineDia4, setIsRutineDia4] = useState(false);
+    const [isRutineDia5, setIsRutineDia5] = useState(false);
+    const [isRutineDia6, setIsRutineDia6] = useState(false);
+    const [isRutineDia7, setIsRutineDia7] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const openModal = () => {
+        setModalVisible(true);
+    };
+
+    const closeModal = () => {
+        setModalVisible(false);
+    };
     const toggleFavorite = async () => {
         try {
             const favorites = await AsyncStorage.getItem('favorites');
@@ -28,17 +47,190 @@ export default function Detail({ route }) {
                 favoritesArray.push(exercise);
                 await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
                 setIsFavorite(true);
-                setShowAlert(true);
 
+                setShowAlert(true);
             } else {
                 // Exercise already exists in favorites, do nothing
                 setIsFavorite(false);
+                setShowAlertError(true);
             }
         } catch (error) {
             console.log('Error toggling favorite:', error);
         }
     };
 
+    const toggleRuitine = async () => {
+        try {
+            const favorites = await AsyncStorage.getItem('Dia1');
+            let favoritesArray = favorites ? JSON.parse(favorites) : [];
+
+            // Check if exercise is already in favorites
+            const exerciseIndex = favoritesArray.findIndex((fav) => fav.id === exercise.id);
+            if (exerciseIndex === -1) {
+                // Add exercise to favorites
+                favoritesArray.push(exercise);
+                await AsyncStorage.setItem('Dia1', JSON.stringify(favoritesArray));
+                setIsRutine(true);
+                setShowAlertRutina(true);
+                setModalVisible(false);
+            } else {
+                // Exercise already exists in favorites, do nothing
+                setIsFavorite(false);
+                setShowAlertError(true);
+                setModalVisible(false);
+            }
+        } catch (error) {
+            console.log('Error toggling Rutine:', error);
+
+        }
+    };
+
+    const toggleRuitineDia2 = async () => {
+        try {
+            const favorites = await AsyncStorage.getItem('Dia2');
+            let favoritesArray = favorites ? JSON.parse(favorites) : [];
+
+            // Check if exercise is already in favorites
+            const exerciseIndex = favoritesArray.findIndex((fav) => fav.id === exercise.id);
+            if (exerciseIndex === -1) {
+                // Add exercise to favorites
+                favoritesArray.push(exercise);
+                await AsyncStorage.setItem('Dia2', JSON.stringify(favoritesArray));
+                setIsRutineDia2(true);
+                setShowAlertRutina(true);
+                setModalVisible(false);
+            } else {
+                // Exercise already exists in favorites, do nothing
+                setIsFavorite(false);
+                setShowAlertError(true);
+                setModalVisible(false);
+            }
+        } catch (error) {
+            console.log('Error toggling Rutine:', error);
+        }
+    };
+
+    const toggleRuitineDia3 = async () => {
+        try {
+            const favorites = await AsyncStorage.getItem('Dia3');
+            let favoritesArray = favorites ? JSON.parse(favorites) : [];
+
+            // Check if exercise is already in favorites
+            const exerciseIndex = favoritesArray.findIndex((fav) => fav.id === exercise.id);
+            if (exerciseIndex === -1) {
+                // Add exercise to favorites
+                favoritesArray.push(exercise);
+                await AsyncStorage.setItem('Dia3', JSON.stringify(favoritesArray));
+                setIsRutineDia3(true);
+                setShowAlertRutina(true);
+                setModalVisible(false);
+            } else {
+                // Exercise already exists in favorites, do nothing
+                setIsFavorite(false);
+                setShowAlertError(true);
+                setModalVisible(false);
+            }
+        } catch (error) {
+            console.log('Error toggling Rutine:', error);
+        }
+    };
+    const toggleRuitineDia4 = async () => {
+        try {
+            const favorites = await AsyncStorage.getItem('Dia4');
+            let favoritesArray = favorites ? JSON.parse(favorites) : [];
+
+            // Check if exercise is already in favorites
+            const exerciseIndex = favoritesArray.findIndex((fav) => fav.id === exercise.id);
+            if (exerciseIndex === -1) {
+                // Add exercise to favorites
+                favoritesArray.push(exercise);
+                await AsyncStorage.setItem('Dia4', JSON.stringify(favoritesArray));
+                setIsRutineDia4(true);
+                setShowAlertRutina(true);
+                setModalVisible(false);
+            } else {
+                // Exercise already exists in favorites, do nothing
+                setIsFavorite(false);
+                setShowAlertError(true);
+                setModalVisible(false);
+            }
+        } catch (error) {
+            console.log('Error toggling Rutine:', error);
+        }
+    };
+    const toggleRuitineDia5 = async () => {
+        try {
+            const favorites = await AsyncStorage.getItem('Dia5');
+            let favoritesArray = favorites ? JSON.parse(favorites) : [];
+
+            // Check if exercise is already in favorites
+            const exerciseIndex = favoritesArray.findIndex((fav) => fav.id === exercise.id);
+            if (exerciseIndex === -1) {
+                // Add exercise to favorites
+                favoritesArray.push(exercise);
+                await AsyncStorage.setItem('Dia5', JSON.stringify(favoritesArray));
+                setIsRutineDia5(true);
+                setShowAlertRutina(true);
+                setModalVisible(false);
+            } else {
+                // Exercise already exists in favorites, do nothing
+                setIsFavorite(false);
+                setShowAlertError(true);
+                setModalVisible(false);
+            }
+        } catch (error) {
+            console.log('Error toggling Rutine:', error);
+        }
+    };
+
+    const toggleRuitineDia6 = async () => {
+        try {
+            const favorites = await AsyncStorage.getItem('Dia6');
+            let favoritesArray = favorites ? JSON.parse(favorites) : [];
+
+            // Check if exercise is already in favorites
+            const exerciseIndex = favoritesArray.findIndex((fav) => fav.id === exercise.id);
+            if (exerciseIndex === -1) {
+                // Add exercise to favorites
+                favoritesArray.push(exercise);
+                await AsyncStorage.setItem('Dia6', JSON.stringify(favoritesArray));
+                setIsRutineDia6(true);
+                setShowAlertRutina(true);
+                setModalVisible(false);
+            } else {
+                // Exercise already exists in favorites, do nothing
+                setIsFavorite(false);
+                setShowAlertError(true);
+                setModalVisible(false);
+            }
+        } catch (error) {
+            console.log('Error toggling Rutine:', error);
+        }
+    };
+    const toggleRuitineDia7 = async () => {
+        try {
+            const favorites = await AsyncStorage.getItem('Dia7');
+            let favoritesArray = favorites ? JSON.parse(favorites) : [];
+
+            // Check if exercise is already in favorites
+            const exerciseIndex = favoritesArray.findIndex((fav) => fav.id === exercise.id);
+            if (exerciseIndex === -1) {
+                // Add exercise to favorites
+                favoritesArray.push(exercise);
+                await AsyncStorage.setItem('Dia7', JSON.stringify(favoritesArray));
+                setIsRutineDia7(true);
+                setShowAlertRutina(true);
+                setModalVisible(false);
+            } else {
+                // Exercise already exists in favorites, do nothing
+                setIsFavorite(false);
+                setShowAlertError(true);
+                setModalVisible(false);
+            }
+        } catch (error) {
+            console.log('Error toggling Rutine:', error);
+        }
+    };
 
     useEffect(() => {
         const randomCalories = Math.floor(Math.random() * 70 + 20); // Genera un número entre 100 y 600
@@ -70,55 +262,167 @@ export default function Detail({ route }) {
                         </View>
                     </View>
                 </View>
+
                 <View style={styles.iconTexto2}>
-                    <Ionicons name="checkmark-circle" size={23} color='#D71920' />
+                    <Image source={tilde} style={{ width: 23, height: 23 }} />
                     <Text style={styles.title}> {exercise.title}</Text>
                 </View>
                 <View style={styles.iconTexto2}>
                 </View>
 
                 <ScrollView>
-                    {exercise.paso1 !== '' && <Text style={styles.pasos}>1- {exercise.paso1}</Text>}
-                    {exercise.paso2 !== '' && <Text style={styles.pasos}>2- {exercise.paso2}</Text>}
-                    {exercise.paso3 !== '' && <Text style={styles.pasos}>3- {exercise.paso3}</Text>}
-                    {exercise.paso4 !== '' && <Text style={styles.pasos}>4- {exercise.paso4}</Text>}
-                    {exercise.paso5 !== '' && <Text style={styles.pasos}>5- {exercise.paso5}</Text>}
-                    {exercise.paso6 !== '' && <Text style={styles.pasos}>6- {exercise.paso6}</Text>}
-                    {exercise.paso7 !== '' && <Text style={styles.pasos}>7- {exercise.paso7}</Text>}
-                    {exercise.paso8 !== '' && <Text style={styles.pasos}>8- {exercise.paso8}</Text>}
-                    {exercise.paso9 !== '' && <Text style={styles.pasos}>9- {exercise.paso9}</Text>}
-                    {exercise.paso10 !== '' && <Text style={styles.pasos}>10- {exercise.paso10}</Text>}
+                    {exercise.paso1 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso1}</Text>
+                    </View>}
+                    {exercise.paso2 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso2}</Text>
+                    </View>}
+                    {exercise.paso3 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso3}</Text>
+                    </View>}
+                    {exercise.paso4 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso4}</Text>
+                    </View>}
+                    {exercise.paso5 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso5}</Text>
+                    </View>}
+                    {exercise.paso6 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso6}</Text>
+                    </View>}
+                    {exercise.paso7 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso7}</Text>
+                    </View>}
+                    {exercise.paso8 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso8}</Text>
+                    </View>}
+                    {exercise.paso9 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso9}</Text>
+                    </View>}
+                    {exercise.paso10 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.paso10}</Text>
+                    </View>}
                 </ScrollView>
-                <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
-                    <Text style={styles.favoriteButtonText}>Añadir aFavoritos  </Text>
-                    <MaterialIcons name="favorite" size={24} color='#ffff' />
-                </TouchableOpacity>
+                <View style={styles.btns}>
+                    <TouchableOpacity onPress={openModal} style={styles.favoriteButton}>
+                        <Text style={styles.favoriteButtonText}>Añadir a Rutina   </Text>
+                        <MaterialCommunityIcons name="timer" size={20} color='#ffff' />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
+                        <Text style={styles.favoriteButtonText}>Añadir a Favorito </Text>
+                        <MaterialIcons name="favorite" size={20} color='#ffff' />
+                    </TouchableOpacity>
+                </View>
+
+                <Modal visible={modalVisible} animationType="slide"  >
+
+                    <View style={styles.ContentModal}>
+
+                        <View style={styles.Modal}>
+                            <TouchableOpacity onPress={closeModal}>
+                                <Text style={styles.closeModal}>X</Text>
+                            </TouchableOpacity>
+
+                            <View style={styles.Rutines}>
+                                <TouchableOpacity onPress={toggleRuitine} style={styles.RutinaButton}>
+                                    <Text style={styles.diaButon}>Día 1</Text>
+                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={toggleRuitineDia2} style={styles.RutinaButton}>
+                                    <Text style={styles.diaButon}>Día 2</Text>
+                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={toggleRuitineDia3} style={styles.RutinaButton}>
+                                    <Text style={styles.diaButon}>Día 3</Text>
+                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={toggleRuitineDia4} style={styles.RutinaButton}>
+                                    <Text style={styles.diaButon}>Día 4</Text>
+                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={toggleRuitineDia5} style={styles.RutinaButton}>
+                                    <Text style={styles.diaButon}>Día 5</Text>
+                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={toggleRuitineDia6} style={styles.RutinaButton}>
+                                    <Text style={styles.diaButon}>Día 6</Text>
+                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={toggleRuitineDia7} style={styles.RutinaButton}>
+                                    <Text style={styles.diaButon}>Día 7</Text>
+                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+
 
                 <Text style={styles.description}>{exercise.description}</Text>
                 <View>
-
                     {exercise.consejo1 !== '' && <View style={styles.iconTexto}>
-                        <Ionicons name="checkmark-circle" size={20} color='#D71920' />
                         <Text style={styles.TextIcon}>  Consejo de entrenamiento:</Text>
                     </View>}
 
-                    {exercise.consejo1 !== '' && <Text style={styles.pasos}>1- {exercise.consejo1}</Text>}
-                    {exercise.consejo2 !== '' && <Text style={styles.pasos}>2- {exercise.consejo2}</Text>}
-                    {exercise.consejo3 !== '' && <Text style={styles.pasos}>3- {exercise.consejo3}</Text>}
-                    {exercise.consejo4 !== '' && <Text style={styles.pasos}>4- {exercise.consejo4}</Text>}
-                    {exercise.consejo5 !== '' && <Text style={styles.pasos}>5- {exercise.consejo5}</Text>}
+                    {exercise.consejo1 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.consejo1}</Text>
+                    </View>}
+                    {exercise.consejo2 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.consejo2}</Text>
+                    </View>}
+                    {exercise.consejo3 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.consejo2}</Text>
+                    </View>}
+                    {exercise.consejo4 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.consejo3}</Text>
+                    </View>}
+                    {exercise.consejo5 !== '' && <View style={styles.pasos}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.pasosText}>{exercise.consejo4}</Text>
+                    </View>}
 
                 </View>
             </View>
             <Dialog
                 visible={showAlert}
                 onTouchOutside={() => setShowAlert(false)}
+
             >
                 <View style={styles.agregado}>
                     <Text>¡Agregado a favoritos!</Text>
                 </View>
             </Dialog>
 
+            <Dialog
+                visible={showAlertRutina}
+                onTouchOutside={() => setShowAlertRutina(false)}
+            >
+                <View style={styles.agregado}>
+                    <Text>¡Agregado a la Rutina!</Text>
+                </View>
+            </Dialog>
+            <Dialog
+                visible={showAlertError}
+                onTouchOutside={() => setShowAlertError(false)}
+            >
+                <View style={styles.agregado}>
+                    <Text>¡Error! Ya esta agregado</Text>
+                </View>
+            </Dialog>
         </ScrollView>
     );
 }
@@ -132,9 +436,9 @@ const styles = StyleSheet.create({
     },
 
     seccion: {
-        padding: 20,
+        padding: 10,
         justifyContent: 'center',
-        backgroundColor: '#F0F0F0',
+        backgroundColor: '#F9F9F9',
         marginTop: 70,
         borderRadius: 30
     },
@@ -181,7 +485,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     description: {
-        color: '#000',
+        color: 'rgba(0, 0, 0, 0.7)',
         fontSize: 15,
         marginBottom: 10,
         textAlign: 'center',
@@ -224,16 +528,15 @@ const styles = StyleSheet.create({
     iconTexto2: {
         color: '#000',
         marginBottom: 10,
-        alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
         textAlign: 'center',
         marginTop: 20,
     },
 
     TextIcon: {
         fontSize: 15,
+        color: 'rgba(0, 0, 0, 0.7)',
     },
     image: {
         width: '100%',
@@ -248,6 +551,46 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+
+    },
+    ContentModal: {
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+    },
+    btns: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10,
+        width: '100%'
+    },
+    Modal: {
+        padding: 20,
+        backgroundColor: '#D71920',
+        height: '100%',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        marginTop: 200
+    },
+    closeModal: {
+        color: '#fff',
+        fontSize: 18,
+        textAlign: 'right',
+        padding: 10,
+        fontWeight: 'bold'
+    },
+    RutinaButton: {
+        backgroundColor: '#ffff',
+        borderRadius: 10,
+        padding: 10,
+        marginTop: 4,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    diaButon: {
+        color: '#000',
+        fontSize: 16,
     },
     favoriteButtonText: {
         color: '#fff',
@@ -260,15 +603,18 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'space-around',
-        color: '#000',
         padding: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3,
-        elevation: 2,
-        fontSize: 13
+        elevation: 1,
+        fontSize: 13,
+        gap: 5
+    },
+    pasosText: {
+        color: 'rgba(0, 0, 0, 0.7)',
+        width: '95%',
     },
     seriesContainer: {
         alignItems: 'center',
@@ -328,12 +674,12 @@ const styles = StyleSheet.create({
     },
 
     agregado: {
-
         padding: 20,
 
-
-
-
     },
+
+    Rutines: {
+        gap: 10,
+    }
 });
 

@@ -12,76 +12,110 @@ export default function Abdominales({ navigation }) {
     const goToDetail = (exerciseId) => {
         navigation.navigate('Detail', { exerciseId });
     };
-
+    const showNoResults = abdominalesExercises.length === 0;
     return (
-        <ImageBackground source={abdominalesImg} resizeMode="cover">
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <Header />
+
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+
+            {/* <Header /> */}
+            <View style={styles.imgBg}>
+                <Image source={abdominalesImg} style={styles.img} />
+            </View>
+
+            <View style={styles.seccion}>
 
 
-
-                <View style={styles.seccion}>
-                    <View style={styles.titleCantidad}>
-                        <Text style={styles.textoTitle}>Ejercicios de Abdominales</Text>
-                        <Text style={styles.textoCantidad}>{abdominalesExercises.length}</Text>
-                    </View>
-                    <View style={styles.searchInputContainer}>
-                        <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
-                        <TextInput
-                            style={styles.searchInput}
-                            placeholder="Buscar ejercicio"
-                            value={searchText}
-                            onChangeText={text => setSearchText(text)}
-                        />
-                    </View>
+                <View style={styles.titleCantidad}>
+                    <Text style={styles.textoTitle}>Ejercicios de Abdominales</Text>
+                    <Text style={styles.textoCantidad}>{abdominalesExercises.length}</Text>
                 </View>
-                <ScrollView style={styles.seccion2}>
-                    {abdominalesExercises.map(exercise => (
-                        <TouchableOpacity key={exercise.id} style={styles.exerciseItem} onPress={() => goToDetail(exercise.id)}>
-                            <LinearGradient colors={['#D71920', '#AC1929',]} style={styles.exerciseContent}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}>
-                                <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
-                                </ImageBackground>
-                                <Text style={styles.exerciseName}>{exercise.title}</Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
-
+                <View style={styles.searchInputContainer}>
+                    <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Buscar ejercicio"
+                        value={searchText}
+                        onChangeText={text => setSearchText(text)}
+                    />
+                </View>
+            </View>
+            <ScrollView style={styles.seccion2}>
+                {showNoResults && (
+                    <View style={styles.noResultsContainer}>
+                        <Text style={styles.noResultsText}>No hay resultados</Text>
+                    </View>
+                )}
+                {abdominalesExercises.map(exercise => (
+                    <TouchableOpacity key={exercise.id} style={styles.exerciseItem} onPress={() => goToDetail(exercise.id)}>
+                        <LinearGradient colors={['#D71920', '#AC1929',]} style={styles.exerciseContent}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}>
+                            <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
+                            </ImageBackground>
+                            <Text style={styles.exerciseName}>{exercise.title}</Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                ))}
             </ScrollView>
-        </ImageBackground>
+
+        </ScrollView>
+
     );
 }
 const styles = StyleSheet.create({
+
     scrollContainer: {
         flexGrow: 1,
-        height: "250%",
+        height: "230%",
         width: '100%',
-        marginTop: 300,
-        backgroundColor: '#f5f5f5',
+        paddingTop: 50,
+        backgroundColor: '#F9F9F9',
         borderRadius: 30
     },
     seccion: {
-        padding: 20,
+        width: '100%',
         justifyContent: 'center',
+        position: 'absolute',
+        top: 40,
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 2,
+        padding: 20
+    },
+    img: {
+        width: '100%',
+        height: 320,
+
+    },
+    imgBg: {
+        marginTop: -60
     },
     seccion2: {
-
+        backgroundColor: '#F9F9F9',
+        marginTop: -30,
+        borderRadius: 30,
         padding: 20,
         height: "50%",
     },
     textoTitle: {
         alignItems: 'center',
         justifyContent: 'center',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: '#fff',
         fontSize: 19,
         fontWeight: 'bold',
-
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 2,
     },
     textoCantidad: {
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: 13,
+        fontSize: 14,
         fontWeight: 'bold',
         color: '#fff',
         backgroundColor: '#D71920',
@@ -92,6 +126,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center',
+
     },
 
     searchInputContainer: {
@@ -101,7 +136,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         marginBottom: 10,
+        shadowColor: 'rgba(0, 0, 0, 0.5)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 70,
+
+        marginTop: 50
+
     },
+
+
     searchIcon: {
         marginRight: 10,
     },
@@ -114,16 +159,17 @@ const styles = StyleSheet.create({
 
         borderRadius: 10,
 
+        shadowColor: 'rgba(0, 0, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 3,
 
     },
     exerciseContent: {
         flexDirection: 'row',
         alignItems: 'center',
-        shadowColor: 'rgba(0, 0, 0, 0.8)',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 10.25,
-        shadowRadius: 30,
-        elevation: 2,
+
         backgroundColor: '#D71920',
         borderRadius: 10,
     },
@@ -150,6 +196,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-between',
-        marginBottom: 10
-    }
+        marginBottom: 20,
+        paddingTop: 20
+    },
+    noResultsContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: 50
+    },
+    noResultsText: {
+        fontSize: 16,
+        color: '#000',
+    },
+
 });

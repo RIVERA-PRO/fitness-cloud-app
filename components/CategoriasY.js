@@ -93,12 +93,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         gap: 10,
-        padding: 20,
-
+        marginTop: 30
     },
     scrollView: {
         alignItems: 'center',
         padding: 20,
+        backgroundColor: '#fff',
+        borderRadius: 30,
+
     },
     categoryBackgroundImage: {
         width: 150,
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginBottom: 10,
         gap: 10,
-        marginHorizontal: 10, // Agregar esta línea
+        marginHorizontal: 10,
     },
     searchInputContainer: {
         flexDirection: 'row',
@@ -131,9 +133,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         marginBottom: 10,
+        shadowColor: 'rgba(0, 0, 0, 0.5)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 100,
+        marginLeft: 20,
+        marginRight: 20,
+
     },
     searchIcon: {
         marginRight: 10,
+
     },
     input: {
         flex: 1,
@@ -144,15 +155,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         fontSize: 20,
         fontWeight: 'bold',
-
+        color: '#fff',
     },
     textoCantidad: {
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: 13,
         fontWeight: 'bold',
-        color: '#fff',
-        backgroundColor: '#D71920',
+        color: '#000',
+        backgroundColor: '#fff',
         padding: 6,
         borderRadius: 100,
         width: 50,
@@ -166,5 +177,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         marginBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20
     }
 });

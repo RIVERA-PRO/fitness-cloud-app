@@ -42,7 +42,7 @@ export default function AllsCategory({ navigation }) {
     };
 
     const orderCategories = (array) => {
-        const order = ['Cardio', 'Biceps', 'Cuadriceps', 'Espalda', 'Gluteos', 'Abdominales', 'Triceps', 'Yoga', 'Peso_corporal', 'Hombros', 'Pecho',];
+        const order = ['Cardio', 'Biceps', 'Cuadriceps', 'Espalda', 'Gluteos', 'Abdominales',];
         const orderedArray = order.map((categoria) => array.find((item) => item.categoria === categoria));
         return orderedArray.filter(Boolean);
     };
@@ -83,16 +83,16 @@ export default function AllsCategory({ navigation }) {
 
 const styles = StyleSheet.create({
     scrollView: {
-        paddingLeft: 10,
+
         paddingTop: 10,
         height: '500%',
-
+        marginLeft: 10,
     },
     categoryBackgroundImage: {
-        width: 170,
+        width: 150,
         height: 200,
         borderRadius: 10,
-        marginLeft: 10,
+
     },
     categoryName: {
         position: 'absolute',
@@ -112,5 +112,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3,
         elevation: 50,
+
     },
 });

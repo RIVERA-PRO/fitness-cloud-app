@@ -18,11 +18,19 @@ import Yoga from '../screens/Yoga'
 import Cardio from '../screens/Cardio'
 import Categorias from '../screens/Categorias'
 import Time from '../screens/Time'
+import Rutina from "../screens/Rutina";
+import Rutina2 from "../screens/Rutina2";
+import Rutina3 from "../screens/Rutina3";
+import Rutina4 from "../screens/Rutina4";
+import Rutina5 from "../screens/Rutina5";
+import Rutina6 from "../screens/Rutina6";
+import Rutina7 from "../screens/Rutina7";
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 
 function BottomTabsNavigation() {
@@ -50,7 +58,7 @@ function BottomTabsNavigation() {
                     marginBottom: 3,
                 },
                 activeTintColor: '#D71920',
-                inactiveTintColor: '#000',
+                inactiveTintColor: 'rgba(0, 0, 0, 0.8)',
 
 
             }}>
@@ -112,10 +120,10 @@ function BottomTabsNavigation() {
                                 shadowOffset: { width: 10, height: 20 },
                                 shadowOpacity: 10.25,
                                 shadowRadius: 300,
-                                elevation: 6,
+                                elevation: 7,
                             }}
                         >
-                            <FontAwesome name="plus" size={size} color="#fff" />
+                            <Feather name="plus" size={30} color="#fff" />
                         </View>
                     ),
                     tabBarStyle: {
@@ -423,6 +431,169 @@ function BottomTabsNavigation() {
                     inactiveTintColor: '#9B9B9B',
                     headerShown: false,
                     tabBarLabel: 'Cardio',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="category" size={24} color={color} />
+                    ),
+                })}
+            />
+
+
+            <Tab.Screen
+                name="Rutina"
+                component={Rutina}
+                options={({ route }) => ({
+                    tabBarButton: () => null, // Ocultar el botón del tab
+                    tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
+                    tabBarStyle: {
+                        backgroundColor: '#fff',
+                        height: 53,
+                        elevation: 0,
+                        position: 'absolute',
+
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Rutina',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="category" size={24} color={color} />
+                    ),
+                })}
+            />
+
+            <Tab.Screen
+                name="Rutina2"
+                component={Rutina2}
+                options={({ route }) => ({
+                    tabBarButton: () => null, // Ocultar el botón del tab
+                    tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
+                    tabBarStyle: {
+                        backgroundColor: '#fff',
+                        height: 53,
+                        elevation: 0,
+                        position: 'absolute',
+
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Rutina2',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="category" size={24} color={color} />
+                    ),
+                })}
+            />
+
+
+            <Tab.Screen
+                name="Rutina3"
+                component={Rutina3}
+                options={({ route }) => ({
+                    tabBarButton: () => null, // Ocultar el botón del tab
+                    tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
+                    tabBarStyle: {
+                        backgroundColor: '#fff',
+                        height: 53,
+                        elevation: 0,
+                        position: 'absolute',
+
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Rutina3',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="category" size={24} color={color} />
+                    ),
+                })}
+            />
+
+
+            <Tab.Screen
+                name="Rutina4"
+                component={Rutina4}
+                options={({ route }) => ({
+                    tabBarButton: () => null, // Ocultar el botón del tab
+                    tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
+                    tabBarStyle: {
+                        backgroundColor: '#fff',
+                        height: 53,
+                        elevation: 0,
+                        position: 'absolute',
+
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Rutina4',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="category" size={24} color={color} />
+                    ),
+                })}
+            />
+
+            <Tab.Screen
+                name="Rutina5"
+                component={Rutina5}
+                options={({ route }) => ({
+                    tabBarButton: () => null, // Ocultar el botón del tab
+                    tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
+                    tabBarStyle: {
+                        backgroundColor: '#fff',
+                        height: 53,
+                        elevation: 0,
+                        position: 'absolute',
+
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Rutina5',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="category" size={24} color={color} />
+                    ),
+                })}
+            />
+
+            <Tab.Screen
+                name="Rutina6"
+                component={Rutina6}
+                options={({ route }) => ({
+                    tabBarButton: () => null, // Ocultar el botón del tab
+                    tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
+                    tabBarStyle: {
+                        backgroundColor: '#fff',
+                        height: 53,
+                        elevation: 0,
+                        position: 'absolute',
+
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Rutina6',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="category" size={24} color={color} />
+                    ),
+                })}
+            />
+            <Tab.Screen
+                name="Rutina7"
+                component={Rutina7}
+                options={({ route }) => ({
+                    tabBarButton: () => null, // Ocultar el botón del tab
+                    tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
+                    tabBarStyle: {
+                        backgroundColor: '#fff',
+                        height: 53,
+                        elevation: 0,
+                        position: 'absolute',
+
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Rutina7',
                     tabBarIcon: ({ color }) => (
                         <MaterialIcons name="category" size={24} color={color} />
                     ),

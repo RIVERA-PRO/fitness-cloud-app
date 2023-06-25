@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         paddingTop: 10,
-        paddingLeft: 20,
-        paddingRight: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
         height: '100%',
     },
     image: {
@@ -46,5 +46,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3,
         elevation: 50,
+
     },
 });

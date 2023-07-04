@@ -116,10 +116,10 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     titleEjercice: {
-        fontSize: 13,
+        fontSize: 12,
         left: 3,
         paddingTop: 6,
-        color: 'rgba(0, 0, 0, 0.8)',
+        color: 'rgba(0, 0, 0, 0.7)',
     },
     seccionMas: {
         flex: 1,

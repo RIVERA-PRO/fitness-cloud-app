@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         height: '100%',
+
     },
     image: {
         width: '100%',

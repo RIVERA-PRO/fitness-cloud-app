@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import tilde from '../assets/tilde.png'
 import { color } from '@rneui/themed/dist/config';
+import imagen2 from '../assets/Cloud.png';
 export default function Detail({ route }) {
     const [showAlert, setShowAlert] = useState(false);
     const [showAlertError, setShowAlertError] = useState(false);
@@ -326,7 +327,7 @@ export default function Detail({ route }) {
                 <Modal visible={modalVisible} animationType="slide"  >
 
                     <View style={styles.ContentModal}>
-
+                        <Image source={imagen2} style={styles.image} />
                         <View style={styles.Modal}>
                             <TouchableOpacity onPress={closeModal}>
                                 <Text style={styles.closeModal}>X</Text>
@@ -335,32 +336,32 @@ export default function Detail({ route }) {
                             <View style={styles.Rutines}>
                                 <TouchableOpacity onPress={toggleRuitine} style={styles.RutinaButton}>
                                     <Text style={styles.diaButon}>Día 1</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={toggleRuitineDia2} style={styles.RutinaButton}>
                                     <Text style={styles.diaButon}>Día 2</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                    <MaterialCommunityIcons name="timer" size={20} color='#ffff' />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={toggleRuitineDia3} style={styles.RutinaButton}>
                                     <Text style={styles.diaButon}>Día 3</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
                                 </TouchableOpacity>
 
                                 <TouchableOpacity onPress={toggleRuitineDia4} style={styles.RutinaButton}>
                                     <Text style={styles.diaButon}>Día 4</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={toggleRuitineDia5} style={styles.RutinaButton}>
                                     <Text style={styles.diaButon}>Día 5</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={toggleRuitineDia6} style={styles.RutinaButton}>
                                     <Text style={styles.diaButon}>Día 6</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={toggleRuitineDia7} style={styles.RutinaButton}>
                                     <Text style={styles.diaButon}>Día 7</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -438,7 +439,7 @@ const styles = StyleSheet.create({
     seccion: {
         padding: 10,
         justifyContent: 'center',
-        backgroundColor: '#F9F9F9',
+        backgroundColor: '#fff',
         marginTop: 70,
         borderRadius: 30
     },
@@ -545,17 +546,22 @@ const styles = StyleSheet.create({
     },
     favoriteButton: {
         backgroundColor: '#D71920',
-        borderRadius: 8,
+        borderRadius: 10,
         padding: 10,
         marginTop: 20,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-
+        shadowColor: 'rgba(215, 25, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 5,
     },
     ContentModal: {
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        borderRadius: 10,
+        overflow: 'hidden',
+        backgroundColor: '#000',
     },
     btns: {
         flexDirection: 'row',
@@ -566,31 +572,34 @@ const styles = StyleSheet.create({
     },
     Modal: {
         padding: 20,
-        backgroundColor: '#D71920',
+        backgroundColor: '#fff',
         height: '100%',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        marginTop: 200
     },
     closeModal: {
-        color: '#fff',
+        color: '#000',
         fontSize: 18,
         textAlign: 'right',
         padding: 10,
         fontWeight: 'bold'
     },
     RutinaButton: {
-        backgroundColor: '#ffff',
+        backgroundColor: '#D71920',
         borderRadius: 10,
-        padding: 10,
+        padding: 13,
         marginTop: 4,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        shadowColor: 'rgba(215, 25, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 5,
     },
     diaButon: {
-        color: '#000',
+        color: '#fff',
         fontSize: 16,
+        fontWeight: 'bold'
     },
     favoriteButtonText: {
         color: '#fff',
@@ -598,17 +607,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     pasos: {
-        backgroundColor: '#fff',
-        borderRadius: 8,
+        borderBottomWidth: 0.5,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
         marginTop: 10,
         flexDirection: 'row',
         width: '100%',
         padding: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3,
-        elevation: 1,
+
         fontSize: 13,
         gap: 5
     },
@@ -680,6 +685,11 @@ const styles = StyleSheet.create({
 
     Rutines: {
         gap: 10,
+    },
+    image: {
+        width: '100%',
+        objectFit: 'cover',
+        height: 200
     }
 });
 

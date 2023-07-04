@@ -8,7 +8,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { Linking } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Header() {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -57,6 +57,7 @@ export default function Header() {
         Linking.openURL(whatsappURL);
     };
     return (
+
         <View style={styles.container}>
             <TouchableOpacity onPress={toggleModal}>
                 <View style={styles.logoContainer}>
@@ -93,7 +94,7 @@ export default function Header() {
                             </TouchableOpacity>
                             <TouchableOpacity onPress={goToProfile} style={styles.btnNav}>
                                 <MaterialIcons name="favorite" size={20} color='#000' />
-                                <Text style={styles.buttonText}>Favoritos</Text>
+                                <Text style={styles.buttonText}>Actividad</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={goToEjercicios} style={styles.btnNav}>
@@ -131,6 +132,7 @@ export default function Header() {
                 </View>
             </Modal>
         </View>
+
     );
 }
 
@@ -142,10 +144,10 @@ const getCurrentDate = () => {
 
 const styles = StyleSheet.create({
     container: {
-
         paddingHorizontal: 10,
         flexDirection: 'column',
-        padding: 20
+        padding: 20,
+
     },
     logoContainer: {
         flexDirection: 'row',

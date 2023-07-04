@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     titleRutina: {
-        backgroundColor: '#D71920',
         padding: 15,
         flexDirection: 'row',
         alignItems: 'center',
@@ -113,7 +112,12 @@ const styles = StyleSheet.create({
         gap: 50,
         width: '100%',
         justifyContent: 'space-around',
-        borderRadius: 10
+        borderRadius: 10,
+        shadowColor: 'rgba(215, 25, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 5,
     },
     RutinaText: {
         color: '#fff',

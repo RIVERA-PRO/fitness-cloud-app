@@ -40,7 +40,7 @@ export default function Home() {
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <LinearGradient colors={['#AC1929', '#D71920', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9', '#F9F9F9',]} style={styles.container}>
+            <LinearGradient colors={['#AC1929', '#D71920', '#fff', '#fff', '#fff', '#fff', '#fff', '#f9f9f9', '#f9f9f9', '#f9f9f9', '#f9f9f9', '#f9f9f9',]} style={styles.container}>
                 <Animated.ScrollView style={[styles.scrollViewHome, homeStyle]}>
                     <Header />
 
@@ -64,18 +64,21 @@ export default function Home() {
 
 
                 </Animated.ScrollView>
-                <View style={styles.seccionMas}>
-                    <Text style={styles.categoriasText}>Destacados</Text>
-                    <TouchableOpacity onPress={navigateToEjercicios} style={styles.verMasbtn}>
-                        <Text style={styles.verMasText}>Ver más </Text>
-                        <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
-                    </TouchableOpacity>
-                </View>
-                <ScrollView>
+                <Animated.ScrollView style={[styles.scrollViewHome, homeStyle]}>
 
-                    <MoreEjercice navigation={navigation} />
-                </ScrollView>
 
+                    <View style={styles.seccionMas}>
+                        <Text style={styles.categoriasText}>Destacados</Text>
+                        <TouchableOpacity onPress={navigateToEjercicios} style={styles.verMasbtn}>
+                            <Text style={styles.verMasText}>Ver más </Text>
+                            <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <ScrollView>
+
+                        <MoreEjercice navigation={navigation} />
+                    </ScrollView>
+                </Animated.ScrollView>
             </LinearGradient >
         </ScrollView>
     );

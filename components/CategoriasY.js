@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         gap: 10,
-        marginTop: 30
+        marginTop: 17
     },
     scrollView: {
         alignItems: 'center',

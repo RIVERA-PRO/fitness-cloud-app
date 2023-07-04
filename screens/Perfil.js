@@ -75,8 +75,15 @@ export default function Perfil() {
                                 onChangeText={(text) => setFilterText(text)}
                             />
                         </View>
+                        {favorites.length > 0 && (
+                            <TouchableOpacity onPress={removeAllExercises} style={styles.Remover}>
+                                <Text style={styles.RemoverText}>Remover todos</Text>
+                                <MaterialIcons name="delete" size={20} color="#fff" />
+                            </TouchableOpacity>
+                        )}
                     </View>
                     <ScrollView contentContainerStyle={styles.scrollContainer}>
+
                         {favorites.filter(filterExercises).map((exercise) => (
                             <View key={exercise.id} style={styles.exerciseItem}>
                                 <TouchableOpacity onPress={() => goToDetail(exercise.id)} >
@@ -91,12 +98,7 @@ export default function Perfil() {
                                 </TouchableOpacity>
                             </View>
                         ))}
-                        {favorites.length > 0 && (
-                            <TouchableOpacity onPress={removeAllExercises} style={styles.Remover}>
-                                <Text style={styles.RemoverText}>Remover todos</Text>
-                                <MaterialIcons name="delete" size={20} color="#fff" />
-                            </TouchableOpacity>
-                        )}
+
                     </ScrollView>
                 </LinearGradient>
             ) : (
@@ -116,16 +118,14 @@ export default function Perfil() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        height: '100%'
+
     },
     scrollContainer: {
         flexGrow: 1,
-        paddingTop: 100,
         backgroundColor: '#F9F9F9',
         padding: 20,
-        marginTop: 70,
         borderRadius: 30,
-        height: '300%'
+        paddingTop: 50
     },
     containerInput: {
         padding: 20,
@@ -212,17 +212,17 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         marginBottom: 10,
-        padding: 20
+        padding: 10
     },
     Remover: {
-        backgroundColor: '#D71920',
+
         padding: 13,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 10,
         borderRadius: 8,
-        marginTop: 20
+
     },
     RemoverText: {
         fontWeight: 'bold',

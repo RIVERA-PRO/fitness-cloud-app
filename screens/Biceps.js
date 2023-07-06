@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
 
     scrollContainer: {
         flexGrow: 1,
-        height: "230%",
+        height: "160%",
         width: '100%',
         paddingTop: 50,
-        backgroundColor: '#F9F9F9',
+        backgroundColor: '#fff',
         borderRadius: 30
     },
     seccion: {
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
 
         backgroundColor: '#D71920',
         borderRadius: 10,
+
     },
     exerciseImage: {
         width: 70,

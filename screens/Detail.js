@@ -50,10 +50,16 @@ export default function Detail({ route }) {
                 setIsFavorite(true);
 
                 setShowAlert(true);
+                setTimeout(() => {
+                    setShowAlert(false);
+                }, 600);
             } else {
                 // Exercise already exists in favorites, do nothing
                 setIsFavorite(false);
                 setShowAlertError(true);
+                setTimeout(() => {
+                    setShowAlertError(false);
+                }, 600);
             }
         } catch (error) {
             console.log('Error toggling favorite:', error);
@@ -74,10 +80,16 @@ export default function Detail({ route }) {
                 setIsRutine(true);
                 setShowAlertRutina(true);
                 setModalVisible(false);
+                setTimeout(() => {
+                    setShowAlertRutina(false);
+                }, 600);
             } else {
                 // Exercise already exists in favorites, do nothing
                 setIsFavorite(false);
                 setShowAlertError(true);
+                setTimeout(() => {
+                    setShowAlertError(false);
+                }, 600);
                 setModalVisible(false);
             }
         } catch (error) {
@@ -99,11 +111,17 @@ export default function Detail({ route }) {
                 await AsyncStorage.setItem('Dia2', JSON.stringify(favoritesArray));
                 setIsRutineDia2(true);
                 setShowAlertRutina(true);
+                setTimeout(() => {
+                    setShowAlertRutina(false);
+                }, 600);
                 setModalVisible(false);
             } else {
                 // Exercise already exists in favorites, do nothing
                 setIsFavorite(false);
                 setShowAlertError(true);
+                setTimeout(() => {
+                    setShowAlertError(false);
+                }, 600);
                 setModalVisible(false);
             }
         } catch (error) {
@@ -124,11 +142,17 @@ export default function Detail({ route }) {
                 await AsyncStorage.setItem('Dia3', JSON.stringify(favoritesArray));
                 setIsRutineDia3(true);
                 setShowAlertRutina(true);
+                setTimeout(() => {
+                    setShowAlertRutina(false);
+                }, 600);
                 setModalVisible(false);
             } else {
                 // Exercise already exists in favorites, do nothing
                 setIsFavorite(false);
                 setShowAlertError(true);
+                setTimeout(() => {
+                    setShowAlertError(false);
+                }, 600);
                 setModalVisible(false);
             }
         } catch (error) {
@@ -148,11 +172,17 @@ export default function Detail({ route }) {
                 await AsyncStorage.setItem('Dia4', JSON.stringify(favoritesArray));
                 setIsRutineDia4(true);
                 setShowAlertRutina(true);
+                setTimeout(() => {
+                    setShowAlertRutina(false);
+                }, 600);
                 setModalVisible(false);
             } else {
                 // Exercise already exists in favorites, do nothing
                 setIsFavorite(false);
                 setShowAlertError(true);
+                setTimeout(() => {
+                    setShowAlertError(false);
+                }, 600);
                 setModalVisible(false);
             }
         } catch (error) {
@@ -172,11 +202,17 @@ export default function Detail({ route }) {
                 await AsyncStorage.setItem('Dia5', JSON.stringify(favoritesArray));
                 setIsRutineDia5(true);
                 setShowAlertRutina(true);
+                setTimeout(() => {
+                    setShowAlertRutina(false);
+                }, 600);
                 setModalVisible(false);
             } else {
                 // Exercise already exists in favorites, do nothing
                 setIsFavorite(false);
                 setShowAlertError(true);
+                setTimeout(() => {
+                    setShowAlertError(false);
+                }, 600);
                 setModalVisible(false);
             }
         } catch (error) {
@@ -197,11 +233,17 @@ export default function Detail({ route }) {
                 await AsyncStorage.setItem('Dia6', JSON.stringify(favoritesArray));
                 setIsRutineDia6(true);
                 setShowAlertRutina(true);
+                setTimeout(() => {
+                    setShowAlertRutina(false);
+                }, 600);
                 setModalVisible(false);
             } else {
                 // Exercise already exists in favorites, do nothing
                 setIsFavorite(false);
                 setShowAlertError(true);
+                setTimeout(() => {
+                    setShowAlertError(false);
+                }, 600);
                 setModalVisible(false);
             }
         } catch (error) {
@@ -221,11 +263,17 @@ export default function Detail({ route }) {
                 await AsyncStorage.setItem('Dia7', JSON.stringify(favoritesArray));
                 setIsRutineDia7(true);
                 setShowAlertRutina(true);
+                setTimeout(() => {
+                    setShowAlertRutina(false);
+                }, 600);
                 setModalVisible(false);
             } else {
                 // Exercise already exists in favorites, do nothing
                 setIsFavorite(false);
                 setShowAlertError(true);
+                setTimeout(() => {
+                    setShowAlertError(false);
+                }, 600);
                 setModalVisible(false);
             }
         } catch (error) {
@@ -424,6 +472,14 @@ export default function Detail({ route }) {
                     <Text>¡Error! Ya esta agregado</Text>
                 </View>
             </Dialog>
+            <View style={styles.seccion}>
+
+                <Text style={styles.text}>
+
+                </Text>
+
+            </View>
+
         </ScrollView>
     );
 }
@@ -431,7 +487,7 @@ export default function Detail({ route }) {
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
-        height: '300%',
+
         backgroundColor: '#fff',
         paddingTop: 50,
     },

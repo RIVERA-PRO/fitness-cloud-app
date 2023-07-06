@@ -98,7 +98,7 @@ export default function Ejercicios({ navigation }) {
                         onChangeText={setSearchText}
                     />
                 </View>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} >
                     <View style={styles.categoryFilter}>
                         {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal'].map((category) => (
                             <TouchableOpacity
@@ -112,7 +112,9 @@ export default function Ejercicios({ navigation }) {
                                 <Text style={styles.filterItemLabel}>{category}</Text>
                             </TouchableOpacity>
                         ))}
+
                     </View>
+
                 </ScrollView>
 
             </View>
@@ -128,6 +130,21 @@ export default function Ejercicios({ navigation }) {
                 numColumns={2}
                 contentContainerStyle={styles.scrollView}
             />
+            <View style={styles.seccion}>
+
+                <Text style={styles.text}>
+
+                </Text>
+
+            </View>
+            <View style={styles.seccion}>
+
+                <Text style={styles.text}>
+
+                </Text>
+
+            </View>
+
 
         </LinearGradient>
     );

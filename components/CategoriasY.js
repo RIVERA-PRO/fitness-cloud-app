@@ -62,11 +62,24 @@ export default function CategoriasY({ navigation }) {
         );
     };
 
+    const renderNoResults = () => {
+        return (
+            <View style={styles.noResultsContainer}>
+                <Text style={styles.noResultsText}>No hay resultados</Text>
+            </View>
+        );
+    };
+
+    const filteredCategories = categories.filter(item => item.categoria.toLowerCase().includes(filter.toLowerCase()));
+
+
+
+
     return (
         <View style={styles.container}>
             <View style={styles.titleCantidad}>
                 <Text style={styles.textoTitle}>Categorias </Text>
-                <Text style={styles.textoCantidad}>{categories.length}</Text>
+                <Text style={styles.textoCantidad}>{filteredCategories.length}</Text>
             </View>
 
             <View style={styles.searchInputContainer}>
@@ -78,15 +91,25 @@ export default function CategoriasY({ navigation }) {
                     onChangeText={setFilter}
                 />
             </View>
-            <FlatList
-                data={categories}
-                renderItem={renderCategoryItem}
-                keyExtractor={(item) => item.categoria}
-                numColumns={2}
-                contentContainerStyle={styles.scrollView}
-            />
+
+            {filteredCategories.length === 0 ? (
+                renderNoResults()
+            ) : (
+                <FlatList
+                    data={filteredCategories}
+                    renderItem={renderCategoryItem}
+                    keyExtractor={(item) => item.categoria}
+                    numColumns={2}
+                    contentContainerStyle={styles.scrollView}
+                />
+            )}
+
+            <View style={styles.seccion}>
+                <Text style={styles.text}></Text>
+            </View>
         </View>
     );
+
 }
 
 const styles = StyleSheet.create({
@@ -179,5 +202,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingLeft: 20,
         paddingRight: 20
+    },
+    noResultsText: {
+        color: '#fff',
+        textAlign: 'center'
+    },
+    noResultsContainer: {
+        justifyContent: 'center',
+        paddingTop: 100
     }
 });

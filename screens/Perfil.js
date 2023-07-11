@@ -5,12 +5,37 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Animated, Easing } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 export default function Perfil() {
     const navigation = useNavigation();
     const isFocused = useIsFocused();
     const [favorites, setFavorites] = useState([]);
     const [filterText, setFilterText] = useState('');
+    const [animationValue] = useState(new Animated.Value(0));
+    const startAnimation = () => {
+        Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 360,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start();
+    };
 
+    useFocusEffect(
+        React.useCallback(() => {
+            startAnimation();
+            return () => {
+                // Reinicia la animación cuando la pantalla pierde el foco
+                animationValue.setValue(0);
+            };
+        }, [])
+    );
+
+    const translateY = animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [200, 0], // Inicia desde 200 unidades hacia abajo y se desplaza hacia arriba
+    });
     useEffect(() => {
         const getFavorites = async () => {
             try {
@@ -52,19 +77,19 @@ export default function Perfil() {
     };
 
     const filterExercises = (exercise) => {
-        return exercise.title.toLowerCase().includes(filterText.toLowerCase());
+        return exercise?.title?.toLowerCase().includes(filterText?.toLowerCase());
     };
 
     return (
         <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.container}>
 
 
-            {favorites.length > 0 ? (
+            {favorites?.length > 0 ? (
                 <LinearGradient colors={['#AC1929', '#D71920', '#D71920', '#D71920']} style={styles.container}>
                     <View style={styles.containerInput}>
                         <View style={styles.titleCantidad}>
                             <Text style={styles.textoTitle}>Tus ejercicios favoritos:  </Text>
-                            <Text style={styles.textoCantidad}>{favorites.length}</Text>
+                            <Text style={styles.textoCantidad}>{favorites?.length}</Text>
                         </View>
                         <View style={styles.searchInputContainer}>
                             <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
@@ -82,33 +107,36 @@ export default function Perfil() {
                             </TouchableOpacity>
                         )}
                     </View>
-                    <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
+                        <ScrollView contentContainerStyle={styles.scrollContainer}>
 
-                        {favorites.filter(filterExercises).map((exercise) => (
-                            <View key={exercise.id} style={styles.exerciseItem}>
-                                <TouchableOpacity onPress={() => goToDetail(exercise.id)} >
-                                    <View style={styles.exerciseContent}>
-                                        <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
-                                        </ImageBackground>
-                                        <Text style={styles.exerciseName}>{exercise.title.slice(0, 60)}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => removeExercise(exercise.id)}>
-                                    <Text><MaterialIcons name="delete" size={24} color="#D71920" /></Text>
-                                </TouchableOpacity>
-                            </View>
-                        ))}
+                            {favorites?.filter(filterExercises).map((exercise) => (
+                                <View key={exercise?.id} style={styles.exerciseItem}>
+                                    <TouchableOpacity onPress={() => goToDetail(exercise.id)} >
+                                        <View style={styles.exerciseContent}>
+                                            <ImageBackground source={{ uri: exercise?.img }} style={styles.exerciseImage} resizeMode="cover">
+                                            </ImageBackground>
+                                            <Text style={styles.exerciseName}>{exercise?.title?.slice(0, 60)}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => removeExercise(exercise?.id)}>
+                                        <Text><MaterialIcons name="delete" size={24} color="#D71920" /></Text>
+                                    </TouchableOpacity>
+                                </View>
+                            ))}
 
-                    </ScrollView>
+                        </ScrollView>
+                    </Animated.View>
                 </LinearGradient>
             ) : (
-                <LinearGradient colors={['#fff', '#fff']} style={styles.container}>
+                <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
+                    <LinearGradient colors={['#fff', '#fff']} style={styles.container}>
 
-                    <View style={styles.noHayFavoritos}>
-                        <Text style={styles.noHayFavoritos}>No hay favoritos</Text>
-                    </View>
-                </LinearGradient>
-
+                        <View style={styles.noHayFavoritos}>
+                            <Text style={styles.noHayFavoritos}>No hay favoritos</Text>
+                        </View>
+                    </LinearGradient>
+                </Animated.View>
             )}
 
         </LinearGradient>

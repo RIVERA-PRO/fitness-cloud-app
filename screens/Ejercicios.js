@@ -4,13 +4,38 @@ import { ejerciciosData } from '../components/Data';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { color } from '@rneui/themed/dist/config';
+import { Animated, Easing } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 export default function Ejercicios({ navigation }) {
     const [exercises, setExercises] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [filteredExercises, setFilteredExercises] = useState([]);
     const [showNoResults, setShowNoResults] = useState(false);
+    const [animationValue] = useState(new Animated.Value(0));
+    const startAnimation = () => {
+        Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 360,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start();
+    };
 
+    useFocusEffect(
+        React.useCallback(() => {
+            startAnimation();
+            return () => {
+                // Reinicia la animación cuando la pantalla pierde el foco
+                animationValue.setValue(0);
+            };
+        }, [])
+    );
+
+    const translateY = animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [200, 0], // Inicia desde 200 unidades hacia abajo y se desplaza hacia arriba
+    });
     useEffect(() => {
         const shuffledExercises = shuffle(ejerciciosData);
         const slicedExercises = shuffledExercises.slice(0, 123);
@@ -43,10 +68,11 @@ export default function Ejercicios({ navigation }) {
     };
 
     const renderExerciseItem = ({ item }) => (
+
         <TouchableOpacity onPress={() => goToDetail(item.id)}>
             <View style={styles.exerciseItem}>
                 <View style={styles.imageContainer}>
-                    <ImageBackground source={{ uri: item.img }} style={styles.exerciseImage} />
+                    <ImageBackground source={{ uri: item.img }} style={styles.exerciseImage} resizeMode="contain" />
                     <Text style={styles.tileEjercice}> {item.title.slice(0, 17)}..</Text>
 
                 </View>
@@ -54,6 +80,7 @@ export default function Ejercicios({ navigation }) {
             </View>
 
         </TouchableOpacity>
+
     );
 
     const handleFilter = () => {
@@ -82,6 +109,7 @@ export default function Ejercicios({ navigation }) {
     };
 
     return (
+
         <LinearGradient colors={['#AC1929', '#D71929', '#D71929', '#D71929', '#D71929', '#D71929', '#D71929',]} style={styles.container}>
             {/* <Header /> */}
             <View style={styles.titleCantidad}>
@@ -123,13 +151,15 @@ export default function Ejercicios({ navigation }) {
                     <Text style={styles.noResultsText}>No hay resultados</Text>
                 </View>
             )}
-            <FlatList
-                data={filteredExercises}
-                renderItem={renderExerciseItem}
-                keyExtractor={(item) => item.id}
-                numColumns={2}
-                contentContainerStyle={styles.scrollView}
-            />
+            <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
+                <FlatList
+                    data={filteredExercises}
+                    renderItem={renderExerciseItem}
+                    keyExtractor={(item) => item.id}
+                    numColumns={2}
+                    contentContainerStyle={styles.scrollView}
+                />
+            </Animated.View>
             <View style={styles.seccion}>
 
                 <Text style={styles.text}>
@@ -147,6 +177,7 @@ export default function Ejercicios({ navigation }) {
 
 
         </LinearGradient>
+
     );
 }
 
@@ -163,16 +194,18 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: 50,
+        paddingTop: 40,
         backgroundColor: '#D71920',
+
     },
     scrollView: {
         flexGrow: 1,
-        marginTop: 20,
+
         alignItems: 'center',
         backgroundColor: '#F9F9F9',
         paddingTop: 50,
-        borderRadius: 30,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30
 
     },
     exerciseItem: {
@@ -265,7 +298,8 @@ const styles = StyleSheet.create({
         paddingTop: 10,
     },
     filtros: {
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
+
     },
     textoTitle: {
         alignItems: 'center',

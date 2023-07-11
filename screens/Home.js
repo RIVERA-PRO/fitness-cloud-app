@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, ImageBackground, ScrollView, Text, TouchableOpacity, Animated } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, StyleSheet, ImageBackground, ScrollView, Text, TouchableOpacity, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import bg from '../assets/home.png';
@@ -10,9 +10,39 @@ import MoreEjercice from '../components/MoreEjercice';
 import Empieza from '../components/Empieza';
 import Header from '../components/HeaderBlanco';
 import { AntDesign } from '@expo/vector-icons';
+import { Animated, Easing } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 export default function Home() {
     const navigation = useNavigation();
     const animation = useRef(new Animated.Value(0)).current;
+
+
+    const [animationValue] = useState(new Animated.Value(0));
+    const startAnimation = () => {
+        Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 700,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            startAnimation();
+            return () => {
+                // Reinicia la animación cuando la pantalla pierde el foco
+                animationValue.setValue(0);
+            };
+        }, [])
+    );
+
+    const translateY = animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [200, 0], // Inicia desde 200 unidades hacia abajo y se desplaza hacia arriba
+    });
+
+
 
     const navigateToCategories = () => {
         navigation.navigate('Categorias'); // Reemplaza 'Categorias' con la ruta correcta a tu página de categorías
@@ -39,54 +69,72 @@ export default function Home() {
     };
 
     return (
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <LinearGradient colors={['#AC1929', '#D71920', '#fff', '#fff', '#fff', '#fff', '#fff', '#f9f9f9', '#f9f9f9', '#f9f9f9', '#f9f9f9', '#f9f9f9',]} style={styles.container}>
-                <Animated.ScrollView style={[styles.scrollViewHome, homeStyle]}>
+        <View style={styles.contenedor}>
+
+            <View style={styles.header}>
+                <LinearGradient colors={['#AC1929', '#D71920']} style={styles.bg} >
                     <Header />
+                </LinearGradient>
+
+            </View>
+
+
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <LinearGradient colors={['#D71920', '#D71920', '#fff', '#fff', '#fff', '#f9f9f9', '#f9f9f9', '#f9f9f9', '#f9f9f9', '#f9f9f9',]} style={styles.container}>
+
+                    <Animated.ScrollView style={[styles.scrollViewHome, homeStyle]}>
+
+                        <AllEjercicios navigation={navigation} />
 
 
 
-                    <AllEjercicios navigation={navigation} />
+
+                        <View style={styles.seccionMas}>
+                            <Text style={styles.categoriasText}>Categorias</Text>
+                            <TouchableOpacity onPress={navigateToCategories} style={styles.verMasbtn}>
+                                <Text style={styles.verMasText}>Ver más </Text>
+
+                                <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <AllsCategory navigation={navigation} />
 
 
-                    <View style={styles.seccionMas}>
-                        <Text style={styles.categoriasText}>Categorias</Text>
-                        <TouchableOpacity onPress={navigateToCategories} style={styles.verMasbtn}>
-                            <Text style={styles.verMasText}>Ver más </Text>
-
-                            <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <AllsCategory navigation={navigation} />
-
-                    <Empieza />
+                        <Animated.View style={[styles.carouselItem, { transform: [{ translateY }] }]}>
+                            <Empieza />
+                        </Animated.View>
 
 
 
-                </Animated.ScrollView>
-                <Animated.ScrollView style={[styles.scrollViewHome, homeStyle]}>
+
+                    </Animated.ScrollView>
+
+                    <Animated.View style={[{ transform: [{ translateY }] }]}>
+                        <Animated.ScrollView style={[homeStyle]}>
 
 
-                    <View style={styles.seccionMas}>
-                        <Text style={styles.categoriasText}>Destacados</Text>
-                        <TouchableOpacity onPress={navigateToEjercicios} style={styles.verMasbtn}>
-                            <Text style={styles.verMasText}>Ver más </Text>
-                            <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <ScrollView>
+                            <View style={styles.seccionMas}>
+                                <Text style={styles.categoriasText}>Destacados</Text>
+                                <TouchableOpacity onPress={navigateToEjercicios} style={styles.verMasbtn}>
+                                    <Text style={styles.verMasText}>Ver más </Text>
+                                    <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <ScrollView>
 
-                        <MoreEjercice navigation={navigation} />
-                    </ScrollView>
-                </Animated.ScrollView>
-            </LinearGradient >
-        </ScrollView>
+                                <MoreEjercice navigation={navigation} />
+                            </ScrollView>
+                        </Animated.ScrollView>
+                    </Animated.View>
+                </LinearGradient >
+            </ScrollView></View >
     );
 }
 
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
+
 
     },
     scrollViewHome: {
@@ -130,6 +178,26 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
+    header: {
+        width: '100%',
+        marginBottom: 20,
 
+
+
+        borderRadius: 20,
+        position: 'absolute',
+        zIndex: 2,
+        top: 0,
+
+    },
+    bg: {
+        height: 120,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        paddingTop: 50,
+    },
+    container: {
+        paddingTop: 70
+    }
 
 });

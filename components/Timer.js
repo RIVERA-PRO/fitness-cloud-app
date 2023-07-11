@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+import { Animated, Easing } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 const Timer = () => {
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
@@ -9,7 +10,30 @@ const Timer = () => {
     const [repetitions, setRepetitions] = useState(1);
     const [timerBorderColor, setTimerBorderColor] = useState('#000000');
     const [progress, setProgress] = useState(0);
+    const [animationValue] = useState(new Animated.Value(0));
+    const startAnimation = () => {
+        Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 360,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start();
+    };
 
+    useFocusEffect(
+        React.useCallback(() => {
+            startAnimation();
+            return () => {
+                // Reinicia la animación cuando la pantalla pierde el foco
+                animationValue.setValue(0);
+            };
+        }, [])
+    );
+
+    const translateY = animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [200, 0], // Inicia desde 200 unidades hacia abajo y se desplaza hacia arriba
+    });
     const handleStart = () => {
         setIsActive(true);
         setTimerBorderColor('#D71920');
@@ -71,58 +95,58 @@ const Timer = () => {
     }, [isActive, seconds]);
 
     return (
+        <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
+            <View style={styles.container}>
 
-        <View style={styles.container}>
-
-            <View style={[styles.timerContainer, { borderColor: timerBorderColor }]}>
-                <View style={[styles.progressBarContainer, { transform: [{ rotate: `${progress * 3.6}deg` }] }]}>
-                    <View style={styles.progressBar} />
+                <View style={[styles.timerContainer, { borderColor: timerBorderColor }]}>
+                    <View style={[styles.progressBarContainer, { transform: [{ rotate: `${progress * 3.6}deg` }] }]}>
+                        <View style={styles.progressBar} />
+                    </View>
+                    <Text style={styles.timer}>
+                        {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+                    </Text>
                 </View>
-                <Text style={styles.timer}>
-                    {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
-                </Text>
-            </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={handleStart} style={styles.button}>
-                    <Text style={styles.buttonText}>Inicio</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handlePause} style={styles.button}>
-                    <Text style={styles.buttonText}>Pausa</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleReset} style={styles.button}>
-                    <Text style={styles.buttonText}>Reiniciar</Text>
-                </TouchableOpacity>
-            </View>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={handleStart} style={styles.button}>
+                        <Text style={styles.buttonText}>Inicio</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handlePause} style={styles.button}>
+                        <Text style={styles.buttonText}>Pausa</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleReset} style={styles.button}>
+                        <Text style={styles.buttonText}>Reiniciar</Text>
+                    </TouchableOpacity>
+                </View>
 
-            <View style={styles.rowContain}>
-                <View style={styles.row}>
-                    <Text style={styles.labelText}>Series</Text>
-                    <View style={styles.counterContainer}>
-                        <TouchableOpacity onPress={handleSeriesDecrement}>
-                            <Text style={styles.button2}>-</Text>
-                        </TouchableOpacity>
-                        <Text style={[styles.label, styles.counterLabel]}>{series}</Text>
-                        <TouchableOpacity onPress={handleSeriesIncrement}>
-                            <Text style={styles.button2}>+</Text>
-                        </TouchableOpacity>
+                <View style={styles.rowContain}>
+                    <View style={styles.row}>
+                        <Text style={styles.labelText}>Series</Text>
+                        <View style={styles.counterContainer}>
+                            <TouchableOpacity onPress={handleSeriesDecrement}>
+                                <Text style={styles.button2}>-</Text>
+                            </TouchableOpacity>
+                            <Text style={[styles.label, styles.counterLabel]}>{series}</Text>
+                            <TouchableOpacity onPress={handleSeriesIncrement}>
+                                <Text style={styles.button2}>+</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.labelText}>Repeticiones</Text>
+                        <View style={styles.counterContainer}>
+                            <TouchableOpacity onPress={handleRepetitionsDecrement}>
+                                <Text style={styles.button2}>-</Text>
+                            </TouchableOpacity>
+                            <Text style={[styles.label, styles.counterLabel]}>{repetitions}</Text>
+                            <TouchableOpacity onPress={handleRepetitionsIncrement}>
+                                <Text style={styles.button2}>+</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.labelText}>Repeticiones</Text>
-                    <View style={styles.counterContainer}>
-                        <TouchableOpacity onPress={handleRepetitionsDecrement}>
-                            <Text style={styles.button2}>-</Text>
-                        </TouchableOpacity>
-                        <Text style={[styles.label, styles.counterLabel]}>{repetitions}</Text>
-                        <TouchableOpacity onPress={handleRepetitionsIncrement}>
-                            <Text style={styles.button2}>+</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+
             </View>
-
-        </View>
-
+        </Animated.View>
     );
 }; const styles = StyleSheet.create({
     container: {

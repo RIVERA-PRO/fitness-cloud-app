@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Button, ScrollView, Text, Image, TouchableOpacity, Modal } from 'react-native';
+import { View, StyleSheet, Button, ScrollView, Text, Image, TouchableOpacity, Modal, ImageBackground } from 'react-native';
 import { ejerciciosData } from '../components/Data';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Timer from '../components/Timer';
-import Header from '../components/Header';
+import Header from '../components/HeaderBlanco';
 import { Dialog } from "react-native-popup-dialog";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,7 +11,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import tilde from '../assets/tilde.png'
 import { color } from '@rneui/themed/dist/config';
 import imagen2 from '../assets/Cloud.png';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Animated, Easing } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 export default function Detail({ route }) {
+    const [animationValue] = useState(new Animated.Value(0));
     const [showAlert, setShowAlert] = useState(false);
     const [showAlertError, setShowAlertError] = useState(false);
     const [showAlertRutina, setShowAlertRutina] = useState(false);
@@ -28,6 +32,32 @@ export default function Detail({ route }) {
     const [isRutineDia6, setIsRutineDia6] = useState(false);
     const [isRutineDia7, setIsRutineDia7] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
+
+    const startAnimation = () => {
+        Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 360,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start();
+    };
+
+
+    useFocusEffect(
+        React.useCallback(() => {
+            startAnimation();
+
+            return () => {
+                // Reinicia la animación cuando el screen pierde el foco
+                animationValue.setValue(0);
+            };
+        }, [])
+    );
+
+    const translateX = animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-200, 0], // Inicia desde 200 unidades a la izquierda y se desplaza hacia la derecha
+    });
 
     const openModal = () => {
         setModalVisible(true);
@@ -289,207 +319,249 @@ export default function Detail({ route }) {
     }, []);
 
     return (
-        <ScrollView contentContainerStyle={styles.scrollContainer} >
-            <Header />
-            <Image source={{ uri: exercise.img }} style={styles.exerciseImage}>
 
-            </Image>
-            <View style={styles.seccion}>
-                <View style={styles.timeCaloriCard}>
-                    <View style={styles.timeCalori}>
-                        <MaterialCommunityIcons name="timer" size={24} color='#D71920' style={styles.icon} />
-                        <View>
-                            <Text style={styles.timeCaloriText2}>Tiempo </Text>
-                            <Text style={styles.timeCaloriText}>{minutes} min </Text>
-                        </View>
+        <View style={styles.contenedor}>
+            <View>
+                <LinearGradient colors={['#AC1929', '#D71920']} style={styles.header}>
+                    <View  >
+
+
+                        <Header />
+
                     </View>
-                    <View style={styles.timeCalori}>
-                        <Ionicons name="fitness" size={24} color='#D71920' style={styles.icon} />
-                        <View>
-                            <Text style={styles.timeCaloriText2}>Calorias </Text>
-                            <Text style={styles.timeCaloriText}>{calories} cal</Text>
-                        </View>
+                </LinearGradient>
+            </View>
+            <ScrollView contentContainerStyle={styles.scrollContainer} >
+
+                <LinearGradient colors={['#D71920', '#D71920']} style={styles.bgHeader}>
+
+                </LinearGradient>
+                <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
+                    <View style={styles.imageContainer} >
+                        <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="contain" />
                     </View>
-                </View>
 
-                <View style={styles.iconTexto2}>
-                    <Image source={tilde} style={{ width: 23, height: 23 }} />
-                    <Text style={styles.title}> {exercise.title}</Text>
-                </View>
-                <View style={styles.iconTexto2}>
-                </View>
+                    <View style={styles.iconTexto2}>
+                        <Image source={tilde} style={{ width: 18, height: 18 }} />
+                        <Text style={styles.title}> {exercise.title}</Text>
+                    </View>
 
-                <ScrollView>
-                    {exercise.paso1 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso1}</Text>
-                    </View>}
-                    {exercise.paso2 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso2}</Text>
-                    </View>}
-                    {exercise.paso3 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso3}</Text>
-                    </View>}
-                    {exercise.paso4 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso4}</Text>
-                    </View>}
-                    {exercise.paso5 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso5}</Text>
-                    </View>}
-                    {exercise.paso6 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso6}</Text>
-                    </View>}
-                    {exercise.paso7 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso7}</Text>
-                    </View>}
-                    {exercise.paso8 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso8}</Text>
-                    </View>}
-                    {exercise.paso9 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso9}</Text>
-                    </View>}
-                    {exercise.paso10 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.paso10}</Text>
-                    </View>}
-                </ScrollView>
-                <View style={styles.btns}>
-                    <TouchableOpacity onPress={openModal} style={styles.favoriteButton}>
-                        <Text style={styles.favoriteButtonText}>Añadir a Rutina   </Text>
-                        <MaterialCommunityIcons name="timer" size={20} color='#ffff' />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
-                        <Text style={styles.favoriteButtonText}>Añadir a Favorito </Text>
-                        <MaterialIcons name="favorite" size={20} color='#ffff' />
-                    </TouchableOpacity>
-                </View>
-
-                <Modal visible={modalVisible} animationType="slide"  >
-
-                    <View style={styles.ContentModal}>
-                        <Image source={imagen2} style={styles.image} />
-                        <View style={styles.Modal}>
-                            <TouchableOpacity onPress={closeModal}>
-                                <Text style={styles.closeModal}>X</Text>
-                            </TouchableOpacity>
-
-                            <View style={styles.Rutines}>
-                                <TouchableOpacity onPress={toggleRuitine} style={styles.RutinaButton}>
-                                    <Text style={styles.diaButon}>Día 1</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={toggleRuitineDia2} style={styles.RutinaButton}>
-                                    <Text style={styles.diaButon}>Día 2</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#ffff' />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={toggleRuitineDia3} style={styles.RutinaButton}>
-                                    <Text style={styles.diaButon}>Día 3</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={toggleRuitineDia4} style={styles.RutinaButton}>
-                                    <Text style={styles.diaButon}>Día 4</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={toggleRuitineDia5} style={styles.RutinaButton}>
-                                    <Text style={styles.diaButon}>Día 5</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={toggleRuitineDia6} style={styles.RutinaButton}>
-                                    <Text style={styles.diaButon}>Día 6</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={toggleRuitineDia7} style={styles.RutinaButton}>
-                                    <Text style={styles.diaButon}>Día 7</Text>
-                                    <MaterialCommunityIcons name="timer" size={20} color='#fff' />
-                                </TouchableOpacity>
+                    <View style={styles.seccion}>
+                        <View style={styles.timeCaloriCard}>
+                            <View style={styles.timeCalori}>
+                                <MaterialCommunityIcons name="timer" size={24} color='#D71920' style={styles.icon} />
+                                <View>
+                                    <Text style={styles.timeCaloriText2}>Tiempo </Text>
+                                    <Text style={styles.timeCaloriText}>{minutes} min </Text>
+                                </View>
+                            </View>
+                            <View style={styles.timeCalori}>
+                                <Ionicons name="fitness" size={24} color='#D71920' style={styles.icon} />
+                                <View>
+                                    <Text style={styles.timeCaloriText2}>Calorias </Text>
+                                    <Text style={styles.timeCaloriText}>{calories} cal</Text>
+                                </View>
                             </View>
                         </View>
+
+
+                        <View style={styles.iconTexto2}>
+                        </View>
+
+                        <ScrollView>
+                            {exercise.paso1 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso1}</Text>
+                            </View>}
+                            {exercise.paso2 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso2}</Text>
+                            </View>}
+                            {exercise.paso3 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso3}</Text>
+                            </View>}
+                            {exercise.paso4 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso4}</Text>
+                            </View>}
+                            {exercise.paso5 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso5}</Text>
+                            </View>}
+                            {exercise.paso6 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso6}</Text>
+                            </View>}
+                            {exercise.paso7 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso7}</Text>
+                            </View>}
+                            {exercise.paso8 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso8}</Text>
+                            </View>}
+                            {exercise.paso9 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso9}</Text>
+                            </View>}
+                            {exercise.paso10 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.paso10}</Text>
+                            </View>}
+                        </ScrollView>
+                        <View style={styles.btns}>
+                            <TouchableOpacity onPress={openModal} style={styles.favoriteButton}>
+                                <Text style={styles.favoriteButtonText}>Añadir a Rutina   </Text>
+                                <MaterialCommunityIcons name="timer" size={20} color='#ffff' />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
+                                <Text style={styles.favoriteButtonText}>Añadir a Favorito </Text>
+                                <MaterialIcons name="favorite" size={20} color='#ffff' />
+                            </TouchableOpacity>
+                        </View>
+
+                        <Modal visible={modalVisible} animationType="slide"  >
+
+                            <View style={styles.ContentModal}>
+                                <Image source={imagen2} style={styles.image} />
+                                <View style={styles.Modal}>
+                                    <TouchableOpacity onPress={closeModal}>
+                                        <Text style={styles.closeModal}>X</Text>
+                                    </TouchableOpacity>
+
+                                    <View style={styles.Rutines}>
+                                        <TouchableOpacity onPress={toggleRuitine} style={styles.RutinaButton}>
+                                            <Text style={styles.diaButon}>Día 1</Text>
+                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={toggleRuitineDia2} style={styles.RutinaButton}>
+                                            <Text style={styles.diaButon}>Día 2</Text>
+                                            <MaterialCommunityIcons name="timer" size={20} color='#ffff' />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={toggleRuitineDia3} style={styles.RutinaButton}>
+                                            <Text style={styles.diaButon}>Día 3</Text>
+                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity onPress={toggleRuitineDia4} style={styles.RutinaButton}>
+                                            <Text style={styles.diaButon}>Día 4</Text>
+                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={toggleRuitineDia5} style={styles.RutinaButton}>
+                                            <Text style={styles.diaButon}>Día 5</Text>
+                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={toggleRuitineDia6} style={styles.RutinaButton}>
+                                            <Text style={styles.diaButon}>Día 6</Text>
+                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={toggleRuitineDia7} style={styles.RutinaButton}>
+                                            <Text style={styles.diaButon}>Día 7</Text>
+                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
+
+
+                        <Text style={styles.description}>{exercise.description}</Text>
+                        <View>
+                            {exercise.consejo1 !== '' && <View style={styles.iconTexto}>
+                                <Text style={styles.TextIcon}>  Consejo de entrenamiento:</Text>
+                            </View>}
+
+                            {exercise.consejo1 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.consejo1}</Text>
+                            </View>}
+                            {exercise.consejo2 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.consejo2}</Text>
+                            </View>}
+                            {exercise.consejo3 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.consejo3}</Text>
+                            </View>}
+                            {exercise.consejo4 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.consejo4}</Text>
+                            </View>}
+                            {exercise.consejo5 !== '' && <View style={styles.pasos}>
+                                <Image source={tilde} style={{ width: 18, height: 18 }} />
+                                <Text style={styles.pasosText}>{exercise.consejo5}</Text>
+                            </View>}
+
+                        </View>
                     </View>
-                </Modal>
+                </Animated.View>
+                <Dialog
+                    visible={showAlert}
+                    onTouchOutside={() => setShowAlert(false)}
 
+                >
+                    <View style={styles.agregado}>
+                        <Text>¡Agregado a favoritos!</Text>
+                    </View>
+                </Dialog>
 
-                <Text style={styles.description}>{exercise.description}</Text>
-                <View>
-                    {exercise.consejo1 !== '' && <View style={styles.iconTexto}>
-                        <Text style={styles.TextIcon}>  Consejo de entrenamiento:</Text>
-                    </View>}
+                <Dialog
+                    visible={showAlertRutina}
+                    onTouchOutside={() => setShowAlertRutina(false)}
+                >
+                    <View style={styles.agregado}>
+                        <Text>¡Agregado a la Rutina!</Text>
+                    </View>
+                </Dialog>
+                <Dialog
+                    visible={showAlertError}
+                    onTouchOutside={() => setShowAlertError(false)}
+                >
+                    <View style={styles.agregado}>
+                        <Text>¡Error! Ya esta agregado</Text>
+                    </View>
+                </Dialog>
+                <View style={styles.seccion}>
 
-                    {exercise.consejo1 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.consejo1}</Text>
-                    </View>}
-                    {exercise.consejo2 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.consejo2}</Text>
-                    </View>}
-                    {exercise.consejo3 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.consejo2}</Text>
-                    </View>}
-                    {exercise.consejo4 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.consejo3}</Text>
-                    </View>}
-                    {exercise.consejo5 !== '' && <View style={styles.pasos}>
-                        <Image source={tilde} style={{ width: 18, height: 18 }} />
-                        <Text style={styles.pasosText}>{exercise.consejo4}</Text>
-                    </View>}
+                    <Text style={styles.text}>
+
+                    </Text>
 
                 </View>
-            </View>
-            <Dialog
-                visible={showAlert}
-                onTouchOutside={() => setShowAlert(false)}
+                <View style={styles.seccion}>
 
-            >
-                <View style={styles.agregado}>
-                    <Text>¡Agregado a favoritos!</Text>
+                    <Text style={styles.text}>
+
+                    </Text>
+
                 </View>
-            </Dialog>
 
-            <Dialog
-                visible={showAlertRutina}
-                onTouchOutside={() => setShowAlertRutina(false)}
-            >
-                <View style={styles.agregado}>
-                    <Text>¡Agregado a la Rutina!</Text>
-                </View>
-            </Dialog>
-            <Dialog
-                visible={showAlertError}
-                onTouchOutside={() => setShowAlertError(false)}
-            >
-                <View style={styles.agregado}>
-                    <Text>¡Error! Ya esta agregado</Text>
-                </View>
-            </Dialog>
-            <View style={styles.seccion}>
 
-                <Text style={styles.text}>
+            </ScrollView>
+        </View>
 
-                </Text>
-
-            </View>
-
-        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
+    contenedor: {
+        backgroundColor: '#D71920',
+
+    },
+
+    bgHeader: {
+        height: 150,
+        backgroundColor: '#D71920',
+        paddingTop: 50,
+    },
     scrollContainer: {
         flexGrow: 1,
 
         backgroundColor: '#fff',
-        paddingTop: 50,
+
+
+
     },
 
     seccion: {
@@ -501,11 +573,13 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#000',
-        fontSize: 18,
+        fontSize: 15,
         fontWeight: 'bold',
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
+
+
     },
     timeCaloriCard: {
         backgroundColor: '#D71920',
@@ -568,12 +642,23 @@ const styles = StyleSheet.create({
     exerciseImage: {
         width: '100%',
         height: 300,
-        alignSelf: 'center',
-        overflow: 'hidden',
-        borderWidth: 2,
-        borderColor: '#fff',
-        objectFit: 'contain',
 
+
+    },
+    imageContainer: {
+        flex: 1,
+        overflow: 'hidden',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 20,
+        backgroundColor: '#fff',
+        shadowColor: 'rgba(0, 0, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 10,
+        margin: 10,
+        marginTop: -130
     },
     iconTexto: {
         color: '#000',
@@ -589,17 +674,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center',
         marginTop: 20,
+
+        margin: 10
     },
 
     TextIcon: {
         fontSize: 15,
         color: 'rgba(0, 0, 0, 0.7)',
     },
-    image: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
-    },
+
     favoriteButton: {
         backgroundColor: '#D71920',
         borderRadius: 10,
@@ -624,7 +707,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 10,
-        width: '100%'
+        width: '100%',
+
     },
     Modal: {
         padding: 20,
@@ -663,19 +747,27 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     pasos: {
-        borderBottomWidth: 0.5,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
+
+
         marginTop: 10,
         flexDirection: 'row',
-        width: '100%',
-        padding: 10,
 
+        padding: 10,
+        shadowColor: 'rgba(0, 25, 0, 0.3)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 10,
+        backgroundColor: '#fff',
         fontSize: 13,
-        gap: 5
+        gap: 5,
+        borderRadius: 10,
+        marginLeft: 5,
+        marginRight: 5
     },
     pasosText: {
         color: 'rgba(0, 0, 0, 0.7)',
-        width: '95%',
+        width: '93%',
     },
     seriesContainer: {
         alignItems: 'center',
@@ -746,6 +838,12 @@ const styles = StyleSheet.create({
         width: '100%',
         objectFit: 'cover',
         height: 200
-    }
+    },
+    header: {
+        width: '100%',
+        paddingTop: 50,
+        borderRadius: 20,
+
+    },
 });
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, Modal } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, } from 'react-native';
 import logo from '../assets/logo.png';
 import { useNavigation } from '@react-navigation/native';
 import image from '../assets/Cloud.png'
@@ -9,6 +9,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import { Linking } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import Modal from 'react-native-modal';
 
 export default function Header() {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -70,66 +71,67 @@ export default function Header() {
                 </View>
             </TouchableOpacity>
             <Modal
-                visible={isModalVisible}
-                animationType="slide"
-                transparent={true}
-                onRequestClose={toggleModal}
-                presentationStyle="overFullScreen"
-                from="left"
+                isVisible={isModalVisible}
+                animationIn="slideInLeft"
+                animationOut="slideOutLeft"
+                swipeDirection="left"
+                onSwipeComplete={toggleModal}
+                onBackdropPress={toggleModal}
+                style={styles.modal}
             >
 
-                <View style={styles.modalContainer} onPress={toggleModal}>
-                    <View style={styles.modalContent} >
 
-                        <Image source={image} style={styles.img} />
-                        <Text style={styles.dateText}>{getCurrentDate()}</Text>
-                        <View style={styles.navBtns}>
-                            <TouchableOpacity onPress={goToHome} style={styles.btnNav}>
-                                <FontAwesome name="home" size={20} color='#000' />
-                                <Text style={styles.buttonText}>Home</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={goToTime} style={styles.btnNav}>
-                                <MaterialCommunityIcons name="timer" size={20} color='#000' />
-                                <Text style={styles.buttonText}>Rutinas</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={goToProfile} style={styles.btnNav}>
-                                <MaterialIcons name="favorite" size={20} color='#000' />
-                                <Text style={styles.buttonText}>Actividad</Text>
-                            </TouchableOpacity>
+                <View style={styles.modalContent} >
 
-                            <TouchableOpacity onPress={goToEjercicios} style={styles.btnNav}>
-                                <MaterialIcons name="fitness-center" size={20} color='#000' />
-                                <Text style={styles.buttonText}>Ejercicios</Text>
+                    <Image source={image} style={styles.img} />
+                    <Text style={styles.dateText}>{getCurrentDate()}</Text>
+                    <View style={styles.navBtns}>
+                        <TouchableOpacity onPress={goToHome} style={styles.btnNav}>
+                            <FontAwesome name="home" size={20} color='#D71920' />
+                            <Text style={styles.buttonText}>Home</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={goToTime} style={styles.btnNav}>
+                            <MaterialCommunityIcons name="timer" size={20} color='#D71920' />
+                            <Text style={styles.buttonText}>Rutinas</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={goToProfile} style={styles.btnNav}>
+                            <MaterialIcons name="favorite" size={20} color='#D71920' />
+                            <Text style={styles.buttonText}>Actividad</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={goToEjercicios} style={styles.btnNav}>
+                            <MaterialIcons name="fitness-center" size={20} color='#D71920' />
+                            <Text style={styles.buttonText}>Ejercicios</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={goToCategorias} style={styles.btnNav}>
+                            <MaterialIcons name="fitness-center" size={20} color='#D71920' />
+                            <Text style={styles.buttonText}>Categorias</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={toggleModal} style={styles.btnNav}>
+                            <MaterialIcons name="logout" size={20} color="#D71920" />
+                            <Text style={styles.buttonText}>Cerrar</Text>
+                        </TouchableOpacity>
+
+                        <Text style={styles.text}>Contacto del desarrollador</Text>
+                        <View style={styles.social}>
+                            <TouchableOpacity onPress={openLinkedInProfile} style={styles.btnNav}>
+                                <FontAwesome name="linkedin" size={20} color="#D71920" />
+
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={goToCategorias} style={styles.btnNav}>
-                                <MaterialIcons name="fitness-center" size={20} color='#000' />
-                                <Text style={styles.buttonText}>Categorias</Text>
+                            <TouchableOpacity onPress={openWebsite} style={styles.btnNav}>
+                                <FontAwesome name="globe" size={20} color="#D71920" />
+
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={toggleModal} style={styles.btnNav}>
-                                <MaterialIcons name="logout" size={24} color="black" />
-                                <Text style={styles.buttonText}>Cerrar</Text>
+                            <TouchableOpacity onPress={openWhatsAppChat} style={styles.btnNav}>
+                                <FontAwesome name="whatsapp" size={20} color="#D71920" />
+
                             </TouchableOpacity>
-
-                            <Text style={styles.text}>Contacto del desarrollador</Text>
-                            <View style={styles.social}>
-                                <TouchableOpacity onPress={openLinkedInProfile} style={styles.btnNav}>
-                                    <FontAwesome name="linkedin" size={20} color="#000" />
-
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={openWebsite} style={styles.btnNav}>
-                                    <FontAwesome name="globe" size={20} color="#000" />
-
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={openWhatsAppChat} style={styles.btnNav}>
-                                    <FontAwesome name="whatsapp" size={20} color="#000" />
-
-                                </TouchableOpacity>
-                            </View>
                         </View>
-
-
                     </View>
+
+
                 </View>
+
             </Modal>
         </View>
 
@@ -185,10 +187,12 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 8,
         elevation: 5,
+
     },
     buttonText: {
-        color: '#000',
+        color: 'rgba(0, 0, 0, 0.8)',
         fontWeight: 'bold',
+
     },
     modalContainer: {
         flex: 1,
@@ -229,6 +233,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 10,
         margin: 9,
+        borderBottomWidth: 0.3,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
     },
     social: {
         flexDirection: 'row',
@@ -240,6 +246,9 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
         marginTop: 100
+    },
+    modal: {
+        margin: 0
     }
 
 });

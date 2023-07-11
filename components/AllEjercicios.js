@@ -2,9 +2,36 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import { ejerciciosData } from './Data';
 import { AntDesign } from '@expo/vector-icons';
+import { Animated, Easing } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 export default function AllEjercicios({ navigation }) {
     const [exercises, setExercises] = useState([]);
+    const [animationValue] = useState(new Animated.Value(0));
+    const startAnimation = () => {
+        Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 900,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start();
+    };
 
+
+    useFocusEffect(
+        React.useCallback(() => {
+            startAnimation();
+
+            return () => {
+                // Reinicia la animación cuando el screen pierde el foco
+                animationValue.setValue(0);
+            };
+        }, [])
+    );
+
+    const translateX = animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-200, 0], // Inicia desde 200 unidades a la izquierda y se desplaza hacia la derecha
+    });
     useEffect(() => {
         const shuffledExercises = shuffle(ejerciciosData);
         const slicedExercises = shuffledExercises.slice(0, 6);
@@ -47,10 +74,13 @@ export default function AllEjercicios({ navigation }) {
                 {exercises.map((exercise) => (
                     <TouchableOpacity key={exercise.id} onPress={() => goToDetail(exercise.id)}>
                         <View style={styles.exerciseItem}>
+
                             <View style={styles.imageContainer}>
                                 <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} />
 
                             </View>
+
+
                             <Text style={styles.titleEjercice}> {exercise.title.slice(0, 7)}..</Text>
                         </View>
                     </TouchableOpacity>

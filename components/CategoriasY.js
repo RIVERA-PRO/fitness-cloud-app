@@ -3,11 +3,35 @@ import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, TextInput } 
 import { ejerciciosData } from './Data';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import { Animated, Easing } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 export default function CategoriasY({ navigation }) {
     const [categories, setCategories] = useState([]);
     const [filter, setFilter] = useState('');
+    const [animationValue] = useState(new Animated.Value(0));
+    const startAnimation = () => {
+        Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 360,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start();
+    };
 
+    useFocusEffect(
+        React.useCallback(() => {
+            startAnimation();
+            return () => {
+                // Reinicia la animación cuando la pantalla pierde el foco
+                animationValue.setValue(0);
+            };
+        }, [])
+    );
+
+    const translateY = animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [200, 0], // Inicia desde 200 unidades hacia abajo y se desplaza hacia arriba
+    });
     useEffect(() => {
         const uniqueCategories = removeDuplicates(ejerciciosData, 'fondo');
         const shuffledCategories = shuffle(uniqueCategories);
@@ -95,13 +119,15 @@ export default function CategoriasY({ navigation }) {
             {filteredCategories.length === 0 ? (
                 renderNoResults()
             ) : (
-                <FlatList
-                    data={filteredCategories}
-                    renderItem={renderCategoryItem}
-                    keyExtractor={(item) => item.categoria}
-                    numColumns={2}
-                    contentContainerStyle={styles.scrollView}
-                />
+                <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
+                    <FlatList
+                        data={filteredCategories}
+                        renderItem={renderCategoryItem}
+                        keyExtractor={(item) => item.categoria}
+                        numColumns={2}
+                        contentContainerStyle={styles.scrollView}
+                    />
+                </Animated.View>
             )}
 
             <View style={styles.seccion}>
@@ -161,8 +187,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3,
         elevation: 100,
-        marginLeft: 20,
-        marginRight: 20,
+        marginLeft: 15,
+        marginRight: 15,
 
     },
     searchIcon: {
@@ -200,8 +226,8 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         marginBottom: 10,
-        paddingLeft: 20,
-        paddingRight: 20
+        paddingLeft: 15,
+        paddingRight: 15
     },
     noResultsText: {
         color: '#fff',

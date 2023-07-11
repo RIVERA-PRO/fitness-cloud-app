@@ -1,11 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import { ejerciciosData } from './Data';
-
+import { Animated, Easing } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 export default function AllsCategory({ navigation }) {
     const [categories, setCategories] = useState([]);
     const [animation] = useState(new Animated.Value(0));
+    const [animationValue] = useState(new Animated.Value(0));
+    const startAnimation = () => {
+        Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 900,
+            easing: Easing.linear,
+            useNativeDriver: true,
+        }).start();
+    };
 
+
+    useFocusEffect(
+        React.useCallback(() => {
+            startAnimation();
+
+            return () => {
+                // Reinicia la animación cuando el screen pierde el foco
+                animationValue.setValue(0);
+            };
+        }, [])
+    );
+
+    const translateX = animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-200, 0], // Inicia desde 200 unidades a la izquierda y se desplaza hacia la derecha
+    });
     useEffect(() => {
         const uniqueCategories = removeDuplicates(ejerciciosData, 'fondo');
         const orderedCategories = orderCategories(uniqueCategories);
@@ -63,13 +89,14 @@ export default function AllsCategory({ navigation }) {
 
 
     return (
+
         <ScrollView horizontal={true} style={styles.scrollView}>
 
             {categories.length > 0 ? (
                 categories.map((item, index) => (
                     <TouchableOpacity key={item.categoria} onPress={() => selectCategory(item)}>
-                        <Animated.View style={[styles.carouselItem, getCategoryAnimationStyle(index)]}>
-                            <Image source={{ uri: item.fondo }} style={styles.categoryBackgroundImage} />
+                        <Animated.View style={[styles.carouselItem, { transform: [{ translateX }] }]}>
+                            <ImageBackground source={{ uri: item.fondo }} style={styles.categoryBackgroundImage} />
                             <Text style={styles.categoryName}>{item.categoria}</Text>
                         </Animated.View>
                     </TouchableOpacity>
@@ -78,13 +105,14 @@ export default function AllsCategory({ navigation }) {
                 <Text>Loading...</Text>
             )}
         </ScrollView>
+
     );
 }
 
 const styles = StyleSheet.create({
     scrollView: {
 
-        paddingTop: 10,
+
         height: '500%',
         marginLeft: 10,
     },
@@ -92,7 +120,12 @@ const styles = StyleSheet.create({
         width: 150,
         height: 200,
         borderRadius: 10,
-
+        overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 6,
     },
     categoryName: {
         position: 'absolute',
@@ -107,11 +140,12 @@ const styles = StyleSheet.create({
     },
     carouselItem: {
         marginRight: 10,
-        shadowColor: '#D71920',
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3,
         elevation: 50,
 
     },
+
 });

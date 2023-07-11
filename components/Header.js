@@ -80,45 +80,46 @@ export default function Header() {
                     <View style={styles.modalContent} >
 
                         <Image source={image} style={styles.img} />
+                        <Text style={styles.dateText}>{getCurrentDate()}</Text>
                         <View style={styles.navBtns}>
                             <TouchableOpacity onPress={goToHome} style={styles.btnNav}>
-                                <FontAwesome name="home" size={20} color='#000' />
+                                <FontAwesome name="home" size={20} color='#D71920' />
                                 <Text style={styles.buttonText}>Home</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={goToTime} style={styles.btnNav}>
-                                <MaterialCommunityIcons name="timer" size={20} color='#000' />
+                                <MaterialCommunityIcons name="timer" size={20} color='#D71920' />
                                 <Text style={styles.buttonText}>Rutinas</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={goToProfile} style={styles.btnNav}>
-                                <MaterialIcons name="favorite" size={20} color='#000' />
-                                <Text style={styles.buttonText}>Favoritos</Text>
+                                <MaterialIcons name="favorite" size={20} color='#D71920' />
+                                <Text style={styles.buttonText}>Actividad</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={goToEjercicios} style={styles.btnNav}>
-                                <MaterialIcons name="fitness-center" size={20} color='#000' />
+                                <MaterialIcons name="fitness-center" size={20} color='#D71920' />
                                 <Text style={styles.buttonText}>Ejercicios</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={goToCategorias} style={styles.btnNav}>
-                                <MaterialIcons name="fitness-center" size={20} color='#000' />
+                                <MaterialIcons name="fitness-center" size={20} color='#D71920' />
                                 <Text style={styles.buttonText}>Categorias</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={toggleModal} style={styles.btnNav}>
-                                <MaterialIcons name="logout" size={24} color="black" />
+                                <MaterialIcons name="logout" size={20} color="#D71920" />
                                 <Text style={styles.buttonText}>Cerrar</Text>
                             </TouchableOpacity>
 
                             <Text style={styles.text}>Contacto del desarrollador</Text>
                             <View style={styles.social}>
                                 <TouchableOpacity onPress={openLinkedInProfile} style={styles.btnNav}>
-                                    <FontAwesome name="linkedin" size={20} color="#000" />
+                                    <FontAwesome name="linkedin" size={20} color="#D71920" />
 
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={openWebsite} style={styles.btnNav}>
-                                    <FontAwesome name="globe" size={20} color="#000" />
+                                    <FontAwesome name="globe" size={20} color="#D71920" />
 
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={openWhatsAppChat} style={styles.btnNav}>
-                                    <FontAwesome name="whatsapp" size={20} color="#000" />
+                                    <FontAwesome name="whatsapp" size={20} color="#D71920" />
 
                                 </TouchableOpacity>
                             </View>

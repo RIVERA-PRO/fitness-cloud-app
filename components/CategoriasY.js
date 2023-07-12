@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, FlatList, TextInput, ScrollView } from 'react-native';
 import { ejerciciosData } from './Data';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Animated, Easing } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
+
 export default function CategoriasY({ navigation }) {
     const [categories, setCategories] = useState([]);
     const [filter, setFilter] = useState('');
@@ -88,7 +90,7 @@ export default function CategoriasY({ navigation }) {
 
     const renderNoResults = () => {
         return (
-            <View style={styles.noResultsContainer}>
+            <View style={styles.container2}>
                 <Text style={styles.noResultsText}>No hay resultados</Text>
             </View>
         );
@@ -103,14 +105,18 @@ export default function CategoriasY({ navigation }) {
         <View style={styles.container}>
             <View style={styles.titleCantidad}>
                 <Text style={styles.textoTitle}>Categorias </Text>
-                <Text style={styles.textoCantidad}>{filteredCategories.length}</Text>
+                <View style={styles.deFlex}>
+                    <FontAwesome name="angle-double-left" size={18} style={styles.icon} color='#fff' />
+                    <Text style={styles.textoCantidad}>{filteredCategories.length}</Text>
+                    <FontAwesome name="angle-double-right" size={17} style={styles.icon} color='#fff' />
+                </View>
             </View>
 
             <View style={styles.searchInputContainer}>
                 <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
                 <TextInput
                     style={styles.input}
-                    placeholder="Filtrar categorías"
+                    placeholder="Buscar categorías"
                     value={filter}
                     onChangeText={setFilter}
                 />
@@ -119,7 +125,7 @@ export default function CategoriasY({ navigation }) {
             {filteredCategories.length === 0 ? (
                 renderNoResults()
             ) : (
-                <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
+                <Animated.View style={[{ transform: [{ translateY }] }]}>
                     <FlatList
                         data={filteredCategories}
                         renderItem={renderCategoryItem}
@@ -129,10 +135,10 @@ export default function CategoriasY({ navigation }) {
                     />
                 </Animated.View>
             )}
+            <View style={styles.espaciobg}>
 
-            <View style={styles.seccion}>
-                <Text style={styles.text}></Text>
             </View>
+
         </View>
     );
 
@@ -141,14 +147,17 @@ export default function CategoriasY({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        gap: 10,
-        marginTop: 17
+
+        paddingTop: 80,
+
     },
     scrollView: {
         alignItems: 'center',
         padding: 20,
         backgroundColor: '#fff',
-        borderRadius: 30,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        marginTop: 30
 
     },
     categoryBackgroundImage: {
@@ -202,21 +211,17 @@ const styles = StyleSheet.create({
     textoTitle: {
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#fff',
     },
     textoCantidad: {
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: 13,
         fontWeight: 'bold',
-        color: '#000',
-        backgroundColor: '#fff',
+        color: '#fff',
         padding: 6,
         borderRadius: 100,
-        width: 50,
-        height: 30,
         textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -230,11 +235,25 @@ const styles = StyleSheet.create({
         paddingRight: 15
     },
     noResultsText: {
-        color: '#fff',
-        textAlign: 'center'
+        color: '#000',
+        textAlign: 'center',
+        marginTop: 100,
     },
-    noResultsContainer: {
-        justifyContent: 'center',
-        paddingTop: 100
+
+    espaciobg: {
+        height: 60,
+        backgroundColor: '#fff',
+    },
+    deFlex: {
+        flexDirection: 'row',
+        textAlign: 'center',
+        alignItems: 'center',
+    },
+    container2: {
+        backgroundColor: '#fff',
+        height: 500,
+        marginTop: 20,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
     }
 });

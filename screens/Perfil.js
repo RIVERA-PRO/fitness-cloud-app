@@ -7,12 +7,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Animated, Easing } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import Header from '../components/HeaderBlanco';
+import imageBg from '../assets/Favoritos.png'
+import imageHome from '../assets/home.png'
 export default function Perfil() {
     const navigation = useNavigation();
     const isFocused = useIsFocused();
     const [favorites, setFavorites] = useState([]);
-    const [filterText, setFilterText] = useState('');
     const [animationValue] = useState(new Animated.Value(0));
+
     const startAnimation = () => {
         Animated.timing(animationValue, {
             toValue: 1,
@@ -26,7 +30,6 @@ export default function Perfil() {
         React.useCallback(() => {
             startAnimation();
             return () => {
-                // Reinicia la animación cuando la pantalla pierde el foco
                 animationValue.setValue(0);
             };
         }, [])
@@ -34,8 +37,9 @@ export default function Perfil() {
 
     const translateY = animationValue.interpolate({
         inputRange: [0, 1],
-        outputRange: [200, 0], // Inicia desde 200 unidades hacia abajo y se desplaza hacia arriba
+        outputRange: [200, 0],
     });
+
     useEffect(() => {
         const getFavorites = async () => {
             try {
@@ -76,69 +80,84 @@ export default function Perfil() {
         navigation.navigate('Detail', { exerciseId });
     };
 
-    const filterExercises = (exercise) => {
-        return exercise?.title?.toLowerCase().includes(filterText?.toLowerCase());
-    };
-
     return (
         <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.container}>
 
-
             {favorites?.length > 0 ? (
-                <LinearGradient colors={['#AC1929', '#D71920', '#D71920', '#D71920']} style={styles.container}>
-                    <View style={styles.containerInput}>
-                        <View style={styles.titleCantidad}>
-                            <Text style={styles.textoTitle}>Tus ejercicios favoritos:  </Text>
-                            <Text style={styles.textoCantidad}>{favorites?.length}</Text>
-                        </View>
-                        <View style={styles.searchInputContainer}>
-                            <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
-                            <TextInput
-                                style={styles.searchInput}
-                                placeholder="Filtrar ejercicios"
-                                value={filterText}
-                                onChangeText={(text) => setFilterText(text)}
-                            />
-                        </View>
-                        {favorites.length > 0 && (
-                            <TouchableOpacity onPress={removeAllExercises} style={styles.Remover}>
-                                <Text style={styles.RemoverText}>Remover todos</Text>
-                                <MaterialIcons name="delete" size={20} color="#fff" />
-                            </TouchableOpacity>
-                        )}
+                <View style={styles.container}>
+
+                    <View style={styles.header}>
+                        <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.headerBg}>
+                            <Header />
+                        </LinearGradient>
                     </View>
-                    <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
+                    <Animated.View style={[{ transform: [{ translateY }] }]}>
                         <ScrollView contentContainerStyle={styles.scrollContainer}>
 
-                            {favorites?.filter(filterExercises).map((exercise) => (
-                                <View key={exercise?.id} style={styles.exerciseItem}>
-                                    <TouchableOpacity onPress={() => goToDetail(exercise.id)} >
-                                        <View style={styles.exerciseContent}>
-                                            <ImageBackground source={{ uri: exercise?.img }} style={styles.exerciseImage} resizeMode="cover">
-                                            </ImageBackground>
-                                            <Text style={styles.exerciseName}>{exercise?.title?.slice(0, 60)}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => removeExercise(exercise?.id)}>
-                                        <Text><MaterialIcons name="delete" size={24} color="#D71920" /></Text>
-                                    </TouchableOpacity>
-                                </View>
-                            ))}
+                            <View style={styles.imageBgcontain}>
+                                <ImageBackground source={imageBg} style={styles.imageBg}>
+
+                                </ImageBackground>
+                            </View>
+
+                            <View style={styles.exerciseItemContain} >
+                                {favorites.map((exercise) => (
+                                    <View key={exercise?.id} style={styles.exerciseItem}>
+                                        <TouchableOpacity onPress={() => goToDetail(exercise.id)}>
+                                            <View style={styles.exerciseContent}>
+                                                <TouchableOpacity onPress={() => removeExercise(exercise?.id)} style={styles.close} >
+                                                    <MaterialIcons name="favorite" size={20} color='#D71920' />
+
+                                                </TouchableOpacity>
+                                                <ImageBackground source={{ uri: exercise?.img }} style={styles.exerciseImage} resizeMode="cover">
+
+                                                </ImageBackground>
+                                                <Text style={styles.exerciseName}>{exercise?.title?.slice(0, 15)}..</Text>
+
+                                            </View>
+                                        </TouchableOpacity>
+
+                                    </View>
+                                ))}
+
+                            </View>
+                            {favorites.length > 1 && (
+                                <TouchableOpacity onPress={removeAllExercises} >
+                                    <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.Remover}>
+                                        <Text style={styles.RemoverText}>Remover todos</Text>
+
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                            )}
+                            <View style={styles.noHayFavoritos}>
+                                <Text style={styles.noHayFavoritos}></Text>
+                            </View>
 
                         </ScrollView>
+
+
+
                     </Animated.View>
-                </LinearGradient>
+                </View>
             ) : (
                 <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
                     <LinearGradient colors={['#fff', '#fff']} style={styles.container}>
-
-                        <View style={styles.noHayFavoritos}>
-                            <Text style={styles.noHayFavoritos}>No hay favoritos</Text>
+                        <View style={styles.header}>
+                            <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.headerBg}>
+                                <Header />
+                            </LinearGradient>
                         </View>
+
+                        <ImageBackground source={imageHome} style={styles.imageHome}>
+                            <View style={styles.noHayFavoritos}>
+                                <Text style={styles.noHayFavoritos}>No hay favoritos</Text>
+                            </View>
+                        </ImageBackground>
+
+
                     </LinearGradient>
                 </Animated.View>
             )}
-
         </LinearGradient>
     );
 }
@@ -150,42 +169,23 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flexGrow: 1,
-        backgroundColor: '#F9F9F9',
-        padding: 20,
+        backgroundColor: '#171414',
         borderRadius: 30,
-        paddingTop: 50
-    },
-    containerInput: {
-        padding: 20,
-        marginTop: 50,
-    },
-    searchInputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderRadius: 10,
-        backgroundColor: '#fff',
-        paddingHorizontal: 10,
-        marginBottom: 10,
-        marginTop: 10,
+        marginTop: 105
 
     },
-    searchIcon: {
-        marginRight: 10,
-    },
-    searchInput: {
-        flex: 1,
-        height: 40,
 
-    },
+
     exerciseItem: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
-        width: '100%'
+        marginHorizontal: 15,
+
     },
     exerciseContent: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
         shadowColor: 'rgba(0, 0, 0, 0.8)',
         shadowOffset: { width: 0, height: 2 },
@@ -193,48 +193,24 @@ const styles = StyleSheet.create({
         shadowRadius: 30,
         elevation: 4,
         borderRadius: 10,
-        backgroundColor: '#D71920'
+        backgroundColor: '#fff',
+        width: 150,
+        marginTop: 20
     },
     exerciseImage: {
-        width: 70,
-        height: 70,
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10,
-        marginRight: 10,
+        width: '100%',
+        height: 150,
+        borderRadius: 8,
+
         justifyContent: 'flex-end',
         overflow: 'hidden',
     },
     exerciseName: {
-        color: '#fff',
-        fontSize: 15,
-        fontWeight: 'bold',
-        textShadowColor: 'rgba(0, 0, 0, 0.5)',
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowRadius: 2,
-        padding: 10,
-        width: '75%',
+        color: '#000',
+        fontSize: 14,
+        padding: 5
     },
-    textoTitle: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    textoCantidad: {
-        alignItems: 'center',
-        fontSize: 13,
-        fontWeight: 'bold',
-        color: '#D71920',
-        backgroundColor: '#fff',
-        padding: 6,
-        borderRadius: 100,
-        width: 50,
-        height: 30,
-        textAlign: 'center',
-        alignItems: 'center',
 
-    },
     titleCantidad: {
         flexDirection: 'row',
         width: '100%',
@@ -244,12 +220,13 @@ const styles = StyleSheet.create({
     },
     Remover: {
 
-        padding: 13,
+        padding: 15,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 10,
         borderRadius: 8,
+        margin: 20
 
     },
     RemoverText: {
@@ -261,7 +238,59 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 100,
-        color: '#000',
+        marginTop: 200,
+        color: '#fff',
+    },
+    deFlex: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    header: {
+        width: '100%',
+        marginBottom: 20,
+        borderRadius: 20,
+        position: 'absolute',
+        zIndex: 2,
+        top: 0,
+
+
+
+    },
+
+    headerBg: {
+        paddingTop: 50,
+        height: 120,
+        width: '100%',
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+    },
+    imageBgcontain: {
+        overflow: 'hidden',
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
+    },
+    imageBg: {
+        overflow: 'hidden',
+        height: 200,
+
+    },
+    exerciseItemContain: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+
+        alignItems: 'center',
+        justifyContent: 'center'
+
+
+    },
+    close: {
+        marginLeft: '80%',
+        padding: 5
+    },
+
+    imageHome: {
+        height: 800,
     }
 });

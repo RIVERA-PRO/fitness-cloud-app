@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, TextInput } from 'react-native';
 import { Animated, Easing } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import imagebg from '../assets/home.png'
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 
 const Timer = () => {
-    const [seconds, setSeconds] = useState(0);
-    const [minutes, setMinutes] = useState(0);
+    const [time, setTime] = useState(0);
     const [isActive, setIsActive] = useState(false);
     const [series, setSeries] = useState(1);
     const [repetitions, setRepetitions] = useState(1);
     const [timerBorderColor, setTimerBorderColor] = useState('#000000');
-    const [progress, setProgress] = useState(0);
     const [animationValue] = useState(new Animated.Value(0));
+    const [inputTime, setInputTime] = useState('');
+    const [isTimerFinished, setIsTimerFinished] = useState(false);
+    const [soundObject, setSoundObject] = useState(null);
+
     const startAnimation = () => {
         Animated.timing(animationValue, {
             toValue: 1,
@@ -32,47 +35,55 @@ const Timer = () => {
                 // Reinicia la animación cuando la pantalla pierde el foco
                 animationValue.setValue(0);
             };
+
         }, [])
+
     );
 
     const translateY = animationValue.interpolate({
         inputRange: [0, 1],
         outputRange: [200, 0], // Inicia desde 200 unidades hacia abajo y se desplaza hacia arriba
     });
-    const handleStart = () => {
-        setIsActive(true);
-        setTimerBorderColor('#D71920');
-    };
 
-    const handlePause = () => {
-        setIsActive(false);
-    };
 
-    const handleReset = () => {
-        setSeconds(0);
-        setMinutes(0);
-        setIsActive(false);
-        setTimerBorderColor('#000000');
-        setProgress(0);
-    };
-
-    const handleSeriesIncrement = () => {
-        setSeries(series + 1);
-    };
-
-    const handleSeriesDecrement = () => {
-        if (series > 1) {
-            setSeries(series - 1);
+    const loadSound = async () => {
+        const sound = new Audio.Sound();
+        try {
+            await sound.loadAsync(require('../assets/sound.mp3'));
+            setSoundObject(sound); // Asignar la instancia del sonido a la variable de estado
+        } catch (error) {
+            console.log('Error al cargar el sonido:', error);
         }
     };
 
-    const handleRepetitionsIncrement = () => {
-        setRepetitions(repetitions + 1);
-    };
+    useEffect(() => {
+        loadSound();
 
-    const handleRepetitionsDecrement = () => {
-        if (repetitions > 1) {
-            setRepetitions(repetitions - 1);
+        return () => {
+            if (soundObject) {
+                soundObject.unloadAsync();
+            }
+        };
+
+
+    }, []);
+
+
+
+
+    const handleStartManual = async () => {
+        const inputSeconds = parseInt(inputTime, 10);
+        if (!isNaN(inputSeconds) && inputSeconds > 0) {
+            setTime(inputSeconds);
+            setIsActive(true);
+            setTimerBorderColor('#D71920');
+            try {
+                if (soundObject) {
+                    await soundObject.replayAsync(); // Reproducir el sonido utilizando soundObject
+                }
+            } catch (error) {
+                console.log('Error al reproducir el sonido:', error);
+            }
         }
     };
 
@@ -81,78 +92,92 @@ const Timer = () => {
 
         if (isActive) {
             interval = setInterval(() => {
-                if (seconds === 59) {
-                    setMinutes((minutes) => minutes + 1);
-                    setSeconds(0);
-                } else {
-                    setSeconds((seconds) => seconds + 1);
-                }
-
-                const totalSeconds = minutes * 60 + seconds;
-                const progressPercentage = (totalSeconds / (series * repetitions * 60)) * 100;
-                setProgress(progressPercentage);
+                setTime((prevTime) => prevTime - 1);
             }, 1000);
-        } else if (!isActive && seconds !== 0) {
+        } else if (!isActive && time !== 0) {
             clearInterval(interval);
         }
 
+        if (time === 0) {
+            setIsActive(false);
+            setTimerBorderColor('#000000');
+            const playSoundAgain = async () => {
+                try {
+                    if (soundObject) {
+                        await soundObject.replayAsync(); // Reproducir el sonido nuevamente utilizando soundObject
+                    }
+                } catch (error) {
+                    console.log('Error al reproducir el sonido:', error);
+                }
+            };
+
+            playSoundAgain();
+        }
+
         return () => clearInterval(interval);
-    }, [isActive, seconds]);
+    }, [isActive, time]);
+
 
     return (
         <Animated.View style={[{ transform: [{ translateY }] }]}>
             <ImageBackground source={imagebg} style={styles.scrollViewTime} resizeMode="cover" >
                 <View style={styles.container}>
-
                     <View style={[styles.timerContainer]}>
                         <Text style={styles.timer}>
-                            {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+                            {Math.floor(time / 60).toString().padStart(2, '0')}:{(time % 60).toString().padStart(2, '0')}
                         </Text>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity onPress={handlePause} style={styles.button}>
-                            <FontAwesome name="stop" size={20} color="#FFF" />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={handleStart} style={styles.button}>
+                        <TouchableOpacity onPress={handleStartManual} style={styles.button}>
                             <AntDesign name="caretright" size={22} color="#FFF" />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={handleReset} style={styles.button}>
+                        <TouchableOpacity onPress={() => setIsActive(false)} style={styles.button}>
+                            <FontAwesome name="stop" size={20} color="#FFF" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setTime(0)} style={styles.button}>
                             <MaterialCommunityIcons name="restart" size={24} color="#FFF" />
                         </TouchableOpacity>
                     </View>
-
+                    <TextInput
+                        style={styles.inputTimer}
+                        keyboardType="numeric"
+                        placeholder="Ingrese el tiempo en segundos"
+                        placeholderTextColor="#999999"
+                        value={inputTime}
+                        onChangeText={setInputTime}
+                    />
                     <View style={styles.rowContain}>
                         <View style={styles.row}>
                             <Text style={styles.labelText}>Series</Text>
                             <View style={styles.counterContainer}>
-                                <TouchableOpacity onPress={handleSeriesDecrement}>
-                                    <Text style={styles.button2}>-</Text>
+                                <TouchableOpacity onPress={() => setSeries(series + 1)}>
+                                    <Text style={styles.button2}>+</Text>
                                 </TouchableOpacity>
                                 <Text style={[styles.label, styles.counterLabel]}>{series}</Text>
-                                <TouchableOpacity onPress={handleSeriesIncrement}>
-                                    <Text style={styles.button2}>+</Text>
+                                <TouchableOpacity onPress={() => setSeries(series > 1 ? series - 1 : 1)}>
+                                    <Text style={styles.button2}>-</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                         <View style={styles.row}>
                             <Text style={styles.labelText}>Repeticiones</Text>
                             <View style={styles.counterContainer}>
-                                <TouchableOpacity onPress={handleRepetitionsDecrement}>
-                                    <Text style={styles.button2}>-</Text>
+                                <TouchableOpacity onPress={() => setRepetitions(repetitions + 1)}>
+                                    <Text style={styles.button2}>+</Text>
                                 </TouchableOpacity>
                                 <Text style={[styles.label, styles.counterLabel]}>{repetitions}</Text>
-                                <TouchableOpacity onPress={handleRepetitionsIncrement}>
-                                    <Text style={styles.button2}>+</Text>
+                                <TouchableOpacity onPress={() => setRepetitions(repetitions > 1 ? repetitions - 1 : 1)}>
+                                    <Text style={styles.button2}>-</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </View>
-
                 </View>
             </ImageBackground>
         </Animated.View>
     );
-}; const styles = StyleSheet.create({
+};
+const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         gap: 30,
@@ -256,6 +281,13 @@ const Timer = () => {
 
         fontWeight: 'bold'
     },
+
+    inputTimer: {
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        color: '#fff',
+        borderRadius: 8,
+        padding: 6
+    }
 });
 
 export default Timer;

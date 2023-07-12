@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { color } from '@rneui/themed/dist/config';
 import { Animated, Easing } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import Header from '../components/HeaderBlanco';
 export default function Ejercicios({ navigation }) {
     const [exercises, setExercises] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -111,47 +112,45 @@ export default function Ejercicios({ navigation }) {
     return (
 
         <LinearGradient colors={['#AC1929', '#D71929', '#D71929', '#D71929', '#D71929', '#D71929', '#D71929',]} style={styles.container}>
-            {/* <Header /> */}
-            <View style={styles.titleCantidad}>
-                <Text style={styles.textoTitle}>Ejercicios </Text>
-                <Text style={styles.textoCantidad}>{exercises.length}</Text>
-            </View>
+
+
             <View style={styles.filtros}>
-                <View style={styles.searchInputContainer}>
-                    <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder="Buscar ejercicio"
-                        value={searchText}
-                        onChangeText={setSearchText}
-                    />
-                </View>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} >
-                    <View style={styles.categoryFilter}>
-                        {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal'].map((category) => (
-                            <TouchableOpacity
-                                key={category}
-                                style={[
-                                    styles.filterItem,
-                                    selectedCategory === category && styles.filterItemSelected,
-                                ]}
-                                onPress={() => handleCategoryFilter(category)}
-                            >
-                                <Text style={styles.filterItemLabel}>{category}</Text>
-                            </TouchableOpacity>
-                        ))}
-
+                <LinearGradient colors={['#AC1929', '#D71929',]} style={styles.filtrosbg}>
+                    <View style={styles.searchInputContainer}>
+                        <Icon name="search" size={20} color="#999" style={styles.searchIcon} />
+                        <TextInput
+                            style={styles.searchInput}
+                            placeholder="Buscar ejercicio"
+                            value={searchText}
+                            onChangeText={setSearchText}
+                        />
                     </View>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                        <View style={styles.categoryFilter}>
+                            {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal'].map((category) => (
+                                <TouchableOpacity
+                                    key={category}
+                                    style={[
+                                        styles.filterItem,
+                                        selectedCategory === category && styles.filterItemSelected,
+                                    ]}
+                                    onPress={() => handleCategoryFilter(category)}
+                                >
+                                    <Text style={styles.filterItemLabel}>{category}</Text>
+                                </TouchableOpacity>
+                            ))}
 
-                </ScrollView>
+                        </View>
 
+                    </ScrollView>
+                </LinearGradient>
             </View>
             {showNoResults && (
                 <View style={styles.noResultsContainer}>
                     <Text style={styles.noResultsText}>No hay resultados</Text>
                 </View>
             )}
-            <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
+            <Animated.View style={[styles.container2, { transform: [{ translateY }] }]}>
                 <FlatList
                     data={filteredExercises}
                     renderItem={renderExerciseItem}
@@ -159,6 +158,7 @@ export default function Ejercicios({ navigation }) {
                     numColumns={2}
                     contentContainerStyle={styles.scrollView}
                 />
+
             </Animated.View>
             <View style={styles.seccion}>
 
@@ -174,7 +174,13 @@ export default function Ejercicios({ navigation }) {
                 </Text>
 
             </View>
+            <View style={styles.seccion}>
 
+                <Text style={styles.text}>
+
+                </Text>
+
+            </View>
 
         </LinearGradient>
 
@@ -186,26 +192,33 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+
     },
     noResultsText: {
         fontSize: 16,
-
         color: '#fff',
     },
     container: {
         flex: 1,
-        paddingTop: 40,
-        backgroundColor: '#D71920',
+        paddingTop: 50,
+
+
+    },
+    container2: {
+        flex: 1,
+
+
 
     },
     scrollView: {
         flexGrow: 1,
 
         alignItems: 'center',
-        backgroundColor: '#F9F9F9',
-        paddingTop: 50,
+        backgroundColor: '#f9f9f9',
+        paddingTop: 40,
         borderTopLeftRadius: 30,
-        borderTopRightRadius: 30
+        borderTopRightRadius: 30,
+        paddingTop: 150
 
     },
     exerciseItem: {
@@ -246,6 +259,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         marginBottom: 10,
+
     },
     searchIcon: {
         marginRight: 10,
@@ -259,7 +273,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignItems: 'center',
         marginTop: 10,
-        height: 40
+        height: 40,
+
     },
     filterItem: {
         flexDirection: 'row',
@@ -269,7 +284,7 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         borderRadius: 20,
-        padding: 7,
+        padding: 6,
         color: '#000',
     },
 
@@ -284,7 +299,7 @@ const styles = StyleSheet.create({
     filterItemSelected: {
         borderBottomWidth: 2,
         borderBottomColor: '#000',
-        height: 36,
+        height: 38,
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
         color: '#fff',
         shadowColor: 'rgba(0, 0, 0, 0.8)',
@@ -298,8 +313,18 @@ const styles = StyleSheet.create({
         paddingTop: 10,
     },
     filtros: {
-        paddingHorizontal: 15,
 
+        position: 'absolute',
+        zIndex: 2,
+        height: 320
+    },
+    filtrosbg: {
+        paddingTop: 70,
+        height: 180,
+        width: '100%',
+        paddingHorizontal: 15,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20
     },
     textoTitle: {
         alignItems: 'center',
@@ -329,5 +354,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 10,
         padding: 20,
+    },
+    seccion: {
+        backgroundColor: '#f9f9f9',
     }
 });

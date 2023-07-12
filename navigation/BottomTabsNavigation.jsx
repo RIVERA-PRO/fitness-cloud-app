@@ -368,10 +368,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#fff',
-                        height: 53,
+                        backgroundColor: '#D71920',
+                        height: 56,
                         elevation: 0,
                         position: 'absolute',
+                        borderRadius: 100,
+                        marginBottom: 10,
+                        margin: 10
                     },
                     activeTintColor: '#D71920',
                     inactiveTintColor: '#9B9B9B',
@@ -390,10 +393,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#fff',
-                        height: 53,
+                        backgroundColor: '#D71920',
+                        height: 56,
                         elevation: 0,
                         position: 'absolute',
+                        borderRadius: 100,
+                        marginBottom: 10,
+                        margin: 10
 
                     },
                     activeTintColor: '#D71920',
@@ -412,10 +418,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#fff',
-                        height: 53,
+                        backgroundColor: '#D71920',
+                        height: 56,
                         elevation: 0,
                         position: 'absolute',
+                        borderRadius: 100,
+                        marginBottom: 10,
+                        margin: 10
 
                     },
                     activeTintColor: '#D71920',
@@ -434,10 +443,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#fff',
-                        height: 53,
+                        backgroundColor: '#D71920',
+                        height: 56,
                         elevation: 0,
                         position: 'absolute',
+                        borderRadius: 100,
+                        marginBottom: 10,
+                        margin: 10
 
                     },
                     activeTintColor: '#D71920',
@@ -457,10 +469,13 @@ function BottomTabsNavigation() {
                     tabBarButton: () => null, // Ocultar el botón del tab
                     tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
                     tabBarStyle: {
-                        backgroundColor: '#fff',
-                        height: 53,
+                        backgroundColor: '#D71920',
+                        height: 56,
                         elevation: 0,
                         position: 'absolute',
+                        borderRadius: 100,
+                        marginBottom: 10,
+                        margin: 10
 
                     },
                     activeTintColor: '#D71920',

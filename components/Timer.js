@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { Animated, Easing } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import imagebg from '../assets/home.png'
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+
 const Timer = () => {
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
@@ -95,64 +100,64 @@ const Timer = () => {
     }, [isActive, seconds]);
 
     return (
-        <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
-            <View style={styles.container}>
+        <Animated.View style={[{ transform: [{ translateY }] }]}>
+            <ImageBackground source={imagebg} style={styles.scrollViewTime} resizeMode="cover" >
+                <View style={styles.container}>
 
-                <View style={[styles.timerContainer, { borderColor: timerBorderColor }]}>
-                    <View style={[styles.progressBarContainer, { transform: [{ rotate: `${progress * 3.6}deg` }] }]}>
-                        <View style={styles.progressBar} />
+                    <View style={[styles.timerContainer]}>
+                        <Text style={styles.timer}>
+                            {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+                        </Text>
                     </View>
-                    <Text style={styles.timer}>
-                        {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
-                    </Text>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={handleStart} style={styles.button}>
-                        <Text style={styles.buttonText}>Inicio</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handlePause} style={styles.button}>
-                        <Text style={styles.buttonText}>Pausa</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handleReset} style={styles.button}>
-                        <Text style={styles.buttonText}>Reiniciar</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={handlePause} style={styles.button}>
+                            <FontAwesome name="stop" size={20} color="#FFF" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleStart} style={styles.button}>
+                            <AntDesign name="caretright" size={22} color="#FFF" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleReset} style={styles.button}>
+                            <MaterialCommunityIcons name="restart" size={24} color="#FFF" />
+                        </TouchableOpacity>
+                    </View>
 
-                <View style={styles.rowContain}>
-                    <View style={styles.row}>
-                        <Text style={styles.labelText}>Series</Text>
-                        <View style={styles.counterContainer}>
-                            <TouchableOpacity onPress={handleSeriesDecrement}>
-                                <Text style={styles.button2}>-</Text>
-                            </TouchableOpacity>
-                            <Text style={[styles.label, styles.counterLabel]}>{series}</Text>
-                            <TouchableOpacity onPress={handleSeriesIncrement}>
-                                <Text style={styles.button2}>+</Text>
-                            </TouchableOpacity>
+                    <View style={styles.rowContain}>
+                        <View style={styles.row}>
+                            <Text style={styles.labelText}>Series</Text>
+                            <View style={styles.counterContainer}>
+                                <TouchableOpacity onPress={handleSeriesDecrement}>
+                                    <Text style={styles.button2}>-</Text>
+                                </TouchableOpacity>
+                                <Text style={[styles.label, styles.counterLabel]}>{series}</Text>
+                                <TouchableOpacity onPress={handleSeriesIncrement}>
+                                    <Text style={styles.button2}>+</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.labelText}>Repeticiones</Text>
+                            <View style={styles.counterContainer}>
+                                <TouchableOpacity onPress={handleRepetitionsDecrement}>
+                                    <Text style={styles.button2}>-</Text>
+                                </TouchableOpacity>
+                                <Text style={[styles.label, styles.counterLabel]}>{repetitions}</Text>
+                                <TouchableOpacity onPress={handleRepetitionsIncrement}>
+                                    <Text style={styles.button2}>+</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.labelText}>Repeticiones</Text>
-                        <View style={styles.counterContainer}>
-                            <TouchableOpacity onPress={handleRepetitionsDecrement}>
-                                <Text style={styles.button2}>-</Text>
-                            </TouchableOpacity>
-                            <Text style={[styles.label, styles.counterLabel]}>{repetitions}</Text>
-                            <TouchableOpacity onPress={handleRepetitionsIncrement}>
-                                <Text style={styles.button2}>+</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
 
-            </View>
+                </View>
+            </ImageBackground>
         </Animated.View>
     );
 }; const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         gap: 30,
-
+        paddingTop: 200,
+        height: 850
     },
     rowContain: {
         flexDirection: 'row',
@@ -173,6 +178,7 @@ const Timer = () => {
     labelText: {
         alignItems: 'center',
         marginBottom: 6,
+        color: '#fff',
     },
     button: {
         backgroundColor: '#D71920',
@@ -181,10 +187,16 @@ const Timer = () => {
         borderRadius: 100,
         marginLeft: 4,
         fontSize: 16,
-        width: 90,
+        width: 60,
+        height: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 10.25,
+        shadowRadius: 30,
+        elevation: 5,
     },
     button2: {
         backgroundColor: '#D71920',
@@ -198,36 +210,36 @@ const Timer = () => {
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: '#ffff'
+        color: '#ffff',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 10.25,
+        shadowRadius: 30,
+        elevation: 5,
 
     },
     timerContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 3,
         borderRadius: 100,
-        width: 150,
-        height: 150,
+
         marginBottom: 10,
         position: 'relative',
-    },
-    progressBarContainer: {
-        position: 'absolute',
-        left: 0,
-        bottom: 0,
-        height: '100%',
-        backgroundColor: '#ccc',
-        overflow: 'hidden',
+        marginTop: 140,
+
     },
 
 
     timer: {
-        fontSize: 24,
+        fontSize: 70,
         fontWeight: 'bold',
+        color: '#fff',
+
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
+        gap: 10
     },
     buttonText: {
         fontSize: 16,
@@ -240,6 +252,9 @@ const Timer = () => {
     },
     counterLabel: {
         textAlign: 'center',
+        color: '#fff',
+
+        fontWeight: 'bold'
     },
 });
 

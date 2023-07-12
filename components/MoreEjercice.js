@@ -4,7 +4,8 @@ import { ejerciciosData } from './Data';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
-
+import { Fontisto } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 export default function MoreEjercice({ navigation }) {
 
     const [exercises, setExercises] = useState([]);
@@ -55,7 +56,9 @@ export default function MoreEjercice({ navigation }) {
 
                             <Text style={styles.categoria}>{exercise?.categoria}</Text>
                         </View>
-                        <MaterialIcons name="fitness-center" style={styles.icon} size={18} color='#D71920' />
+
+
+                        <FontAwesome name="angle-double-right" size={25} style={styles.icon} color='#fff' />
                     </LinearGradient>
                 </TouchableOpacity>
             ))}
@@ -112,9 +115,11 @@ const styles = StyleSheet.create({
 
     },
     icon: {
-        backgroundColor: '#fff',
+
         padding: 3,
-        borderRadius: 100
+        width: 30,
+        borderRadius: 100,
+        textAlign: 'center'
     },
     deFlexColumn: {
         width: '65%'

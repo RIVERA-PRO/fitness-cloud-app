@@ -4,6 +4,7 @@ import { ejerciciosData } from './Data';
 import { AntDesign } from '@expo/vector-icons';
 import { Animated, Easing } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
 export default function AllEjercicios({ navigation }) {
     const [exercises, setExercises] = useState([]);
     const [animationValue] = useState(new Animated.Value(0));
@@ -66,7 +67,7 @@ export default function AllEjercicios({ navigation }) {
                 <Text style={styles.categoriasText}>Ejercicios</Text>
                 <TouchableOpacity onPress={navigateToEjercicios} style={styles.verMasbtn}>
                     <Text style={styles.verMasText}>Ver más </Text>
-                    <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
+                    <FontAwesome name="angle-double-right" size={17} style={styles.icon} color='#D71920' />
                 </TouchableOpacity>
             </View>
             <ScrollView horizontal={true} style={styles.scrollView}>
@@ -175,10 +176,14 @@ const styles = StyleSheet.create({
     verMasbtn: {
         flexDirection: 'row',
         alignContent: 'center',
+        marginRight: 5
     },
     categoriasText: {
         color: 'rgba(0, 0, 0, 0.9)',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    icon: {
+        marginTop: 2
     },
 });

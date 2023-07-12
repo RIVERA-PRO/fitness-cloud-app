@@ -12,6 +12,7 @@ import Header from '../components/HeaderBlanco';
 import { AntDesign } from '@expo/vector-icons';
 import { Animated, Easing } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
 export default function Home() {
     const navigation = useNavigation();
     const animation = useRef(new Animated.Value(0)).current;
@@ -93,8 +94,8 @@ export default function Home() {
                             <Text style={styles.categoriasText}>Categorias</Text>
                             <TouchableOpacity onPress={navigateToCategories} style={styles.verMasbtn}>
                                 <Text style={styles.verMasText}>Ver más </Text>
+                                <FontAwesome name="angle-double-right" size={17} style={styles.icon} color='#D71920' />
 
-                                <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
                             </TouchableOpacity>
                         </View>
                         <AllsCategory navigation={navigation} />
@@ -117,7 +118,7 @@ export default function Home() {
                                 <Text style={styles.categoriasText}>Destacados</Text>
                                 <TouchableOpacity onPress={navigateToEjercicios} style={styles.verMasbtn}>
                                     <Text style={styles.verMasText}>Ver más </Text>
-                                    <Text> <AntDesign name="right" size={12} color='#D71920' /> </Text>
+                                    <FontAwesome name="angle-double-right" size={17} style={styles.icon} color='#D71920' />
                                 </TouchableOpacity>
                             </View>
                             <ScrollView>
@@ -172,6 +173,10 @@ const styles = StyleSheet.create({
     verMasbtn: {
         flexDirection: 'row',
         alignContent: 'center',
+        marginRight: 5
+    },
+    icon: {
+        marginTop: 2
     },
     categoriasText: {
         color: 'rgba(0, 0, 0, 0.9)',

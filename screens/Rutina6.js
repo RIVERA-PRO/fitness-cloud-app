@@ -6,6 +6,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Timer from '../components/Timer';
+import imagebg from '../assets/home.png'
+import tilde from '../assets/tilde.png'
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import Header from '../components/HeaderBlanco';
 export default function Rutina6() {
     const navigation = useNavigation();
     const isFocused = useIsFocused();
@@ -60,92 +66,151 @@ export default function Rutina6() {
         return exercise.title.toLowerCase().includes(filterText.toLowerCase());
     };
 
+    const goToTime = () => {
+        navigation.navigate('Time');
 
+    };
     return (
-        <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.container}>
+        <>
 
 
             {favorites.length > 0 ? (
-                <LinearGradient colors={['#AC1929', '#D71920', '#D71920', '#D71920']} style={styles.container}>
-                    <View style={styles.containerInput}>
+
+                <View>
+
+                    <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.containerInput}>
+
+                        <TouchableOpacity onPress={goToTime}  >
+                            <Fontisto name="angle-dobule-left" size={18} color="#fff" />
+                        </TouchableOpacity>
                         <View style={styles.titleCantidad}>
                             <Text style={styles.textoTitle}> Ejercicios del Dia 6</Text>
                             <Text style={styles.textoCantidad}>{favorites.length}</Text>
                         </View>
+                    </LinearGradient>
 
-                    </View>
+
+
                     <ScrollView contentContainerStyle={styles.scrollContainer}>
+
                         <Timer />
-                        {favorites.filter(filterExercises).map((exercise) => (
-                            <View key={exercise.id} style={styles.exerciseItem}>
-                                <View style={styles.ejerciceDelet}>
-                                    <TouchableOpacity onPress={() => goToDetail(exercise.id)} >
-                                        <View style={styles.exerciseContent}>
-                                            <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover">
-                                            </ImageBackground>
-                                            <Text style={styles.exerciseName}>{exercise.title.slice(0, 60)}</Text>
-                                        </View>
-                                    </TouchableOpacity>
+                        <View style={styles.containerItems}>
+                            {favorites.filter(filterExercises).map((exercise) => (
+                                <View key={exercise.id} >
+                                    <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.exerciseItem}>
 
+                                        <TouchableOpacity onPress={() => goToDetail(exercise.id)} >
+
+                                            <View style={styles.exerciseImageContain} >
+                                                <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="cover" >
+
+                                                </ImageBackground>
+
+                                            </View>
+
+
+                                        </TouchableOpacity>
+
+
+
+                                        <View style={styles.rowContain}>
+                                            <View style={styles.deFLex2}>
+                                                <Text style={styles.exerciseName}>{exercise.title.slice(0, 60)}</Text>
+                                                <TouchableOpacity onPress={() => removeExercise(exercise.id)} style={styles.close}>
+                                                    <Ionicons name="close" size={24} color="#fff" />
+                                                </TouchableOpacity>
+
+
+                                            </View>
+                                            <View style={styles.deFLex}>
+                                                <View style={styles.row}>
+                                                    <Text style={styles.labelText}>Series</Text>
+                                                    <View style={styles.counterContainer}>
+                                                        <TextInput
+                                                            placeholder="1"
+                                                            keyboardType="numeric"
+                                                            style={styles.input}
+                                                        />
+                                                    </View>
+                                                </View>
+                                                <View style={styles.row}>
+                                                    <Text style={styles.labelText}>Repet</Text>
+                                                    <View style={styles.counterContainer}>
+                                                        <TextInput
+                                                            placeholder="1"
+                                                            keyboardType="numeric"
+                                                            style={styles.input}
+                                                        />
+
+                                                    </View>
+                                                </View>
+
+
+                                            </View>
+
+                                        </View>
+                                    </LinearGradient>
                                 </View>
+                            ))}
+                        </View>
 
+                        <LinearGradient colors={['#000', '#000']} >
+                            {favorites.length > 0 && (
+                                <TouchableOpacity onPress={removeAllExercises} >
+                                    <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.Remover} >
+                                        <Text style={styles.RemoverText}>Remover todos</Text>
 
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                            )}
 
-                                <View style={styles.rowContain}>
-                                    <View style={styles.row}>
-                                        <Text style={styles.labelText}>Series</Text>
-                                        <View style={styles.counterContainer}>
-                                            <TextInput
-                                                placeholder="1"
-                                                keyboardType="numeric"
-                                                style={styles.input}
-                                            />
-                                        </View>
-                                    </View>
-                                    <View style={styles.row}>
-                                        <Text style={styles.labelText}>Repet</Text>
-                                        <View style={styles.counterContainer}>
-                                            <TextInput
-                                                placeholder="1"
-                                                keyboardType="numeric"
-                                                style={styles.input}
-                                            />
+                        </LinearGradient>
 
-                                        </View>
-                                    </View>
-                                    <TouchableOpacity onPress={() => removeExercise(exercise.id)}>
-                                        <Text><MaterialIcons name="delete" size={24} color="#fff" /></Text>
-                                    </TouchableOpacity>
-                                </View>
+                        <LinearGradient colors={['#000', '#000']} style={styles.container}>
+
+                            <View style={styles.noHayFavoritos}>
+
                             </View>
-                        ))}
-                        {favorites.length > 0 && (
-                            <TouchableOpacity onPress={removeAllExercises} style={styles.Remover}>
-                                <Text style={styles.RemoverText}>Remover todos</Text>
-                                <MaterialIcons name="delete" size={20} color="#fff" />
-                            </TouchableOpacity>
-                        )}
+
+                        </LinearGradient>
+                    </ScrollView >
+                </View >
 
 
-                    </ScrollView>
 
-
-                </LinearGradient>
             ) : (
-                <LinearGradient colors={['#fff', '#fff']} style={styles.container}>
 
-                    <View style={styles.noHayFavoritos}>
-                        <Text style={styles.noHayFavoritos}>No hay Rutinas del Día 6</Text>
-                    </View>
-                    <TouchableOpacity onPress={navigateEjercicios} style={styles.agregar}>
-                        <Text style={styles.agregarText}>Agregar</Text>
+                <>
+                    <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.containerInput}>
 
-                    </TouchableOpacity>
-                </LinearGradient>
+                        <TouchableOpacity onPress={goToTime}  >
+                            <Fontisto name="angle-dobule-left" size={18} color="#fff" />
+                        </TouchableOpacity>
+                        <View style={styles.titleCantidad}>
+                            <Text style={styles.textoTitle}> Ejercicios del Dia 6</Text>
+                            <Text style={styles.textoCantidad}>{favorites.length}</Text>
+                        </View>
+                    </LinearGradient>
 
-            )}
 
-        </LinearGradient>
+                    <ImageBackground source={imagebg} style={styles.imagebg} resizeMode="cover" >
+                        <View style={styles.noHayFavoritos}>
+                            <Text style={styles.noHayFavoritos}>No hay Ejercicios del Día 6</Text>
+                        </View>
+                        <TouchableOpacity onPress={navigateEjercicios} >
+                            <LinearGradient colors={['#AC1929', '#D71920',]} style={styles.agregar}>
+                                <Text style={styles.agregarText}>Agregar</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </ImageBackground>
+
+
+                </>
+
+            )
+            }
+
+        </>
     );
 }
 
@@ -156,16 +221,28 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flexGrow: 1,
-        paddingTop: 24,
-        backgroundColor: '#F9F9F9',
-        padding: 20,
-        marginTop: 50,
-        borderRadius: 30,
-        height: '350%'
+
+
+    },
+    containerItems: {
+        backgroundColor: '#000',
+        marginTop: -30,
+        padding: 15,
+        paddingTop: 50
+
     },
     containerInput: {
-        padding: 20,
-        marginTop: 50,
+        paddingHorizontal: 30,
+        height: 110,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        position: 'absolute',
+        zIndex: 2,
+        width: '100%',
+        paddingTop: 50,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     searchInputContainer: {
         flexDirection: 'row',
@@ -186,36 +263,31 @@ const styles = StyleSheet.create({
 
     },
     exerciseItem: {
-        flexDirection: 'column',
-        justifyContent: 'center',
+        flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 20,
-        width: '100%',
         borderColor: '#000',
         borderRadius: 10,
-        backgroundColor: '#D71920',
-        shadowColor: 'rgba(0, 0, 0, 0.8)',
+        shadowColor: 'rgba(255, 255, 255, 0.8)',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 10.25,
         shadowRadius: 30,
-        elevation: 10,
-    },
-    exerciseContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        elevation: 5,
 
-        borderRadius: 1,
-        borderWidth: 0.1,  // Agrega esta línea para el borde
-        borderColor: '#fff'  // Puedes cambiar el color del borde aquí
+
+    },
+
+    exerciseImageContain: {
+        borderRadius: 10,
+        width: 110,
+        height: 140
     },
     exerciseImage: {
-        width: 70,
-        height: 70,
-        borderTopLeftRadius: 10,
+        width: '100%',
+        height: 140,
+        borderRadius: 10,
+        overflow: 'hidden'
 
-        marginRight: 10,
-        justifyContent: 'flex-end',
-        overflow: 'hidden',
     },
     exerciseName: {
         color: '#fff',
@@ -224,46 +296,47 @@ const styles = StyleSheet.create({
         textShadowColor: 'rgba(0, 0, 0, 0.5)',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 2,
-        padding: 10,
-        width: '75%',
+        width: '100%',
     },
     textoTitle: {
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: 22,
+        fontSize: 17,
         fontWeight: 'bold',
         color: '#fff',
     },
     textoCantidad: {
         alignItems: 'center',
-        fontSize: 13,
+
         fontWeight: 'bold',
         color: '#D71920',
         backgroundColor: '#fff',
-        padding: 6,
+        padding: 3,
         borderRadius: 100,
-        width: 50,
-        height: 30,
+        width: 30,
+        height: 25,
         textAlign: 'center',
         alignItems: 'center',
 
     },
     titleCantidad: {
         flexDirection: 'row',
+        alignItems: 'center',
         width: '100%',
-        justifyContent: 'space-between',
-        marginBottom: 10,
-        padding: 10
+        justifyContent: 'flex-end',
+        padding: 10,
+        gap: 10
     },
     Remover: {
         backgroundColor: '#D71920',
-        padding: 13,
+        padding: 15,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 10,
         borderRadius: 8,
-        marginTop: 20
+        marginTop: 20,
+        margin: 20
     },
     agregar: {
         backgroundColor: '#D71920',
@@ -275,7 +348,12 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 96,
         marginRight: 96,
-        textAlign: 'center'
+        textAlign: 'center',
+        shadowColor: '#D71920',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 10.25,
+        shadowRadius: 30,
+        elevation: 5,
     },
     agregarText: {
         fontWeight: 'bold',
@@ -291,19 +369,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 100,
-        color: '#000',
+        marginTop: 200,
+        color: '#fff',
         fontSize: 16
     },
 
-
-
-    rowContain: {
+    deFLex: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
-        gap: 30,
-        paddingTop: 10
+        gap: 10
+    },
+
+    rowContain: {
+        flexDirection: 'column',
+        gap: 20,
+        paddingLeft: 10
+
     },
     row: {
         flexDirection: 'column',
@@ -318,15 +399,22 @@ const styles = StyleSheet.create({
     },
 
 
-    ejerciceDelet: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
+
     input: {
         backgroundColor: '#fff',
         width: 50,
         borderRadius: 7,
         alignItems: 'center',
         textAlign: 'center'
+    },
+
+    deFLex2: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '68%',
+        gap: 10
+    },
+    imagebg: {
+        height: '100%'
     }
 });

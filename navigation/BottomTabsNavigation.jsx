@@ -15,6 +15,8 @@ import Cuadriceps from '../screens/Cuadriceps'
 import Hombros from '../screens/Hombros'
 import Peso_corporal from '../screens/Peso_corporal'
 import Yoga from '../screens/Yoga'
+import Isquiotibiales from '../screens/Isquiotibiales'
+import Pantorrillas from '../screens/Pantorrillas'
 import Cardio from '../screens/Cardio'
 import Categorias from '../screens/Categorias'
 import Time from '../screens/Time'
@@ -487,8 +489,57 @@ function BottomTabsNavigation() {
                     ),
                 })}
             />
+            <Tab.Screen
+                name="Isquiotibiales"
+                component={Isquiotibiales}
+                options={({ route }) => ({
+                    tabBarButton: () => null, // Ocultar el botón del tab
+                    tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
+                    tabBarStyle: {
+                        backgroundColor: '#D71920',
+                        height: 56,
+                        elevation: 0,
+                        position: 'absolute',
+                        borderRadius: 100,
+                        marginBottom: 10,
+                        margin: 10
 
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Isquiotibiales',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="category" size={24} color={color} />
+                    ),
+                })}
+            />
 
+            <Tab.Screen
+                name="Pantorrillas"
+                component={Pantorrillas}
+                options={({ route }) => ({
+                    tabBarButton: () => null, // Ocultar el botón del tab
+                    tabBarVisible: false, // Ocultar la pestaña "Gluteos" en la barra de navegación
+                    tabBarStyle: {
+                        backgroundColor: '#D71920',
+                        height: 56,
+                        elevation: 0,
+                        position: 'absolute',
+                        borderRadius: 100,
+                        marginBottom: 10,
+                        margin: 10
+
+                    },
+                    activeTintColor: '#D71920',
+                    inactiveTintColor: '#9B9B9B',
+                    headerShown: false,
+                    tabBarLabel: 'Pantorrillas',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="category" size={24} color={color} />
+                    ),
+                })}
+            />
             <Tab.Screen
                 name="Rutina"
                 component={Rutina}

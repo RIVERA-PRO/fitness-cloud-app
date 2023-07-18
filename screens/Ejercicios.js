@@ -127,7 +127,7 @@ export default function Ejercicios({ navigation }) {
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} >
                         <View style={styles.categoryFilter}>
-                            {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal'].map((category) => (
+                            {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal', 'Isquiotibiales', 'Pantorrillas'].map((category) => (
                                 <TouchableOpacity
                                     key={category}
                                     style={[

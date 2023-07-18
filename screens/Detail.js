@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Button, ScrollView, Text, Image, TouchableOpacity, Modal, ImageBackground } from 'react-native';
+import { View, StyleSheet, Button, ScrollView, Text, Image, TouchableOpacity, ImageBackground, } from 'react-native';
 import { ejerciciosData } from '../components/Data';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Timer from '../components/Timer';
@@ -14,7 +14,13 @@ import imagen2 from '../assets/Cloud.png';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Animated, Easing } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { Fontisto } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import Modal from 'react-native-modal';
 export default function Detail({ route }) {
+    const navigation = useNavigation();
+
     const [animationValue] = useState(new Animated.Value(0));
     const [showAlert, setShowAlert] = useState(false);
     const [showAlertError, setShowAlertError] = useState(false);
@@ -317,26 +323,35 @@ export default function Detail({ route }) {
         const randomMinutes = Math.floor(Math.random() * 15 + 2); // Genera un número entre 100 y 600
         setMinutes(randomMinutes);
     }, []);
+    const navigateToCategory = () => {
+        navigation.navigate(`${exercise.categoria}`);
+    };
+
+
+
+
+
 
     return (
 
         <View style={styles.contenedor}>
-            <View>
-                <LinearGradient colors={['#AC1929', '#D71920']} style={styles.header}>
-                    <View  >
+
+            <LinearGradient colors={['#AC1929', '#D71920']} style={styles.header}>
 
 
-                        <Header />
 
-                    </View>
-                </LinearGradient>
-            </View>
+                <Header />
+
+
+            </LinearGradient>
+
             <ScrollView contentContainerStyle={styles.scrollContainer} >
 
                 <LinearGradient colors={['#D71920', '#D71920']} style={styles.bgHeader}>
 
                 </LinearGradient>
                 <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
+
                     <View style={styles.imageContainer} >
                         <ImageBackground source={{ uri: exercise.img }} style={styles.exerciseImage} resizeMode="contain" />
                     </View>
@@ -345,6 +360,10 @@ export default function Detail({ route }) {
                         <Image source={tilde} style={{ width: 18, height: 18 }} />
                         <Text style={styles.title}> {exercise.title}</Text>
                     </View>
+                    <TouchableOpacity onPress={navigateToCategory} style={styles.btnCategoria}>
+                        <Fontisto name="angle-dobule-left" size={17} color="#D71920" />
+
+                    </TouchableOpacity>
 
                     <View style={styles.seccion}>
                         <View style={styles.timeCaloriCard}>
@@ -368,7 +387,7 @@ export default function Detail({ route }) {
                         <View style={styles.iconTexto2}>
                         </View>
 
-                        <ScrollView>
+                        <View style={styles.pasoscontain}>
                             {exercise.paso1 !== '' && <View style={styles.pasos}>
                                 <Image source={tilde} style={{ width: 18, height: 18 }} />
                                 <Text style={styles.pasosText}>{exercise.paso1}</Text>
@@ -409,56 +428,115 @@ export default function Detail({ route }) {
                                 <Image source={tilde} style={{ width: 18, height: 18 }} />
                                 <Text style={styles.pasosText}>{exercise.paso10}</Text>
                             </View>}
-                        </ScrollView>
+                        </View>
                         <View style={styles.btns}>
-                            <TouchableOpacity onPress={openModal} style={styles.favoriteButton}>
-                                <Text style={styles.favoriteButtonText}>Añadir a Rutina   </Text>
-                                <MaterialCommunityIcons name="timer" size={20} color='#ffff' />
+                            <TouchableOpacity onPress={openModal} >
+                                <LinearGradient colors={['#D71920', '#D71920']} style={styles.favoriteButton}>
+                                    <Text style={styles.favoriteButtonText}>Añadir a Rutina   </Text>
+                                    <MaterialCommunityIcons name="timer" size={20} color='#ffff' />
+                                </LinearGradient>
+
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
-                                <Text style={styles.favoriteButtonText}>Añadir a Favorito </Text>
-                                <MaterialIcons name="favorite" size={20} color='#ffff' />
+                            <TouchableOpacity onPress={toggleFavorite} >
+
+                                <LinearGradient colors={['#D71920', '#D71920']} style={styles.favoriteButton}>
+                                    <Text style={styles.favoriteButtonText}>Añadir a Favorito </Text>
+                                    <MaterialIcons name="favorite" size={20} color='#ffff' />
+                                </LinearGradient>
+
                             </TouchableOpacity>
                         </View>
 
-                        <Modal visible={modalVisible} animationType="slide"  >
+                        <Modal visible={modalVisible} animationType="slide" style={styles.modal}>
 
                             <View style={styles.ContentModal}>
-                                <Image source={imagen2} style={styles.image} />
+
                                 <View style={styles.Modal}>
                                     <TouchableOpacity onPress={closeModal}>
                                         <Text style={styles.closeModal}>X</Text>
                                     </TouchableOpacity>
 
                                     <View style={styles.Rutines}>
-                                        <TouchableOpacity onPress={toggleRuitine} style={styles.RutinaButton}>
-                                            <Text style={styles.diaButon}>Día 1</Text>
-                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={toggleRuitineDia2} style={styles.RutinaButton}>
-                                            <Text style={styles.diaButon}>Día 2</Text>
-                                            <MaterialCommunityIcons name="timer" size={20} color='#ffff' />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={toggleRuitineDia3} style={styles.RutinaButton}>
-                                            <Text style={styles.diaButon}>Día 3</Text>
-                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        <TouchableOpacity onPress={toggleRuitine} >
+                                            <LinearGradient colors={['#D71920', '#D71920', '#AC1929', '#AC1929',]} start={{ x: 0, y: 0 }}
+                                                end={{ x: 1, y: 0 }} style={styles.RutinaBtn}>
+                                                <View style={styles.deFLex}>
+                                                    <Image source={tilde} style={styles.icon2} />
+                                                    <Text style={styles.RutinaText}> Dia 1</Text>
+
+                                                </View>
+                                                <AntDesign name="doubleright" size={24} color='#fff' />
+                                            </LinearGradient>
+
                                         </TouchableOpacity>
 
-                                        <TouchableOpacity onPress={toggleRuitineDia4} style={styles.RutinaButton}>
-                                            <Text style={styles.diaButon}>Día 4</Text>
-                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        <TouchableOpacity onPress={toggleRuitineDia2} >
+                                            <LinearGradient colors={['#D71920', '#D71920', '#AC1929', '#AC1929',]} start={{ x: 0, y: 0 }}
+                                                end={{ x: 1, y: 0 }} style={styles.RutinaBtn}>
+                                                <View style={styles.deFLex}>
+                                                    <Image source={tilde} style={styles.icon2} />
+                                                    <Text style={styles.RutinaText}> Dia 2</Text>
+
+                                                </View>
+                                                <AntDesign name="doubleright" size={24} color='#fff' />
+                                            </LinearGradient>
+
                                         </TouchableOpacity>
-                                        <TouchableOpacity onPress={toggleRuitineDia5} style={styles.RutinaButton}>
-                                            <Text style={styles.diaButon}>Día 5</Text>
-                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        <TouchableOpacity onPress={toggleRuitineDia3}>
+                                            <LinearGradient colors={['#D71920', '#D71920', '#AC1929', '#AC1929',]} start={{ x: 0, y: 0 }}
+                                                end={{ x: 1, y: 0 }} style={styles.RutinaBtn}>
+                                                <View style={styles.deFLex}>
+                                                    <Image source={tilde} style={styles.icon2} />
+                                                    <Text style={styles.RutinaText}> Dia 3</Text>
+
+                                                </View>
+                                                <AntDesign name="doubleright" size={24} color='#fff' />
+                                            </LinearGradient>
                                         </TouchableOpacity>
-                                        <TouchableOpacity onPress={toggleRuitineDia6} style={styles.RutinaButton}>
-                                            <Text style={styles.diaButon}>Día 6</Text>
-                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+
+                                        <TouchableOpacity onPress={toggleRuitineDia4} >
+                                            <LinearGradient colors={['#D71920', '#D71920', '#AC1929', '#AC1929',]} start={{ x: 0, y: 0 }}
+                                                end={{ x: 1, y: 0 }} style={styles.RutinaBtn}>
+                                                <View style={styles.deFLex}>
+                                                    <Image source={tilde} style={styles.icon2} />
+                                                    <Text style={styles.RutinaText}> Dia 4</Text>
+
+                                                </View>
+                                                <AntDesign name="doubleright" size={24} color='#fff' />
+                                            </LinearGradient>
                                         </TouchableOpacity>
-                                        <TouchableOpacity onPress={toggleRuitineDia7} style={styles.RutinaButton}>
-                                            <Text style={styles.diaButon}>Día 7</Text>
-                                            <MaterialCommunityIcons name="timer" size={20} color='#fff' />
+                                        <TouchableOpacity onPress={toggleRuitineDia5}>
+                                            <LinearGradient colors={['#D71920', '#D71920', '#AC1929', '#AC1929',]} start={{ x: 0, y: 0 }}
+                                                end={{ x: 1, y: 0 }} style={styles.RutinaBtn}>
+                                                <View style={styles.deFLex}>
+                                                    <Image source={tilde} style={styles.icon2} />
+                                                    <Text style={styles.RutinaText}> Dia 5</Text>
+
+                                                </View>
+                                                <AntDesign name="doubleright" size={24} color='#fff' />
+                                            </LinearGradient>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={toggleRuitineDia6} >
+                                            <LinearGradient colors={['#D71920', '#D71920', '#AC1929', '#AC1929',]} start={{ x: 0, y: 0 }}
+                                                end={{ x: 1, y: 0 }} style={styles.RutinaBtn}>
+                                                <View style={styles.deFLex}>
+                                                    <Image source={tilde} style={styles.icon2} />
+                                                    <Text style={styles.RutinaText}> Dia 6</Text>
+
+                                                </View>
+                                                <AntDesign name="doubleright" size={24} color='#fff' />
+                                            </LinearGradient>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={toggleRuitineDia7} >
+                                            <LinearGradient colors={['#D71920', '#D71920', '#AC1929', '#AC1929',]} start={{ x: 0, y: 0 }}
+                                                end={{ x: 1, y: 0 }} style={styles.RutinaBtn}>
+                                                <View style={styles.deFLex}>
+                                                    <Image source={tilde} style={styles.icon2} />
+                                                    <Text style={styles.RutinaText}> Dia 7</Text>
+
+                                                </View>
+                                                <AntDesign name="doubleright" size={24} color='#fff' />
+                                            </LinearGradient>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -522,6 +600,7 @@ export default function Detail({ route }) {
                         <Text>¡Error! Ya esta agregado</Text>
                     </View>
                 </Dialog>
+
                 <View style={styles.seccion}>
 
                     <Text style={styles.text}>
@@ -547,7 +626,7 @@ export default function Detail({ route }) {
 const styles = StyleSheet.create({
     contenedor: {
         backgroundColor: '#D71920',
-
+        paddingTop: 100,
     },
 
     bgHeader: {
@@ -684,8 +763,8 @@ const styles = StyleSheet.create({
     },
 
     favoriteButton: {
-        backgroundColor: '#D71920',
-        borderRadius: 10,
+
+        borderRadius: 15,
         padding: 10,
         marginTop: 20,
         flexDirection: 'row',
@@ -698,9 +777,11 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     ContentModal: {
-        borderRadius: 10,
+
         overflow: 'hidden',
-        backgroundColor: '#000',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        height: '100%',
+        justifyContent: 'flex-end'
     },
     btns: {
         flexDirection: 'row',
@@ -713,7 +794,9 @@ const styles = StyleSheet.create({
     Modal: {
         padding: 20,
         backgroundColor: '#fff',
-        height: '100%',
+
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20
     },
     closeModal: {
         color: '#000',
@@ -843,6 +926,74 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingTop: 50,
         borderRadius: 20,
+
+        borderRadius: 20,
+        position: 'absolute',
+        zIndex: 2,
+        top: 0,
+
+    },
+
+    btnCategoria: {
+        position: 'absolute',
+        zIndex: 2,
+        top: -120,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        paddingHorizontal: 20
+    },
+    exerciseImageReacionados: {
+        height: 60,
+        width: 100
+    },
+    modal: {
+        margin: 0
+    },
+    icon2: {
+        borderRadius: 100,
+        width: 20,
+        height: 20
+    },
+    RutinaBtn: {
+        backgroundColor: '#D71920',
+        height: 50,
+        marginHorizontal: 10,
+        marginVertical: 4,
+        paddingRight: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: 300,
+        justifyContent: 'space-between',
+        borderRadius: 10,
+        shadowColor: 'rgba(215, 25, 0, 0.8)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+        elevation: 5,
+        gap: 150
+    },
+    RutinaText: {
+        color: '#D71920',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+    titleRutinaText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+
+    deFLex: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: 100,
+        backgroundColor: 'rgba(255, 255, 255, 255)',
+        borderBottomRightRadius: 5,
+        borderTopRightRadius: 5,
+        padding: 3,
+        gap: 5,
+        paddingLeft: 10,
 
     },
 });

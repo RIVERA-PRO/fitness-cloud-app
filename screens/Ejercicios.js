@@ -127,7 +127,7 @@ export default function Ejercicios({ navigation }) {
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} >
                         <View style={styles.categoryFilter}>
-                            {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal', 'Isquiotibiales', 'Pantorrillas'].map((category) => (
+                            {['Pecho', 'Abdominales', 'Gluteos', 'Cuadriceps', 'Espalda', 'Yoga', 'Biceps', 'Triceps', 'Cardio', 'Peso_corporal', 'Isquiotibiales', 'Pantorrillas', 'Banda_elastica'].map((category) => (
                                 <TouchableOpacity
                                     key={category}
                                     style={[
@@ -200,7 +200,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: 50,
 
 
     },
@@ -215,10 +214,11 @@ const styles = StyleSheet.create({
 
         alignItems: 'center',
         backgroundColor: '#f9f9f9',
-        paddingTop: 40,
+
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        paddingTop: 150
+        paddingTop: 210,
+
 
     },
     exerciseItem: {
